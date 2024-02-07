@@ -1,0 +1,13 @@
+Dokumentasi website umroh :
+
+* User Client(Menjual Tiket Umroh)
+- Untuk pengguna user client. Setelah melakukan registrasi data diri. maka langsung menuju kebagian informasi travel untuk mengaktifkan semua fitur yang ada didalam menu agen.
+- Jika sudah di acc oleh admin, maka user client mampu menggunakan semua fitur yang ada. Jika belum, akan diarahkan untuk melakukan pendaftaran kembali.
+- Berikut fitur yang dapat digunakan oleh client ketika di acc oleh admin :
+	- Tampilan dashboard berisikan informasi komisi client selama periode yang sudah ditentukan
+	- Tiket Umroh (Bertujuan untuk client mengisi data dari tiket yang akan digunakan untuk jadwal penerbangan, jumlah seat dan tujuan keberangkatan.
+		- Untuk menambahkan data tiket umroh, dimulai dari tambah tiket group untuk mengisi semua form yang ada
+		- Setelah mengisi semua informasi tiket pesawat maka akan diarahkan kedalam data tiket group untuk melakukan pengecekan data dari tambah tiket group.
+		- Bursa tiket merupakan harga tiket yang diinputkan langsung oleh admin dan hanya admin yang dapat mengisi form tersebut
+
+* User pembeli/pencari informasi umroh

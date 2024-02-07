@@ -1,0 +1,44 @@
+/* Style untuk mode cetak */
+@media print {
+    /* Semua elemen div akan terlihat solid saat dicetak */
+    div {
+        border: 1px solid black;
+    }
+
+    /* Menyembunyikan elemen dengan kelas .no-print saat dicetak */
+    .no-print {
+        display: none;
+    }
+
+    /* Mengatur lebar gambar menjadi 100% dari lebar halaman saat dicetak */
+    img {
+        width: 100%;
+    }
+
+    /* Menghilangkan warna latar belakang dan border pada link saat dicetak */
+    a {
+        background-color: transparent;
+        color: black;
+        text-decoration: none;
+        border: none;
+    }
+
+    /* Menghilangkan elemen navigasi saat dicetak */
+    nav {
+        display: none;
+    }
+
+    /* Menyembunyikan atau menyesuaikan tata letak elemen-elemen lainnya */
+    /* ... */
+
+    /* Menyembunyikan elemen yang tidak perlu dicetak */
+    .no-print, .footer, .sidebar {
+        display: none;
+    }
+
+    /* Mengatur ukuran dan jenis font untuk cetak */
+    body {
+        font-size: 12pt;
+        font-family: 'Arial', sans-serif;
+    }
+}

@@ -1,0 +1,460 @@
+/* Google Fonts Import Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.home-section {
+    position: relative;
+    background: #ffffff;
+    height: 100vh;
+    left: 260px;
+    width: calc(100% - 112px);
+    transition: all 0.5s ease;
+}
+
+.sidebar.close~.home-section {
+    left: 78px;
+    width: calc(100% - 140px);
+}
+
+.home-section .home-content {
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.home-section .home-content .bx-menu,
+.home-section .home-content .text {
+    color: #11101d;
+    font-size: 35px;
+}
+
+.home-section .home-content .bx-menu {
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.home-section .home-content .text {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.logo-details{
+    padding: 10px;
+}
+
+.card_dashboard{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.card{
+    padding: 0 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.main-logo{
+    margin-left: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 60px;
+    width: 150px;
+}
+
+.travel_input{
+    padding: 10px;
+    width: 820px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.travel_input_2{
+    padding: 10px;
+    width: 745px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.travel_input_3{
+    padding: 10px;
+    width: 541px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.travel_option{
+    padding: 5px;
+    width: 820px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.ticket_option{
+    padding: 5px;
+    width: 541px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.ticket_option_2{
+    padding: 5px;
+    width: 235px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.button_filter{
+    margin-top: -5px;
+    height: 35px;
+}
+
+#transit_departure{
+    display: none;
+}
+
+#transit_homecoming{
+    display: none;
+}
+
+.delete_tiket{
+    color: black;
+    font-size: 30px;
+}
+
+#tiket_group_1{
+    display: none;
+}
+
+#tiket_group_2{
+    display: none;
+}
+
+#tiket_group_3{
+    display: none;
+}
+
+#tiket_group_4{
+    display: none;
+}
+
+#tiket_group_5{
+    display: none;
+}
+
+#tiket_group_6{
+    display: none;
+}
+
+#tiket_group_7{
+    display: none;
+}
+
+#tiket_group_8{
+    display: none;
+}
+
+#tiket_group_9{
+    display: none;
+}
+
+#hotel_1{
+    display: none;
+}
+
+#hotel_2{
+    display: none;
+}
+
+#hotel_3{
+    display: none;
+}
+
+#hotel_4{
+    display: none;
+}
+
+#facilitas_in{
+    display: none;
+}
+
+#facilitas_in_2{
+    display: none;
+}
+
+#facilitas_in_3{
+    display: none;
+}
+
+#facilitas_in_4{
+    display: none;
+}
+
+#facilitas_in_5{
+    display: none;
+}
+
+#facilitas_in_6{
+    display: none;
+}
+
+#facilitas_in_7{
+    display: none;
+}
+
+#facilitas_in_8{
+    display: none;
+}
+
+#facilitas_in_9{
+    display: none;
+}
+
+#facilitas_in_10{
+    display: none;
+}
+
+#facilitas_in_11{
+    display: none;
+}
+
+#facilitas_in_12{
+    display: none;
+}
+
+#facilitas_in_13{
+    display: none;
+}
+
+#facilitas_in_14{
+    display: none;
+}
+
+#facilitas_in_15{
+    display: none;
+}
+
+#facilitas_in_16{
+    display: none;
+}
+
+#facilitas_in_17{
+    display: none;
+}
+
+#facilitas_in_18{
+    display: none;
+}
+
+#facilitas_in_19{
+    display: none;
+}
+
+#facilitas_out{
+    display: none;
+}
+
+#facilitas_out_2{
+    display: none;
+}
+
+#facilitas_out_3{
+    display: none;
+}
+
+#facilitas_out_4{
+    display: none;
+}
+
+#facilitas_out_5{
+    display: none;
+}
+
+#facilitas_out_6{
+    display: none;
+}
+
+#facilitas_out_7{
+    display: none;
+}
+
+#facilitas_out_8{
+    display: none;
+}
+
+#facilitas_out_9{
+    display: none;
+}
+
+#facilitas_out_10{
+    display: none;
+}
+
+#facilitas_out_11{
+    display: none;
+}
+
+#facilitas_out_12{
+    display: none;
+}
+
+#facilitas_out_13{
+    display: none;
+}
+
+#facilitas_out_14{
+    display: none;
+}
+
+#facilitas_out_15{
+    display: none;
+}
+
+#facilitas_out_16{
+    display: none;
+}
+
+#facilitas_out_17{
+    display: none;
+}
+
+#facilitas_out_18{
+    display: none;
+}
+
+#facilitas_out_19{
+    display: none;
+}
+
+#condition{
+    display: none;
+}
+
+#condition_2{
+    display: none;
+}
+
+#condition_3{
+    display: none;
+}
+
+#condition_4{
+    display: none;
+}
+
+#condition_5{
+    display: none;
+}
+
+#condition_6{
+    display: none;
+}
+
+#condition_7{
+    display: none;
+}
+
+#condition_8{
+    display: none;
+}
+
+#condition_9{
+    display: none;
+}
+
+#condition_10{
+    display: none;
+}
+
+#condition_11{
+    display: none;
+}
+
+#condition_12{
+    display: none;
+}
+
+#condition_13{
+    display: none;
+}
+
+#condition_14{
+    display: none;
+}
+
+#condition_15{
+    display: none;
+}
+
+#condition_16{
+    display: none;
+}
+
+#condition_17{
+    display: none;
+}
+
+#condition_18{
+    display: none;
+}
+
+#condition_19{
+    display: none;
+}
+
+.travel_upload_video{
+    width: 285px;
+}
+
+#activity_10{
+    display: none;
+}
+
+#activity_11{
+    display: none;
+}
+
+#activity_12{
+    display: none;
+}
+
+#activity_13{
+    display: none;
+}
+
+#activity_14{
+    display: none;
+}
+
+#type_2{
+    display: none;
+}
+
+#type_3{
+    display: none;
+}
+
+.card_penjualan{
+    padding: 20px;
+    margin-left: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width:1710px;
+}
+
+@media (max-width: 420px) {
+    .sidebar.close .nav-links li .sub-menu {
+        display: none;
+    }
+    .home-section {
+        width: calc(100% - -460px);
+    }
+    .sidebar.close~.home-section {
+        left: 78px;
+        width: calc(100% - -741px);
+    }
+}
