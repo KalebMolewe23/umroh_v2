@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment_detail;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +26,10 @@ class User_profileController extends Controller
 
         $transaction = Transaction::where('id_user', Auth::id())->where('transaction_status', 'BELUM BAYAR')->orderBy('id', 'DESC')->get();
         $transaction_pending = Transaction::where('id_user', Auth::id())->where('transaction_status', 'PENDING')->orderBy('id', 'DESC')->get();
+        $transaction_dp = Transaction::where('id_user', Auth::id())->where('transaction_status', 'DP Lunas')->orderBy('id', 'DESC')->get();
         $transaction_sudah_bayar = Transaction::where('id_user', Auth::id())->where('transaction_status', 'SUDAH BAYAR')->orderBy('id', 'DESC')->get();
 
-        return view('user_profile', ['id' => $userId, 'profile' => $profile, 'title' => $title, 'transaction' => $transaction, 'transaction_pending' => $transaction_pending, 'transaction_sudah_bayar' => $transaction_sudah_bayar]);
+        return view('user_profile', ['id' => $userId, 'profile' => $profile, 'title' => $title, 'transaction' => $transaction, 'transaction_pending' => $transaction_pending, 'transaction_sudah_bayar' => $transaction_sudah_bayar, 'transaction_dp' => $transaction_dp]);
     }
 
     public function executePayment(Request $request) {
@@ -35,6 +37,13 @@ class User_profileController extends Controller
         \Midtrans\Config::$isProduction = config('midtrans.is_production');
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
+
+        $order = Transaction::find($request->id);
+        if ($request->is_dp == 1) {
+            $order->update(['dp' => 1]);
+        }else{
+            $order->update(['dp' => 0]);
+        }
 
         $params = array(
             'transaction_details' => array(
@@ -57,7 +66,20 @@ class User_profileController extends Controller
         if($hashed == $request->signature_key){
             if($request->transaction_status == 'capture' or $request->transaction_status == 'settlement'){
                 $order = Transaction::find($request->order_id);
-                $order->update(['transaction_status' => 'Pending']);
+
+                $status = "Pending";
+                if ($order->dp > 0) {
+                    $status = "DP lunas";
+                }
+
+                $order->update(['transaction_status' => $status, 'grand_total' => $request->gross_amount]);
+
+                // insert to payment 
+                Payment_detail::create([
+                    'id_transaction' => $request->order_id,
+                    'payment_date' => now(),
+                    'payment_amount' => $request->gross_amount,
+                ]);
             }
         }
     }

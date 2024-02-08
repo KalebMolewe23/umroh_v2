@@ -70,6 +70,9 @@
                                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Dalam Proses</button>
                             </li>
                             <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="dp-tab" data-bs-toggle="tab" data-bs-target="#dp" type="button" role="tab" aria-controls="dp" aria-selected="false">Berhasil DP</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Sudah Bayar</button>
                             </li>
                         </ul>
@@ -133,6 +136,36 @@
                                                 <td>{{ $item_pending->departing_from }}</td>
                                                 <td>{{ $item_pending->departing_price }}</td>
                                                 <td>{{ $item_pending->transaction_status }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="dp" role="tabpanel" aria-labelledby="dp-tab">
+                                <table class="table table-bordered table-striped mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th>Kode</th>
+                                            <th>Tipe Pembayaran</th>
+                                            <th>Metode Pembayaran</th>
+                                            <th>Tipe Kamar</th>
+                                            <th>Tipe Hotel</th>
+                                            <th>Berangkat Dari</th>
+                                            <th>Biaya Keberangkatan</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($transaction_dp as $item_dp)
+                                            <tr>
+                                                <td>{{ $item_dp->transaction_code }}</td>
+                                                <td>{{ $item_dp->payment_type }}</td>
+                                                <td>{{ $item_dp->payment_metode }}</td>
+                                                <td>{{ $item_dp->room_type }}</td>
+                                                <td>{{ $item_dp->hotel_type }}</td>
+                                                <td>{{ $item_dp->departing_from }}</td>
+                                                <td>{{ $item_dp->departing_price }}</td>
+                                                <td>{{ $item_dp->transaction_status }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -262,6 +295,7 @@
                             <div class="row mt-2">
                                 <input type="hidden" class="transaction-id">
                                 <input type="hidden" class="grand-total-transaction">
+                                <input type="hidden" class="is-dp" value="0">
                                 <h5 class="name-packet"></h5>
                                 <hr>
                                 <div class="area-detail" style="padding-top:-20px;margin-top:-10px;margin-bottom:20px"></div>
@@ -319,6 +353,7 @@
                 url : "/get-data-transaction/" + id,
                 type : "GET",
                 success:function(res){
+                    console.log(res);
                     $('.name-packet').html(res.data.data_packet.name_packet);
                     let detail = res.data.transaction_detail;
 
@@ -351,7 +386,8 @@
                 type : "POST",
                 data : {
                     id : id,
-                    grand_total : grand_total
+                    grand_total : grand_total,
+                    is_dp : $('.is-dp').val()
                 },
                 success:function(res){
                     window.snap.pay(res.snap, {
@@ -379,8 +415,10 @@
 
         $('.pembayaran-dp').click(function() {
             $('.price-dp').html('Rp ' + formatNumberWithCommas(response.data.data_packet.dp));
-            $('.acumulate-from-dp').html('Rp ' + formatNumberWithCommas(response.data.grand_total - response.data.data_packet.dp));
+            $('.acumulate-from-dp').html('Rp ' + formatNumberWithCommas(Number(response.data.grand_total) - Number(response.data.data_packet.dp)));
             $('.view-dp').show();
+            $('.is-dp').val(1);
+            $('.grand-total-transaction').val(Number(response.data.data_packet.dp));
             $('.view-pelunasan').hide();
             $('.btn-ajukan').show();
             $('.view-metode-pembayaran').hide();
@@ -390,6 +428,7 @@
             $('.view-dp').hide();
             $('.view-pelunasan').show();
             $('.btn-ajukan').show();
+            $('.is-dp').val(0);
             $('.view-metode-pembayaran').hide();
         });
 
