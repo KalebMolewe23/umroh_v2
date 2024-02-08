@@ -153,7 +153,8 @@
                                             <th>Tipe Hotel</th>
                                             <th>Berangkat Dari</th>
                                             <th>Biaya Keberangkatan</th>
-                                            <th>Status</th>
+                                            <th>Nominal DP</th>
+                                            <th>Total Kekurangan</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -167,7 +168,8 @@
                                                 <td>{{ $item_dp->hotel_type }}</td>
                                                 <td>{{ $item_dp->departing_from }}</td>
                                                 <td>{{ $item_dp->departing_price }}</td>
-                                                <td>{{ $item_dp->transaction_status }}</td>
+                                                <td>{{ number_format($item_dp->paymentDetail->payment_amount, 0) }}</td>
+                                                <td>{{ number_format($item_dp->grand_total - $item_dp->paymentDetail->payment_amount, 0) }}</td>
                                                 <td>
                                                     <button class="btn btn-sm btn-success lunasi" data-id="{{ $item_dp->id }}">Lunasi</button>
                                                 </td>

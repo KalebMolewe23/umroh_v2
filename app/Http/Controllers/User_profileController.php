@@ -26,7 +26,7 @@ class User_profileController extends Controller
 
         $transaction = Transaction::where('id_user', Auth::id())->where('transaction_status', 'BELUM BAYAR')->orderBy('id', 'DESC')->get();
         $transaction_pending = Transaction::where('id_user', Auth::id())->where('transaction_status', 'PENDING')->orderBy('id', 'DESC')->get();
-        $transaction_dp = Transaction::where('id_user', Auth::id())->where('transaction_status', 'DP Lunas')->orderBy('id', 'DESC')->get();
+        $transaction_dp = Transaction::with('paymentDetail')->where('id_user', Auth::id())->where('transaction_status', 'DP Lunas')->orderBy('id', 'DESC')->get();
         $transaction_sudah_bayar = Transaction::where('id_user', Auth::id())->where('transaction_status', 'SUDAH BAYAR')->orderBy('id', 'DESC')->get();
 
         return view('user_profile', ['id' => $userId, 'profile' => $profile, 'title' => $title, 'transaction' => $transaction, 'transaction_pending' => $transaction_pending, 'transaction_sudah_bayar' => $transaction_sudah_bayar, 'transaction_dp' => $transaction_dp]);

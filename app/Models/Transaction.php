@@ -32,4 +32,10 @@ class Transaction extends Model
     {
         return $this->hasOne(Packets::class, 'id', 'id_packet');
     }
+    
+    public function paymentDetail()
+    {
+        return $this->hasOne(Payment_detail::class, 'id_transaction', 'id');
+    }
+    
 }
