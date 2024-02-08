@@ -45,6 +45,13 @@ class User_profileController extends Controller
             $order->update(['dp' => 0]);
         }
 
+        // insert to payment 
+        Payment_detail::create([
+            'id_transaction' => $request->id,
+            'payment_date' => now(),
+            'payment_amount' => $request->price_dp,
+        ]); 
+
         $params = array(
             'transaction_details' => array(
                 'order_id' => $request->id,
@@ -73,13 +80,6 @@ class User_profileController extends Controller
                 }
 
                 $order->update(['transaction_status' => $status, 'grand_total' => $request->gross_amount]);
-
-                // insert to payment 
-                Payment_detail::create([
-                    'id_transaction' => $request->order_id,
-                    'payment_date' => now(),
-                    'payment_amount' => $request->gross_amount,
-                ]);
             }
         }
     }

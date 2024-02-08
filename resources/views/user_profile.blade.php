@@ -153,6 +153,7 @@
                                             <th>Berangkat Dari</th>
                                             <th>Biaya Keberangkatan</th>
                                             <th>Status</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -166,6 +167,9 @@
                                                 <td>{{ $item_dp->departing_from }}</td>
                                                 <td>{{ $item_dp->departing_price }}</td>
                                                 <td>{{ $item_dp->transaction_status }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-success lunasi" data-id="{{ $item_dp->id }}">Lunasi</button>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -296,6 +300,7 @@
                                 <input type="hidden" class="transaction-id">
                                 <input type="hidden" class="grand-total-transaction">
                                 <input type="hidden" class="is-dp" value="0">
+                                <input type="hidden" class="price-dp-post" value="0">
                                 <h5 class="name-packet"></h5>
                                 <hr>
                                 <div class="area-detail" style="padding-top:-20px;margin-top:-10px;margin-bottom:20px"></div>
@@ -387,7 +392,8 @@
                 data : {
                     id : id,
                     grand_total : grand_total,
-                    is_dp : $('.is-dp').val()
+                    is_dp : $('.is-dp').val(),
+                    price_dp : $('.price-dp-post').val()
                 },
                 success:function(res){
                     window.snap.pay(res.snap, {
@@ -415,10 +421,10 @@
 
         $('.pembayaran-dp').click(function() {
             $('.price-dp').html('Rp ' + formatNumberWithCommas(response.data.data_packet.dp));
+            $('.price-dp-post').val(response.data.data_packet.dp);
             $('.acumulate-from-dp').html('Rp ' + formatNumberWithCommas(Number(response.data.grand_total) - Number(response.data.data_packet.dp)));
             $('.view-dp').show();
             $('.is-dp').val(1);
-            $('.grand-total-transaction').val(Number(response.data.data_packet.dp));
             $('.view-pelunasan').hide();
             $('.btn-ajukan').show();
             $('.view-metode-pembayaran').hide();
@@ -435,6 +441,11 @@
         $('.btn-ajukan').click(function(){
             $('.view-metode-pembayaran').show();
             $('.btn-ajukan').hide();
+        });
+
+        $('.lunasi').click(function(){
+            let id = $(this).data('id');
+
         });
 
         function formatNumberWithCommas(number) {
