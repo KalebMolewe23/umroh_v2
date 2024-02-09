@@ -39,9 +39,12 @@ class User_profileController extends Controller
         \Midtrans\Config::$is3ds = true;
 
         $order = Transaction::find($request->id);
+
         if ($request->is_dp == 1) {
+            $grand_total = $request->price_dp;
             $order->update(['dp' => 1]);
         }else{
+            $grand_total = $request->grand_total;
             $order->update(['dp' => 0]);
         }
 
@@ -49,13 +52,13 @@ class User_profileController extends Controller
         Payment_detail::create([
             'id_transaction' => $request->id,
             'payment_date' => now(),
-            'payment_amount' => $request->price_dp,
+            'payment_amount' => $grand_total,
         ]); 
 
         $params = array(
             'transaction_details' => array(
                 'order_id' => $request->id,
-                'gross_amount' => $request->grand_total,
+                'gross_amount' => $grand_total,
             ),
             'customer_details'  => array(
                 'first_name'          => '',
@@ -79,7 +82,7 @@ class User_profileController extends Controller
                     $status = "DP lunas";
                 }
 
-                $order->update(['transaction_status' => $status, 'grand_total' => $request->gross_amount]);
+                $order->update(['transaction_status' => $status]);
             }
         }
     }
