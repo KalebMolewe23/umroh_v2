@@ -192,4 +192,19 @@ class User_profileController extends Controller
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         return response()->json(['snap' => $snapToken]);
     }
+
+    public function process_transaction_not_paid(Request $request, $id){
+        $data = Transaction::find($id);
+
+        if($request->hasFile('payment_image')){
+            $request->file('payment_image')->move('assets/payment/', $request->file('payment_image')->getClientOriginalName());
+            $data->payment_image = $request->file('payment_image')->getClientOriginalName();
+            $data->save();
+        }
+
+        $transaction_status  = "pending";
+        $data->save();
+
+        return redirect('/user_profile')->with('success', 'Data Background Berhasil Di Update');
+    }
 }

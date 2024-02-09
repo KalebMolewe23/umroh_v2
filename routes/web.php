@@ -43,8 +43,11 @@ Route::get('/login', function() {
 // include antoher route
 include __DIR__.'/frontend.php';
 
+Route::post('/user_profile/process_transaction_not_paid/{id}', [User_profileController::class, 'process_transaction_not_paid'])->name('user_profile/process_transaction_not_paid');
+
 //tampilan pengguna
 // Route::get('/product/{id}', [ProductController::class, 'index'])->name('product');
+
 Route::post('/product/proses_save_buy_packet', [ProductController::class, 'proses_save_buy_packet'])->name('product/proses_save_buy_packet');
 Route::post('/product/proses_save_order_packet', [ProductController::class, 'proses_save_order_packet'])->name('product/proses_save_order_packet');
 Route::get('/form_order', [ProductController::class, 'form_order'])->name('form_order');

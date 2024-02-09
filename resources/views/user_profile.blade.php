@@ -19,6 +19,28 @@
     th{
         font-size: 13px
     }
+
+    .copyfield{
+        display: flex;
+        border-radius: 5px;
+    }
+
+    #link{
+        width: 100px;
+        /* padding: 12px 10px; */
+        border: 1px solid #212121;
+        background-color: #fff;
+        font-size: 15px;
+        border: none;
+    }
+
+    #copy-btn{
+        background-color: black;
+        color: #fff;
+        padding: 0 20px;
+        font-size: 15px;
+        cursor: pointer;
+    }
 </style>
 
 @section('content')
@@ -293,6 +315,30 @@
                                 <button id="pay-button" class="btn btn-primary">Virtual Account</button>
                                 <button class="btn btn-primary pay-mandiri">Pembayaran mandiri</button>
                             </div>
+                            <div class="view-mandiri" style="display: none">
+                                <br>
+                                <?php
+                                    foreach($transaction as $v_trans){
+                                        $packet = DB::table('packets')->where('id', $v_trans->id_packet)->first();
+                                        $money = DB::table('money')->where('id_user', $packet->id_user)->first();
+                                ?>
+                                <?php
+                                    }
+                                    ?>
+                            <form action="{{ url('/user_profile/process_transaction_not_paid/'.$v_trans->id) }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                    <input type="hidden" name="id" value="<?= $v_trans->id; ?>">
+                                    Rekening : {{ $money->bank_name }}<br>
+                                    <div class="copyfield">
+                                        No. Rekening :&nbsp&nbsp 
+                                        <span id="link">{{ $money->number_rek }}</span>
+                                        <span id="copy-btn">Copy</span>
+                                    </div>
+                                    Atas Nama : {{ $money->owner_rek }}<br>
+                                    Bukti Pembayaran <input type="file" class="form-control" name="payment_image"><br><br>
+                                    <button type="submit" class="btn btn-success">Bayar</button>
+                            </form>
+                            </div>
                         </div>
                         <div class="col-5">
                             <h6>Detail Pemesanan</h6>
@@ -322,6 +368,14 @@
 @push('js')
 
     <script>
+
+        var copybtn = document.getElementById("copy-btn");
+        var link = document.getElementById("link");
+
+        copybtn.onclick = function(){
+            navigator.clipboard.writeText(link.innerHTML);
+        }
+
         let flag_url = "{{ @$_GET['flag'] }}";
         let response = null;
 
@@ -437,6 +491,10 @@
             $('.btn-ajukan').show();
             $('.is-dp').val(0);
             $('.view-metode-pembayaran').hide();
+        });
+        
+        $('.pay-mandiri').click(function(){
+            $('.view-mandiri').show();
         });
 
         $('.btn-ajukan').click(function(){
