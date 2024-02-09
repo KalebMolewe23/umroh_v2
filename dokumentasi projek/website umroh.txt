@@ -11,3 +11,29 @@ Dokumentasi website umroh :
 		- Bursa tiket merupakan harga tiket yang diinputkan langsung oleh admin dan hanya admin yang dapat mengisi form tersebut
 
 * User pembeli/pencari informasi umroh
+
+transactions : `status`
+-> belum bayar
+* transaksi yang baru dibuat, dan belum tereksekusi
+
+// flow dp
+-> pending dp
+* transaksi yang dibuat dan sudah melakukan pembayaran dp, namun masih belum acc
+
+-> menunggu pelunasan
+saat aksi ini dilakukan, harus ada update kolom `dp` di table transaction (guna supaya tidak di anggap dp lagi)
+* transaksi yang dibuat dan sudah melakukan pembayaran dp dan acc, namun masih menunggu pelunasan
+
+// flow pelunasan
+-> pending
+* transaksi yang dibuat dan sudah melakukan pembayaran dp / pelunasan, namun masih menunggu acc
+
+-> success
+* transaksi yang sudah ter-acc
+
+payment_details : `status`
+-> pending
+* sudah melakukan pembayaran, namun masih belum acc
+
+-> success
+* transaksi yang sudah ter-acc
