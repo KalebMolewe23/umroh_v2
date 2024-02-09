@@ -21,7 +21,7 @@ transactions : `status`
 * transaksi yang dibuat dan sudah melakukan pembayaran dp, namun masih belum acc
 
 -> menunggu pelunasan
-saat aksi ini dilakukan, harus ada update kolom `dp` di table transaction (guna supaya tidak di anggap dp lagi)
+saat aksi ini dilakukan, harus ada update kolom `dp` => 0 di table transaction (guna supaya tidak di anggap dp lagi)
 * transaksi yang dibuat dan sudah melakukan pembayaran dp dan acc, namun masih menunggu pelunasan
 
 // flow pelunasan
