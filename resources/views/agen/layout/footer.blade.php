@@ -1060,8 +1060,8 @@
             columns: [
                 { data: 'name', name: 'name' },
                 { data: 'transaction_code', name: 'transaction_code' },
-                { data: 'payment_type', name: 'payment_type' },
-                { data: 'payment_metode', name: 'payment_metode' },
+                { data: 'due_date', name: 'due_date' },
+                { data: 'payment_image', name: 'payment_image' },
                 { data: 'room_type', name: 'room_type' },
                 { data: 'departing_from', name: 'departing_from' },
                 { data: 'grand_total', name: 'grand_total' },

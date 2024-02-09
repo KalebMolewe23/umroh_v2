@@ -347,8 +347,8 @@
                             <tr>
                                 <th scope="col">Nama Pemesan</th>
                                 <th scope="col">Kode Transaksi</th>
-                                <th scope="col">Tipe Pembayaran</th>
-                                <th scope="col">Metode Pembayaran</th>
+                                <th scope="col">Batas Pembayaran</th>
+                                <th scope="col">Bukti Pembayaran</th>
                                 <th scope="col">Tipe Kamar</th>
                                 <th scope="col">Keberangkatan</th>
                                 <th scope="col">Total Harga</th>

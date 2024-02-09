@@ -202,7 +202,33 @@ class User_profileController extends Controller
             $data->save();
         }
 
-        $transaction_status  = "pending";
+        $data->transaction_status  = "pending";
+        $data->save();
+
+        return redirect('/user_profile')->with('success', 'Data Background Berhasil Di Update');
+    }
+
+    public function process_transaction_not_paid_dp(Request $request, $id){
+        $data = Transaction::find($id);
+        $transaction = DB::table('packets')->where('id', $data->id_packet)->first();
+        $grand_total = $data->grand_total - $transaction->dp;
+
+        // insert to payment 
+        $payment = Payment_detail::create([
+            'id_transaction' => $request->id,
+            'payment_date' => now(),
+            'payment_amount' => $grand_total,
+            'status' => 'pending'
+        ]);
+
+        if($request->hasFile('payment_image')){
+            $request->file('payment_image')->move('assets/payment/', $request->file('payment_image')->getClientOriginalName());
+            $data->payment_image = $request->file('payment_image')->getClientOriginalName();
+            $data->save();
+        }
+
+        $data->transaction_status   = "pending dp";
+        $data->dp                   = 1;
         $data->save();
 
         return redirect('/user_profile')->with('success', 'Data Background Berhasil Di Update');

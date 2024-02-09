@@ -44,6 +44,7 @@ Route::get('/login', function() {
 include __DIR__.'/frontend.php';
 
 Route::post('/user_profile/process_transaction_not_paid/{id}', [User_profileController::class, 'process_transaction_not_paid'])->name('user_profile/process_transaction_not_paid');
+Route::post('/user_profile/process_transaction_not_paid_dp/{id}', [User_profileController::class, 'process_transaction_not_paid_dp'])->name('user_profile/process_transaction_not_paid_dp');
 
 //tampilan pengguna
 // Route::get('/product/{id}', [ProductController::class, 'index'])->name('product');
@@ -182,6 +183,7 @@ Route::middleware('auth_agen')->group(function(){
     Route::get('/agen/get_sale', [MoneyController::class, 'index'])->name('agen/get_sale');
     Route::post('/agen/update_status_money/{id}', [MoneyController::class, 'proses_edit_money'])->name('agen/update_status_money');
     Route::post('/agen/update_status_pending_money/{id}', [MoneyController::class, 'proses_edit_pending_money'])->name('agen/update_status_pending_money');
+    Route::post('/agen/update_status_money_pending_dp/{id}', [MoneyController::class, 'update_status_money_pending_dp'])->name('agen/update_status_money_pending_dp');
     Route::get('/agen/get_commision', [MoneyController::class, 'get_commision'])->name('agen/get_commision');
     Route::post('/agen/save_commision', [MoneyController::class, 'save_commision'])->name('agen/save_commision');
     

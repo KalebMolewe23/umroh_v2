@@ -23,7 +23,7 @@ class MoneyController extends Controller
 
         if(request()->ajax()){
             return datatables()->of(DB::table('transactions')
-            ->select('transactions.id', 'name', 'transaction_code', 'payment_type', 'payment_metode', 'room_type', 'departing_from', DB::raw('FORMAT(grand_total, 2) as grand_total'), 'transaction_status')
+            ->select('transactions.id', 'name', 'transaction_code', 'due_date', 'payment_image', 'room_type', 'departing_from', DB::raw('FORMAT(grand_total, 2) as grand_total'), 'transaction_status')
             ->join('packets', 'packets.id', '=', 'transactions.id_packet')
             ->join('users', 'users.id', '=', 'transactions.id_user')
             ->where('packets.id_user', $userId)
@@ -41,6 +41,15 @@ class MoneyController extends Controller
         $data = Transaction::find($id);
 
         $data->transaction_status = "SUDAH BAYAR";
+        $data->save();
+
+        return redirect('/agen/get_sale')->with('success', 'Data Status Pembayaran Berhasil Di-update');
+    }
+
+    public function update_status_money_pending_dp(Request $request, $id){
+        $data = Transaction::find($id);
+
+        $data->transaction_status = "menunggu pelunasan";
         $data->save();
 
         return redirect('/agen/get_sale')->with('success', 'Data Status Pembayaran Berhasil Di-update');

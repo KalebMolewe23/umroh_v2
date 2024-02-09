@@ -133,8 +133,7 @@
                                     <thead>
                                         <tr>
                                             <th>Kode</th>
-                                            <th>Tipe Pembayaran</th>
-                                            <th>Metode Pembayaran</th>
+                                            <th>Batas Pembayaran</th>
                                             <th>Tipe Kamar</th>
                                             <th>Tipe Hotel</th>
                                             <th>Berangkat Dari</th>
@@ -146,8 +145,7 @@
                                         @foreach ($transaction_pending as $item_pending)
                                             <tr>
                                                 <td>{{ $item_pending->transaction_code }}</td>
-                                                <td>{{ $item_pending->payment_type }}</td>
-                                                <td>{{ $item_pending->payment_metode }}</td>
+                                                <td>{{ $item_pending->due_date }}</td>
                                                 <td>{{ $item_pending->room_type }}</td>
                                                 <td>{{ $item_pending->hotel_type }}</td>
                                                 <td>{{ $item_pending->departing_from }}</td>
@@ -163,12 +161,10 @@
                                     <thead>
                                         <tr>
                                             <th>Kode</th>
-                                            <th>Tipe Pembayaran</th>
-                                            <th>Metode Pembayaran</th>
+                                            <th>Batas Pembayaran</th>
                                             <th>Tipe Kamar</th>
                                             <th>Tipe Hotel</th>
                                             <th>Berangkat Dari</th>
-                                            <th>Biaya Keberangkatan</th>
                                             <th>Nominal DP</th>
                                             <th>Total Kekurangan</th>
                                             <th>Status</th>
@@ -179,12 +175,10 @@
                                         @foreach ($transaction_dp as $item_dp)
                                             <tr>
                                                 <td>{{ $item_dp->transaction_code }}</td>
-                                                <td>{{ $item_dp->payment_type }}</td>
-                                                <td>{{ $item_dp->payment_metode }}</td>
+                                                <td>{{ $item_dp->due_date }}</td>
                                                 <td>{{ $item_dp->room_type }}</td>
                                                 <td>{{ $item_dp->hotel_type }}</td>
                                                 <td>{{ $item_dp->departing_from }}</td>
-                                                <td>{{ $item_dp->departing_price }}</td>
                                                 <td>{{ number_format($item_dp->paymentDetail->payment_amount, 0) }}</td>
                                                 <td>{{ number_format($item_dp->grand_total - $item_dp->paymentDetail->payment_amount, 0) }}</td>
                                                 <td>{{ $item_dp->transaction_status }}</td>
@@ -284,6 +278,37 @@
                                 <small>
                                     Pastikan anda mengecek kembali paket umroh Anda, jika sudah silahkan klik tombol "Ajukan Pembayaran" untuk menuju ke pembayaran.
                                 </small>
+                                <button style="float: right;display: none" class="btn btn-success btn-sm mt-5 btn-ajukan">Ajukan Pembayaran</button>
+                                 <!-- Metode Pembayaran -->
+                                 <br><div class="view-metode-pembayaran" style="display:none">
+                                    <h6>Pilih Metode Pembayaran</h6>
+                                    <button id="pay-button-dp" class="btn btn-primary">Virtual Account</button>
+                                    <button class="btn btn-primary pay-mandiri-dp">Pembayaran mandiri</button>
+                                </div>
+                                <div class="view-mandiri-dp" style="display: none">
+                                    <br>
+                                    <?php
+                                        foreach($transaction as $v_trans){
+                                            $packet = DB::table('packets')->where('id', $v_trans->id_packet)->first();
+                                            $money = DB::table('money')->where('id_user', $packet->id_user)->first();
+                                    ?>
+                                        <form action="{{ url('/user_profile/process_transaction_not_paid_dp/'.$v_trans->id) }}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                                <input type="hidden" name="id" value="<?= $v_trans->id; ?>">
+                                                Rekening : {{ $money->bank_name }}<br>
+                                                <div class="copyfield">
+                                                    No. Rekening :&nbsp&nbsp 
+                                                    <span id="link">{{ $money->number_rek }}</span>
+                                                    <span id="copy-btn">Copy</span>
+                                                </div>
+                                                Atas Nama : {{ $money->owner_rek }}<br>
+                                                Bukti Pembayaran <input type="file" class="form-control" name="payment_image" required><br><br>
+                                                <button type="submit" class="btn btn-success">Bayar</button>
+                                        </form>
+                                    <?php
+                                        }
+                                    ?>
+                                </div>
                             </div>
 
                             <!-- Detail Pelunasan 100% -->
@@ -307,37 +332,37 @@
                                 <small>
                                     Pastikan anda mengecek kembali paket umroh Anda, jika sudah silahkan klik tombol "Ajukan Pembayaran" untuk menuju ke pembayaran.
                                 </small>
-                            </div>
-                            <button style="float: right;display: none" class="btn btn-success btn-sm mt-5 btn-ajukan">Ajukan Pembayaran</button>
-                            <!-- Metode Pembayaran -->
-                            <br><div class="view-metode-pembayaran" style="display:none">
-                                <h6>Pilih Metode Pembayaran</h6>
-                                <button id="pay-button" class="btn btn-primary">Virtual Account</button>
-                                <button class="btn btn-primary pay-mandiri">Pembayaran mandiri</button>
-                            </div>
-                            <div class="view-mandiri" style="display: none">
-                                <br>
-                                <?php
-                                    foreach($transaction as $v_trans){
-                                        $packet = DB::table('packets')->where('id', $v_trans->id_packet)->first();
-                                        $money = DB::table('money')->where('id_user', $packet->id_user)->first();
-                                ?>
-                                <?php
-                                    }
+                                <button style="float: right;display: none" class="btn btn-success btn-sm mt-5 btn-ajukan">Ajukan Pembayaran</button>
+                                <!-- Metode Pembayaran -->
+                                <br><div class="view-metode-pembayaran" style="display:none">
+                                    <h6>Pilih Metode Pembayaran</h6>
+                                    <button id="pay-button" class="btn btn-primary">Virtual Account</button>
+                                    <button class="btn btn-primary pay-mandiri">Pembayaran mandiri</button>
+                                </div>
+                                <div class="view-mandiri" style="display: none">
+                                    <br>
+                                    <?php
+                                        foreach($transaction as $v_trans){
+                                            $packet = DB::table('packets')->where('id', $v_trans->id_packet)->first();
+                                            $money = DB::table('money')->where('id_user', $packet->id_user)->first();
                                     ?>
-                            <form action="{{ url('/user_profile/process_transaction_not_paid/'.$v_trans->id) }}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                    <input type="hidden" name="id" value="<?= $v_trans->id; ?>">
-                                    Rekening : {{ $money->bank_name }}<br>
-                                    <div class="copyfield">
-                                        No. Rekening :&nbsp&nbsp 
-                                        <span id="link">{{ $money->number_rek }}</span>
-                                        <span id="copy-btn">Copy</span>
-                                    </div>
-                                    Atas Nama : {{ $money->owner_rek }}<br>
-                                    Bukti Pembayaran <input type="file" class="form-control" name="payment_image"><br><br>
-                                    <button type="submit" class="btn btn-success">Bayar</button>
-                            </form>
+                                        <form action="{{ url('/user_profile/process_transaction_not_paid/'.$v_trans->id) }}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                                <input type="hidden" name="id" value="<?= $v_trans->id; ?>">
+                                                Rekening : {{ $money->bank_name }}<br>
+                                                <div class="copyfield">
+                                                    No. Rekening :&nbsp&nbsp 
+                                                    <span id="link">{{ $money->number_rek }}</span>
+                                                    <span id="copy-btn">Copy</span>
+                                                </div>
+                                                Atas Nama : {{ $money->owner_rek }}<br>
+                                                Bukti Pembayaran <input type="file" class="form-control" name="payment_image" required><br><br>
+                                                <button type="submit" class="btn btn-success">Bayar</button>
+                                        </form>
+                                    <?php
+                                        }
+                                    ?>
+                                </div>
                             </div>
                         </div>
                         <div class="col-5">
@@ -372,9 +397,15 @@
         var copybtn = document.getElementById("copy-btn");
         var link = document.getElementById("link");
 
-        copybtn.onclick = function(){
-            navigator.clipboard.writeText(link.innerHTML);
-        }
+        $(document).ready(function(){
+            copybtn.onclick = function(){
+                navigator.clipboard.writeText(link.innerHTML);
+                copybtn.innerHTML = "Copied!"
+                setTimeout(function (){
+                    copybtn.innerHTML = "Copy"
+                }, 2000)
+            }
+        });
 
         let flag_url = "{{ @$_GET['flag'] }}";
         let response = null;
@@ -470,6 +501,42 @@
             });
         });
 
+        $('#pay-button-dp').click(function() {
+            let id = $('.transaction-id').val();
+            let grand_total = $('.grand-total-transaction').val();
+            let html = "";
+
+            console.log(grand_total);
+
+            $.ajax({
+                url : "/execute-payment/",
+                type : "POST",
+                data : {
+                    id : id,
+                    grand_total : grand_total,
+                    is_dp : $('.is-dp').val(),
+                    price_dp : $('.price-dp-post').val()
+                },
+                success:function(res){
+                    window.snap.pay(res.snap, {
+                        onSuccess: function(result){
+                            window.location.href = '/user_profile?flag=true';
+                            alert("payment success!"); console.log(result);
+                        },
+                        onPending: function(result){
+                            alert("wating your payment!"); console.log(result);
+                        },
+                        onError: function(result){
+                            alert("payment failed!"); console.log(result);
+                        },
+                        onClose: function(){
+                            alert('you closed the popup without finishing the payment');
+                        }
+                    })
+                }
+            });
+        });
+
         $('.close').click(function() {
             $('#paymentMethod').modal('hide');
         });
@@ -495,6 +562,10 @@
         
         $('.pay-mandiri').click(function(){
             $('.view-mandiri').show();
+        });
+
+        $('.pay-mandiri-dp').click(function(){
+            $('.view-mandiri-dp').show();
         });
 
         $('.btn-ajukan').click(function(){
