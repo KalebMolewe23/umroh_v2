@@ -24,6 +24,8 @@ class User_profileController extends Controller
 
         $profile = DB::table('users')->where('id', $userId)->first();
 
+        $due_date = DB::table('transactions')->where('id_user', Auth::id())->first();
+
         $transaction = Transaction::where('id_user', Auth::id())
                                   ->where('transaction_status', 'belum bayar')
                                   ->orderBy('id', 'DESC')
@@ -55,7 +57,10 @@ class User_profileController extends Controller
             'transaction' => $transaction, 
             'transaction_pending' => $transaction_pending, 
             'transaction_sudah_bayar' => $transaction_sudah_bayar, 
-            'transaction_dp' => $transaction_dp
+            'transaction_dp' => $transaction_dp,
+            'due_date' => $due_date,
+            // 'dp' => $dp,
+
         ]);
     }
 

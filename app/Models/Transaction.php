@@ -11,14 +11,13 @@ class Transaction extends Model
     protected $fillable = [
         'id_user',
         'id_packet',
-        'payment_type',
-        'payment_metode',
+        'due_date',
+        'payment_image',
         'transaction_code',
         'room_type',
         'hotel_type',
         'departing_from',
         'dp',
-        'departing_price',
         'grand_total',
         'transaction_status'
     ]; 

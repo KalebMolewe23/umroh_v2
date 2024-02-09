@@ -83,12 +83,9 @@
                                     <thead>
                                         <tr>
                                             <th>Kode</th>
-                                            <th>Tipe Pembayaran</th>
-                                            <th>Metode Pembayaran</th>
                                             <th>Tipe Kamar</th>
                                             <th>Tipe Hotel</th>
                                             <th>Berangkat Dari</th>
-                                            <th>Biaya Keberangkatan</th>
                                             <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -97,12 +94,9 @@
                                         @foreach ($transaction as $item)
                                             <tr>
                                                 <td>{{ $item->transaction_code }}</td>
-                                                <td>{{ $item->payment_type }}</td>
-                                                <td>{{ $item->payment_metode }}</td>
                                                 <td>{{ $item->room_type }}</td>
                                                 <td>{{ $item->hotel_type }}</td>
                                                 <td>{{ $item->departing_from }}</td>
-                                                <td>{{ $item->departing_price }}</td>
                                                 <td>{{ $item->transaction_status }}</td>
                                                 <td>
                                                     <button class="btn btn-sm btn-success pay" data-id="{{ $item->id }}">Bayar</button>
@@ -254,12 +248,12 @@
                                         <tbody>
                                             <tr>
                                                 <td>DP</td>
-                                                <td>24-x-xxxx</td>
+                                                <td>{{ $due_date->due_date }}</td>
                                                 <td class="price-dp"></td>
                                             </tr>
                                             <tr>
                                                 <td>Pelunasan</td>
-                                                <td>24-x-xxxx</td>
+                                                <td>{{ $due_date->due_date }}</td>
                                                 <td class="acumulate-from-dp"></td>
                                             </tr>
                                         </tbody>
@@ -282,7 +276,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>24-x-xxxx</td>
+                                                <td>{{ $due_date->due_date }}</td>
                                                 <td class="total-biaya"></td>
                                             </tr>
                                         </tbody>

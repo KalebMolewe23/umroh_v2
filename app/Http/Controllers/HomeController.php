@@ -9,6 +9,8 @@ use App\Models\Transaction_detail;
 use App\Models\Packets;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -40,10 +42,14 @@ class HomeController extends Controller
         $day = $id[1];
 
         $data = Itinery::with('photo.packets.informasiTravels', 'photo.hotels.moneyPackets', 'photo.conditions', 'photo.hotels.facility', 'photo.packets.tiketGroup', 'photo.packets.partnerBranches.regency')->where('id', $id[0])->first();
+
+        $data_due_date = DB::table('settingdue_dates')->where('id_user', $data->id_user)->first();
+        $tanggalSekarang = Carbon::now();
+        $due_date = $tanggalSekarang->addDays($data_due_date->days);
         
         $other_packet = Photo::with('packets.tiketGroup', 'hotels')->orderBy('id','DESC')->paginate(6);
 
-        return view('v_detail_packets', compact('data', 'day', 'other_packet'));
+        return view('v_detail_packets', compact('data', 'day', 'other_packet', 'due_date'));
     }
 
     public function store(Request $request){
@@ -83,15 +89,13 @@ class HomeController extends Controller
         $transaction = Transaction::create([
             'id_user' => $request->id_user,
             'id_packet' => $request->id_packet,
-            'payment_type' => 0,
-            'payment_metode' => 0,
+            'due_date' => $request->due_date,
             'transaction_code' => 'ON'.date('dmYs').$count,
             'transaction_status' => 'BELUM BAYAR',
             'room_type' => $request->room_type,
             'hotel_type' => $request->hotel_type,
             'dp' => 0,
             'departing_from' => $request->departing_from,
-            'departing_price' => $request->departing_price,
             'grand_total' => $request->grand_total,
         ]);
 

@@ -26,12 +26,11 @@ $('.pesan-paket').click(function () {
 
 $('body').on('click', '.save', function(){
     // declare var
-    let payment_type = $('.payment_type').val();
-    let payment_metode = $('.payment_metode').val();
+    let due_date = $('.due_date').val();
+    let payment_image = $('.payment_image').val();
     let room_type = $('.room-type-post').val();
     let hotel_type = $('.hotel-type-post').val();
     let departing_from = $('.departing-from-post').val();
-    let departing_price = $('.departing-price-post').val();
     let grand_total = $('.total-amount-post').val();
 
     if (hotel_type == "") {
@@ -52,12 +51,11 @@ $('body').on('click', '.save', function(){
         data : {
             id_user : auth_id,
             id_packet : id_packet,
-            payment_type : payment_type,
-            payment_metode : payment_metode,
+            due_date : due_date,
+            payment_image : payment_image,
             room_type : room_type,
             hotel_type : hotel_type,
             departing_from : departing_from,
-            departing_price : departing_price,
             grand_total : grand_total,
             detail : form
         },

@@ -468,14 +468,13 @@
                 <input type="hidden" class="price_adult" value="{{ $data->photo->hotels->moneyPackets->price_adult }}">
                 <input type="hidden" class="price_child" value="{{ $data->photo->hotels->moneyPackets->price_child }}">
                 <input type="hidden" class="price_baby" value="{{ $data->photo->hotels->moneyPackets->price_baby }}">
-
+                <input type="hidden" class="due_date" value="{{ $due_date }}">
 
                 <!-- Send to controller -->
                 <input type="hidden" class="total-amount-post">
                 <input type="hidden" class="room-type-post">
                 <input type="hidden" class="hotel-type-post">
                 <input type="hidden" class="departing-from-post">
-                <input type="hidden" class="departing-price-post">
 
                 <div class="card">
                     <div class="card-body">
