@@ -155,6 +155,7 @@
                                             <th>Biaya Keberangkatan</th>
                                             <th>Nominal DP</th>
                                             <th>Total Kekurangan</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -170,8 +171,11 @@
                                                 <td>{{ $item_dp->departing_price }}</td>
                                                 <td>{{ number_format($item_dp->paymentDetail->payment_amount, 0) }}</td>
                                                 <td>{{ number_format($item_dp->grand_total - $item_dp->paymentDetail->payment_amount, 0) }}</td>
+                                                <td>{{ $item_dp->transaction_status }}</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-success lunasi" data-id="{{ $item_dp->id }}">Lunasi</button>
+                                                    @if ($item_dp->transaction_status == 'menunggu pelunasan')    
+                                                        <button class="btn btn-sm btn-success lunasi" data-nominal="{{ $item_dp->grand_total - $item_dp->paymentDetail->payment_amount }}" data-id-transaction="{{ $item_dp->id }}" data-id="{{ $item_dp->paymentDetail->id }}">Lunasi</button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -448,7 +452,46 @@
 
         $('.lunasi').click(function(){
             let id = $(this).data('id');
-
+            let id_transaction = $(this).data('id-transaction');
+            let nominal = $(this).data('nominal');
+            Swal.fire({
+                title: `Lunasi kekurangan sejumlah ${nominal}?`,
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: "Ya",
+                denyButtonText: `Tidak`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url : "/pay-off",
+                        type : "POST",
+                        data : {
+                            id : id,
+                            id_transaction : id_transaction,
+                            grand_total : nominal
+                        },
+                        success:function(res){
+                            window.snap.pay(res.snap, {
+                            onSuccess: function(result){
+                                window.location.href = '/user_profile?flag=true';
+                                alert("payment success!"); console.log(result);
+                            },
+                            onPending: function(result){
+                                alert("wating your payment!"); console.log(result);
+                            },
+                            onError: function(result){
+                                alert("payment failed!"); console.log(result);
+                            },
+                            onClose: function(){
+                                alert('you closed the popup without finishing the payment');
+                            }
+                        })
+                        }
+                    })
+                } else if (result.isDenied) {
+                    Swal.fire("Pembayaran dibatalkan", "", "info");
+                }
+            });
         });
 
         function formatNumberWithCommas(number) {

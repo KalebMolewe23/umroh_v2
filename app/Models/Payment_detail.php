@@ -12,5 +12,6 @@ class Payment_detail extends Model
         'id_transaction',
         'payment_date',
         'payment_amount',
+        'status'
     ];
 }

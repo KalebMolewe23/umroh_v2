@@ -289,6 +289,8 @@
 
 <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
      $.ajaxSetup({
         headers: {
