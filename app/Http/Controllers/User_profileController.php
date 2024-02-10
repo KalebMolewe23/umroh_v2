@@ -198,10 +198,18 @@ class User_profileController extends Controller
     public function process_transaction_not_paid(Request $request, $id){
         $data = Transaction::find($id);
 
+        // insert to payment 
+        $payment = Payment_detail::create([
+            'id_transaction' => $request->id,
+            'payment_date' => now(),
+            'payment_amount' => $data->grand_total,
+            'status' => 'success'
+        ]);
+
         if($request->hasFile('payment_image')){
             $request->file('payment_image')->move('assets/payment/', $request->file('payment_image')->getClientOriginalName());
-            $data->payment_image = $request->file('payment_image')->getClientOriginalName();
-            $data->save();
+            $payment->payment_image = $request->file('payment_image')->getClientOriginalName();
+            $payment->save();
         }
 
         $data->transaction_status  = "pending";
@@ -220,7 +228,7 @@ class User_profileController extends Controller
             'id_transaction' => $request->id,
             'payment_date' => now(),
             'payment_amount' => $grand_total,
-            'status' => 'pending'
+            'status' => 'success'
         ]);
 
         if($request->hasFile('payment_image')){
@@ -248,7 +256,7 @@ class User_profileController extends Controller
             'id_transaction' => $request->id_transaction,
             'payment_date' => now(),
             'payment_amount' => $grand_total,
-            'status' => 'pending'
+            'status' => 'success'
         ]);
 
         if($request->hasFile('payment_image')){

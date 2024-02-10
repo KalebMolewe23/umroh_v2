@@ -1060,6 +1060,7 @@
             columns: [
                 { data: 'name', name: 'name' },
                 { data: 'transaction_code', name: 'transaction_code' },
+                { data: 'created_at', name: 'created_at' },
                 { data: 'due_date', name: 'due_date' },
                 { data: 'payment_image', name: 'payment_image' },
                 { data: 'room_type', name: 'room_type' },

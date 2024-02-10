@@ -125,6 +125,90 @@
     .select-image:hover{
         background: blue;
     }
+
+    .img-area-money{
+        position: relative;
+        width: 100%;
+        height: 240px;
+        background: var(--gray);
+        border-radius: 15px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .img-area-money .icon{
+        font-size: 100px;
+    }
+
+    .img-area-money h3{
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 6px;
+    }
+
+    .img-area-money p{
+        color: #999;
+    }
+
+    .img-area-money p span{
+        font-weight: 600;
+    }
+
+    .img-area-money img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: 100;
+    }
+
+    .img-area-money::before{
+        content: attr(data-img);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .5);
+        color: #fff;
+        font-weight: 500;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+        opacity: 0;
+        transition: all .3s ease;
+        z-index: 200;
+    }
+
+    .img-area-money.active:hover::before{
+        opacity: 1;
+    }
+
+    .select-image-money{
+        display: block;
+        width: 100%;
+        padding: 16px 0;
+        border-radius: 15px;
+        background: #15baef;
+        color: #fff;
+        font-weight: 500;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        transition: all .3s ease;
+    }
+
+    .select-image:hover{
+        background: blue;
+    }
 </style>
 
 @section('content')
@@ -221,7 +305,6 @@
                                             <th>Tipe Kamar</th>
                                             <th>Tipe Hotel</th>
                                             <th>Berangkat Dari</th>
-                                            <th>Biaya Keberangkatan</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
@@ -233,7 +316,6 @@
                                                 <td>{{ $item_pending->room_type }}</td>
                                                 <td>{{ $item_pending->hotel_type }}</td>
                                                 <td>{{ $item_pending->departing_from }}</td>
-                                                <td>{{ $item_pending->departing_price }}</td>
                                                 <td>{{ $item_pending->transaction_status }}</td>
                                             </tr>
                                         @endforeach
@@ -281,12 +363,10 @@
                                     <thead>
                                         <tr>
                                             <th>Kode</th>
-                                            <th>Tipe Pembayaran</th>
-                                            <th>Metode Pembayaran</th>
                                             <th>Tipe Kamar</th>
                                             <th>Tipe Hotel</th>
                                             <th>Berangkat Dari</th>
-                                            <th>Biaya Keberangkatan</th>
+                                            <th>Total Biaya</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
@@ -294,12 +374,10 @@
                                         @foreach ($transaction_sudah_bayar as $item_sudah_bayar)
                                             <tr>
                                                 <td>{{ $item_sudah_bayar->transaction_code }}</td>
-                                                <td>{{ $item_sudah_bayar->payment_type }}</td>
-                                                <td>{{ $item_sudah_bayar->payment_metode }}</td>
                                                 <td>{{ $item_sudah_bayar->room_type }}</td>
                                                 <td>{{ $item_sudah_bayar->hotel_type }}</td>
                                                 <td>{{ $item_sudah_bayar->departing_from }}</td>
-                                                <td>{{ $item_sudah_bayar->departing_price }}</td>
+                                                <td>{{ $item_sudah_bayar->grand_total }}</td>
                                                 <td>{{ $item_sudah_bayar->transaction_status }}</td>
                                             </tr>
                                         @endforeach
@@ -416,10 +494,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach ($transaction as $v_item)
                                             <tr>
-                                                <td></td>
+                                                <td>{{ $v_item->due_date }}</td>
                                                 <td class="total-biaya"></td>
                                             </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -450,7 +530,15 @@
                                                     <span id="copy-btn">Copy</span>
                                                 </div>
                                                 Atas Nama : {{ $money->owner_rek }}<br>
-                                                Bukti Pembayaran <input type="file" class="form-control" name="payment_image" required><br><br>
+                                                <input type="file" id="file-money" class="form-control" name="payment_image" accept="image/*" hidden required>
+                                                <div class="img-area-money" data-img="">
+                                                    <i class="bx bxs-cloud-upload icon"></i>
+                                                    <h3>Upload Bukti Pembayaran</h3>
+                                                    <p>Batas Size Gambar Maksimal <span>2MB</span></p>
+                                                </div><br>
+                                                <button class="select-image-money">Pilih Gambar</button>
+                                                <br>
+                                                <!-- Bukti Pembayaran <br><br> -->
                                                 <button type="submit" class="btn btn-success">Bayar</button>
                                         </form>
                                     <?php
@@ -764,6 +852,34 @@
                     imgArea.dataset.img = image.name;
                 }
                 reader.readAsDataURL(image);
+            } else {
+                alert("Maaf ukuran size terlalu besar");
+            }
+        });
+
+        const selectImageMoney = document.querySelector('.select-image-money');
+        const inputFileMoney = document.querySelector('#file-money');
+        const imgAreaMoney = document.querySelector('.img-area-money');
+
+        selectImageMoney.addEventListener('click', function (){
+            inputFileMoney.click();
+        })
+
+        inputFileMoney.addEventListener('change', function(){
+            const image_money = this.files[0]
+            if(image_money.size < 2000000){
+                const reader = new FileReader();
+                reader.onload = ()=> {
+                    const allImg = imgAreaMoney.querySelectorAll('img');
+                    allImg.forEach(item=> item.remove());
+                    const imgUrl = reader.result;
+                    const img = document.createElement('img');
+                    img.src = imgUrl;
+                    imgAreaMoney.appendChild(img);
+                    imgAreaMoney.classList.add('active');
+                    imgAreaMoney.dataset.img = image_money.name;
+                }
+                reader.readAsDataURL(image_money);
             } else {
                 alert("Maaf ukuran size terlalu besar");
             }

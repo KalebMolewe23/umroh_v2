@@ -342,11 +342,13 @@
                 </center>
 
                 <?php }else{ ?>
+                  <div class="table-responsive">
                     <table class="table table-striped" id="ajax-crud-money-transaction">
                         <thead>
                             <tr>
                                 <th scope="col">Nama Pemesan</th>
                                 <th scope="col">Kode Transaksi</th>
+                                <th scope="col">Tanggal Pembayaran</th>
                                 <th scope="col">Batas Pembayaran</th>
                                 <th scope="col">Bukti Pembayaran</th>
                                 <th scope="col">Tipe Kamar</th>
@@ -357,6 +359,7 @@
                             </tr>
                         </thead>
                     </table>
+                </div>
                 <?php } ?>
                 </div>
             </div><br>

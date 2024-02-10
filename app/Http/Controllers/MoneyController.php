@@ -23,11 +23,12 @@ class MoneyController extends Controller
 
         if(request()->ajax()){
             return datatables()->of(DB::table('payment_details')
-            ->select('transactions.id', 'name', 'transaction_code', 'due_date', 'payment_image', 'room_type', 'departing_from', DB::raw('FORMAT(payment_amount, 2) as grand_total'), 'transaction_status')
+            ->select('transactions.id', 'name', 'transaction_code', 'due_date', 'payment_details.created_at', 'payment_image', 'room_type', 'departing_from', DB::raw('FORMAT(payment_amount, 2) as grand_total'), 'transaction_status')
             ->join('transactions', 'transactions.id', '=', 'payment_details.id_transaction')
             ->join('packets', 'packets.id', '=', 'transactions.id_packet')
             ->join('users', 'users.id', '=', 'transactions.id_user')
             ->where('packets.id_user', $userId)
+            ->where('payment_details.status', "success")
             ->get())
             ->addColumn('action', 'agen.money.money-action')
             ->rawColumns(['action'])
@@ -41,7 +42,7 @@ class MoneyController extends Controller
     public function proses_edit_money(Request $request, $id){
         $data = Transaction::find($id);
 
-        $data->transaction_status = "SUDAH BAYAR";
+        $data->transaction_status = "success";
         $data->save();
 
         return redirect('/agen/get_sale')->with('success', 'Data Status Pembayaran Berhasil Di-update');
@@ -83,6 +84,7 @@ class MoneyController extends Controller
             ->join('packets', 'packets.id', '=', 'transactions.id_packet')
             ->join('agens', 'agens.id', '=', 'commision_transactions.id_agens')
             ->where('packets.id_user', $userId)
+            ->where('status', $userId)
             ->get())
             ->addColumn('action', 'agen.money.commision-action')
             ->rawColumns(['action'])
@@ -90,7 +92,7 @@ class MoneyController extends Controller
             ->make(true);
         }
 
-        $transaction = DB::table('transactions')->select('transactions.id as id', 'name_packet')->join('packets', 'packets.id', '=', 'transactions.id_packet')->where('packets.id_user', $userId)->where('transaction_status', "SUDAH BAYAR")->get();
+        $transaction = DB::table('transactions')->select('transactions.id as id', 'name_packet')->join('packets', 'packets.id', '=', 'transactions.id_packet')->where('packets.id_user', $userId)->where('transaction_status', "success")->get();
         $agen = DB::table('agens')->where('agens.id_user', $userId)->get();
         $komisi = DB::table('money')->where('id_user', $userId)->first();
 
