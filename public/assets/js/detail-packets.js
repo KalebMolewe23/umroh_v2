@@ -24,6 +24,11 @@ $('.pesan-paket').click(function () {
 
 });
 
+$('.pesan-group').click(function () {
+    let name_packet = $('.name-of-packet').html();
+    window.open("https://api.whatsapp.com/send?phone=6289676315535&text=Saya tertarik dengan paket *" + name_packet + "*", "_blank");
+});
+
 $('body').on('click', '.save', function(){
     // declare var
     let due_date = $('.due_date').val();

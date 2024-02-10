@@ -127,7 +127,7 @@
                 <!-- Hero -->
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="fw-bold">{{ $data->photo->packets->name_packet }}</h3>
+                        <h3 class="fw-bold name-of-packet">{{ $data->photo->packets->name_packet }}</h3>
                         <div id="carouselExampleControls" class="carousel slide"
                             style="background-color: #000">
                             <div class="carousel-inner">
