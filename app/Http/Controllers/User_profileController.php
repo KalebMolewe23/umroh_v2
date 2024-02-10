@@ -237,19 +237,18 @@ class User_profileController extends Controller
     }
 
     public function data_transaction_paid_dp(Request $request){
-    
-        $data = Transaction::find($request->id_transaction);
 
-        return response()->json($data);
+        dump($request);
+        die();
 
+        // $data = Transaction::find($request->id_transaction);
         // $transaction = DB::table('packets')->where('id', $data->id_packet)->first();
         // $grand_total = $data->grand_total - $transaction->dp;
-
-        // // insert to payment 
+        
         // $payment = Payment_detail::create([
-        //     'id_transaction' => $request->id,
+        //     'id_transaction' => $request->id_transaction,
         //     'payment_date' => now(),
-        //     'payment_amount' => $grand_total,
+        //     'payment_amount' => $request->grand_total,
         //     'status' => 'pending'
         // ]);
 
@@ -262,6 +261,6 @@ class User_profileController extends Controller
         // $data->transaction_status   = "pending";
         // $data->save();
 
-        // return redirect('/user_profile')->with('success', 'Data Background Berhasil Di Update');
+        return response()->json(['payment' => $payment, 'data' => $data]);
     }
 }

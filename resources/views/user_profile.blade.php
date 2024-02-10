@@ -487,9 +487,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form action="{{ url('/user_profile/process_transaction_paid_dp/'.$id_transaction) }}" method="post" enctype="multipart/form-data">
-                    @csrf    
-                        <input type="file" id="file" class="form-control" name="payment_image" accept="image/*" hidden required>
+                    <form id="saveDataForm" enctype="multipart/form-data">
+                        <input type="file" id="file" class="form-control payment_image" name="payment_image" accept="image/*" hidden required>
                         <div class="img-area" data-img="">
                             <i class="bx bxs-cloud-upload icon"></i>
                             <h3>Upload Bukti Pembayaran</h3>
@@ -498,11 +497,11 @@
                         <button class="select-image">Pilih Gambar</button>
                         <br>
                         <!-- Bukti Pembayaran <br><br> -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Bayar</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Bayar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -730,19 +729,39 @@
                         }
                     })
                 } else if (result.isDenied) {
-                    $.ajax({
-                        url : "/data_transaction_paid_dp",
-                        type : "POST",
-                        data : {
-                            id : id,
-                            id_transaction : id_transaction,
-                            grand_total : nominal
-                        },
-                        success:function(res2){
-                            console.log(res2);
-                            $('#myModal').modal('show');
-                        }
-                    })
+                    $('#myModal').modal('show');
+                    document.getElementById('saveDataForm').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        
+                        var formData = new FormData();
+                        var file = document.getElementById('file').files[0];
+                        console.log(file);
+                        formData.append('payment_image', file);
+                        $.ajax({
+                            url : "/data_transaction_paid_dp",
+                            type : "POST",
+                            data : formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                console.log(response);
+                            },
+                        });
+                    });
+                    // $.ajax({
+                    //     url : "/data_transaction_paid_dp",
+                    //     type : "POST",
+                    //     data : {
+                    //         id : id,
+                    //         id_transaction : id_transaction,
+                    //         grand_total : nominal
+                    //     },
+                    //     success:function(res2){
+                    //         console.log(res2.data);
+                    //         $('#myModal').modal('show');
+
+                    //     }
+                    // })
                 }
             });
         });
