@@ -58,7 +58,7 @@ class HomeController extends Controller
         
         $query_other_packet->whereHas('packets', function ($query) use ($today, $data) {
             $query->where('departure_date', '>=', $today)
-                  ->where('id', '!=', 29);
+                  ->where('id', '!=', $data->photo->packets->id);
         });
         
         $other_packet = $query_other_packet->orderBy('id','DESC')->get();

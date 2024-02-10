@@ -692,7 +692,18 @@
                                 }
                             }
                         }
+
+                        $usingSeat = DB::table('transactions')
+                                        ->where('id_packet', $item_packets->packets->id)
+                                        ->where('transaction_status', 'success')
+                                        ->count();
+
+                        $available_seat = $item_packets->packets->seat_capasitas - $usingSeat;
+
+                        $presentase = ($available_seat / $item_packets->packets->seat_capasitas) * 100;
                     @endphp
+
+                    @if ($available_seat > 0)
 
                     <div class="col-md-4 mt-2">
                         <a style="color:black; text-decoration:none;" href="{{ url('/detail-product/' . $itineries->id . '&day=' . $counter + 1) }}">
@@ -705,17 +716,6 @@
                                         </div>
                                         <div class="col">
                                             <h6>{{ $item_packets->packets->name_packet }}</h6>
-                                            @php
-                                                $usingSeat = DB::table('transactions')
-                                                                ->where('id_packet', $item_packets->packets->id)
-                                                                ->where('transaction_status', 'success')
-                                                                ->count();
-
-                                                $available_seat = $item_packets->packets->seat_capasitas - $usingSeat;
-
-                                                $presentase = ($available_seat / $item_packets->packets->seat_capasitas) * 100;
-                                            @endphp
-
                                             <div class="progress" style="height: 20px;">
                                                 <div class="progress-bar bg-blue progress-bar-striped progress-bar-animated"
                                                     role="progressbar" aria-valuenow="{{ $presentase }}" aria-valuemin="0"
@@ -754,6 +754,9 @@
                             </div>
                         </a>
                     </div>
+
+                    @endif
+
                 @endforeach
             </div>
             <center>
