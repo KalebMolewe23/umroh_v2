@@ -491,9 +491,9 @@
                         <div class="col mt-1 mb-1">
                             <div class="progress" style="height: 20px;">
                                 <div class="progress-bar bg-blue progress-bar-striped progress-bar-animated"
-                                    role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
-                                    style="width: 75%">
-                                    <b>Sisa {{ $data->photo->packets->seat_capasitas }} Seat</b>
+                                    role="progressbar" aria-valuenow="{{ $presentase_seat }}" aria-valuemin="0" aria-valuemax="100"
+                                    style="width: {{ $presentase_seat }}%">
+                                    <b>Sisa {{ $available_seat }} Seat</b>
                                 </div>
                             </div>
                         </div>
@@ -623,15 +623,13 @@
                                             class="btn btn-outline-info btn-keberangkatan btn-active"><small>{{ $data->photo->packets->departure_city }}</small></button>
                                     </div>
                                 </div>
-                                @foreach ($data->photo->packets->partnerBranches as $item)
-                                    @if (!empty($item->regency))
-                                        <div class="col">
-                                            <div class="d-grid gap-2 mt-4">
-                                                <button data-city="{{ $item->regency->name }}" type="button" data-price="{{ $item->cost }}"
-                                                    class="btn btn-outline-info btn-keberangkatan"><small>{{ $item->regency->name }}</small></button>
-                                            </div>
+                                @foreach ($partner_branches as $item)
+                                    <div class="col">
+                                        <div class="d-grid gap-2 mt-4">
+                                            <button data-city="{{ $item->city }}" type="button" data-price="{{ $item->cost }}"
+                                                class="btn btn-outline-info btn-keberangkatan"><small>{{ $item->city }}</small></button>
                                         </div>
-                                    @endif
+                                    </div>
                                 @endforeach
                             </div>
                         </div>

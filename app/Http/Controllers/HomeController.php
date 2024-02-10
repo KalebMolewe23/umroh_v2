@@ -7,6 +7,7 @@ use App\Models\Itinery;
 use App\Models\Transaction;
 use App\Models\Transaction_detail;
 use App\Models\Packets;
+use App\Models\Partner_branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -30,6 +31,12 @@ class HomeController extends Controller
                 $query->whereMonth('departure_date', '=', $params['departure_date']);
             });
         }
+
+        $today = Carbon::today()->toDateString();
+
+        $query->whereHas('packets', function ($query) use ($today) {
+            $query->where('departure_date', '>=', $today);
+        });
                         
         $data = $query->orderBy('id', 'DESC')->paginate(6);
 
@@ -42,14 +49,28 @@ class HomeController extends Controller
         $day = $id[1];
 
         $data = Itinery::with('photo.packets.informasiTravels', 'photo.hotels.moneyPackets', 'photo.conditions', 'photo.hotels.facility', 'photo.packets.tiketGroup', 'photo.packets.partnerBranches.regency')->where('id', $id[0])->first();
-
-        $data_due_date = DB::table('settingdue_dates')->where('id_user', $data->id_user)->first();
+        $data_due_date = DB::table('settingdue_dates')->first();
         $tanggalSekarang = Carbon::now();
         $due_date = $tanggalSekarang->addDays($data_due_date->days);
         
-        $other_packet = Photo::with('packets.tiketGroup', 'hotels')->orderBy('id','DESC')->paginate(6);
+        $today = Carbon::today()->toDateString();
+        $query_other_packet = Photo::with('packets','packets.tiketGroup', 'hotels');
+        
+        $query_other_packet->whereHas('packets', function ($query) use ($today, $data) {
+            $query->where('departure_date', '>=', $today)
+                  ->where('id', '!=', 29);
+        });
+        
+        $other_packet = $query_other_packet->orderBy('id','DESC')->get();
 
-        return view('v_detail_packets', compact('data', 'day', 'other_packet', 'due_date'));
+        $partner_branches = Partner_branch::orderBy('id','DESC')->get();
+
+        $using_seat = Transaction::where('id_packet', $data->photo->packets->id)->where('transaction_status', 'success')->count();
+        $available_seat = $data->photo->packets->seat_capasitas - $using_seat;
+
+        $presentase_seat = ($available_seat / $data->photo->packets->seat_capasitas) * 100;
+
+        return view('v_detail_packets', compact('data', 'day', 'other_packet', 'due_date', 'partner_branches', 'available_seat', 'presentase_seat'));
     }
 
     public function store(Request $request){
