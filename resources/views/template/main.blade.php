@@ -136,15 +136,73 @@
         background-color: <?= $bg->bg1; ?>;
     }
 
+    #preloader{
+        background: white;
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        z-index:9999;
+    }
+
     .button_search_data{
         border:none;
         background-color: white;
     }
+
+    .center{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .ring{
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        animation: ring 2s linear infinite;
+    }
+
+    @keyframes ring{
+        0%{
+            transform: rotate(0deg);
+            box-shadow: 1px 5px 2px #15baef;
+        }
+        50%{
+            transform: rotate(180deg);
+            box-shadow: 1px 5px 2px #18b201;
+        }
+        100%{
+            transform: rotate(360deg);
+            box-shadow: 1px 5px 2px #0456c8;
+        }
+    }
+
+    .ring:before{
+        position: absolute;
+        content: '';
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        box-shadow: 0 0 5px #15baef;
+    }
+
+    
 </style>
 
 @stack('css')
 
 <body>
+<div id="preloader">
+    <div class="center">
+        <div class="ring"></div>
+        <span><img style="width: 300px;" src="{{ asset('assets/img/'.$bg->logo) }}" alt=""></span>
+    </div>
+</div>
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -177,6 +235,7 @@
             </div>
         </div>
     </nav>
+
     @yield('content')
     <div class="wrapper mt-4">
         <div class="container wrapper_content">
@@ -292,6 +351,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+
+    var loader = document.getElementById("preloader");
+
+    window.addEventListener("load", function(){
+        loader.style.display = "none";
+    })
+
      $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

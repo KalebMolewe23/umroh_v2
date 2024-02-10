@@ -41,6 +41,90 @@
         font-size: 15px;
         cursor: pointer;
     }
+
+    .img-area{
+        position: relative;
+        width: 100%;
+        height: 240px;
+        background: var(--gray);
+        border-radius: 15px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .img-area .icon{
+        font-size: 100px;
+    }
+
+    .img-area h3{
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 6px;
+    }
+
+    .img-area p{
+        color: #999;
+    }
+
+    .img-area p span{
+        font-weight: 600;
+    }
+
+    .img-area img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: 100;
+    }
+
+    .img-area::before{
+        content: attr(data-img);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .5);
+        color: #fff;
+        font-weight: 500;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+        opacity: 0;
+        transition: all .3s ease;
+        z-index: 200;
+    }
+
+    .img-area.active:hover::before{
+        opacity: 1;
+    }
+
+    .select-image{
+        display: block;
+        width: 100%;
+        padding: 16px 0;
+        border-radius: 15px;
+        background: #15baef;
+        color: #fff;
+        font-weight: 500;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        transition: all .3s ease;
+    }
+
+    .select-image:hover{
+        background: blue;
+    }
 </style>
 
 @section('content')
@@ -262,16 +346,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($transaction as $v_item)
                                             <tr>
                                                 <td>DP</td>
-                                                <td>{{ $due_date->due_date }}</td>
+                                                    <td>{{ $v_item->due_date }}</td>
                                                 <td class="price-dp"></td>
                                             </tr>
                                             <tr>
                                                 <td>Pelunasan</td>
-                                                <td>{{ $due_date->due_date }}</td>
+                                                <td>{{ $v_item->due_date }}</td>
                                                 <td class="acumulate-from-dp"></td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -302,7 +388,15 @@
                                                     <span id="copy-btn">Copy</span>
                                                 </div>
                                                 Atas Nama : {{ $money->owner_rek }}<br>
-                                                Bukti Pembayaran <input type="file" class="form-control" name="payment_image" required><br><br>
+                                                <input type="file" id="file" class="form-control" name="payment_image" accept="image/*" hidden required>
+                                                <div class="img-area" data-img="">
+                                                    <i class="bx bxs-cloud-upload icon"></i>
+                                                    <h3>Upload Bukti Pembayaran</h3>
+                                                    <p>Batas Size Gambar Maksimal <span>2MB</span></p>
+                                                </div><br>
+                                                <button class="select-image">Pilih Gambar</button>
+                                                <br>
+                                                <!-- Bukti Pembayaran <br><br> -->
                                                 <button type="submit" class="btn btn-success">Bayar</button>
                                         </form>
                                     <?php
@@ -323,7 +417,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>{{ $due_date->due_date }}</td>
+                                                <td></td>
                                                 <td class="total-biaya"></td>
                                             </tr>
                                         </tbody>
@@ -385,6 +479,30 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary"><i class='bx bxs-memory-card'></i> Simpan</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="{{ url('/user_profile/process_transaction_paid_dp/'.$id_transaction) }}" method="post" enctype="multipart/form-data">
+                    @csrf    
+                        <input type="file" id="file" class="form-control" name="payment_image" accept="image/*" hidden required>
+                        <div class="img-area" data-img="">
+                            <i class="bx bxs-cloud-upload icon"></i>
+                            <h3>Upload Bukti Pembayaran</h3>
+                            <p>Batas Size Gambar Maksimal <span>2MB</span></p>
+                        </div><br>
+                        <button class="select-image">Pilih Gambar</button>
+                        <br>
+                        <!-- Bukti Pembayaran <br><br> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Bayar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -581,8 +699,8 @@
                 title: `Lunasi kekurangan sejumlah ${nominal}?`,
                 showDenyButton: true,
                 showCancelButton: false,
-                confirmButtonText: "Ya",
-                denyButtonText: `Tidak`
+                confirmButtonText: "Virtual Account",
+                denyButtonText: `Pembayaran Manual`
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -612,7 +730,19 @@
                         }
                     })
                 } else if (result.isDenied) {
-                    Swal.fire("Pembayaran dibatalkan", "", "info");
+                    $.ajax({
+                        url : "/data_transaction_paid_dp",
+                        type : "GET",
+                        data : {
+                            id : id,
+                            id_transaction : id_transaction,
+                            grand_total : nominal
+                        },
+                        success:function(res2){
+                        console.log(res2);
+                        $('#myModal').modal('show');
+                        }
+                    })
                 }
             });
         });
@@ -621,5 +751,33 @@
             // Format number with commas
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
+
+        const selectImage = document.querySelector('.select-image');
+        const inputFile = document.querySelector('#file');
+        const imgArea = document.querySelector('.img-area');
+
+        selectImage.addEventListener('click', function (){
+            inputFile.click();
+        })
+
+        inputFile.addEventListener('change', function(){
+            const image = this.files[0]
+            if(image.size < 2000000){
+                const reader = new FileReader();
+                reader.onload = ()=> {
+                    const allImg = imgArea.querySelectorAll('img');
+                    allImg.forEach(item=> item.remove());
+                    const imgUrl = reader.result;
+                    const img = document.createElement('img');
+                    img.src = imgUrl;
+                    imgArea.appendChild(img);
+                    imgArea.classList.add('active');
+                    imgArea.dataset.img = image.name;
+                }
+                reader.readAsDataURL(image);
+            } else {
+                alert("Maaf ukuran size terlalu besar");
+            }
+        })
     </script>
 @endpush

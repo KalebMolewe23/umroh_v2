@@ -24,7 +24,10 @@ class User_profileController extends Controller
 
         $profile = DB::table('users')->where('id', $userId)->first();
 
-        $due_date = DB::table('transactions')->where('id_user', Auth::id())->first();
+        $id_transaction = Transaction::where('id_user', Auth::id())
+                                  ->where('transaction_status', 'belum bayar')
+                                  ->orderBy('id', 'DESC')
+                                  ->first();
 
         $transaction = Transaction::where('id_user', Auth::id())
                                   ->where('transaction_status', 'belum bayar')
@@ -54,12 +57,11 @@ class User_profileController extends Controller
             'id' => $userId, 
             'profile' => $profile, 
             'title' => $title, 
+            'id_transaction' => $id_transaction, 
             'transaction' => $transaction, 
             'transaction_pending' => $transaction_pending, 
             'transaction_sudah_bayar' => $transaction_sudah_bayar, 
             'transaction_dp' => $transaction_dp,
-            'due_date' => $due_date,
-            // 'dp' => $dp,
 
         ]);
     }
@@ -211,7 +213,7 @@ class User_profileController extends Controller
     public function process_transaction_not_paid_dp(Request $request, $id){
         $data = Transaction::find($id);
         $transaction = DB::table('packets')->where('id', $data->id_packet)->first();
-        $grand_total = $data->grand_total - $transaction->dp;
+        $grand_total = $transaction->dp;
 
         // insert to payment 
         $payment = Payment_detail::create([
@@ -223,8 +225,8 @@ class User_profileController extends Controller
 
         if($request->hasFile('payment_image')){
             $request->file('payment_image')->move('assets/payment/', $request->file('payment_image')->getClientOriginalName());
-            $data->payment_image = $request->file('payment_image')->getClientOriginalName();
-            $data->save();
+            $payment->payment_image = $request->file('payment_image')->getClientOriginalName();
+            $payment->save();
         }
 
         $data->transaction_status   = "pending dp";
@@ -232,5 +234,34 @@ class User_profileController extends Controller
         $data->save();
 
         return redirect('/user_profile')->with('success', 'Data Background Berhasil Di Update');
+    }
+
+    public function data_transaction_paid_dp(Request $request){
+    
+        $data = Transaction::find($request->id_transaction);
+
+        return response()->json($data);
+
+        // $transaction = DB::table('packets')->where('id', $data->id_packet)->first();
+        // $grand_total = $data->grand_total - $transaction->dp;
+
+        // // insert to payment 
+        // $payment = Payment_detail::create([
+        //     'id_transaction' => $request->id,
+        //     'payment_date' => now(),
+        //     'payment_amount' => $grand_total,
+        //     'status' => 'pending'
+        // ]);
+
+        // if($request->hasFile('payment_image')){
+        //     $request->file('payment_image')->move('assets/payment/', $request->file('payment_image')->getClientOriginalName());
+        //     $payment->payment_image = $request->file('payment_image')->getClientOriginalName();
+        //     $payment->save();
+        // }
+
+        // $data->transaction_status   = "pending";
+        // $data->save();
+
+        // return redirect('/user_profile')->with('success', 'Data Background Berhasil Di Update');
     }
 }

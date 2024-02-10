@@ -13,3 +13,4 @@ Route::post('/home/store', [HomeController::class, 'store'])->name('home.store')
 Route::get('/get-data-transaction/{id}', [User_profileController::class, 'getData']);
 Route::post('/execute-payment', [User_profileController::class, 'executePayment']);
 Route::post('/pay-off', [User_profileController::class, 'payOff']);
+Route::get('/data_transaction_paid_dp', [User_profileController::class, 'data_transaction_paid_dp']);
