@@ -705,11 +705,22 @@
                                         </div>
                                         <div class="col">
                                             <h6>{{ $item_packets->packets->name_packet }}</h6>
+                                            @php
+                                                $usingSeat = DB::table('transactions')
+                                                                ->where('id_packet', $item_packets->packets->id)
+                                                                ->where('transaction_status', 'success')
+                                                                ->count();
+
+                                                $available_seat = $item_packets->packets->seat_capasitas - $usingSeat;
+
+                                                $presentase = ($available_seat / $item_packets->packets->seat_capasitas) * 100;
+                                            @endphp
+
                                             <div class="progress" style="height: 20px;">
                                                 <div class="progress-bar bg-blue progress-bar-striped progress-bar-animated"
-                                                    role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                                    aria-valuemax="100" style="width: 75%">
-                                                    <b>Sisa {{ $item_packets->packets->seat_capasitas }} Seat</b>
+                                                    role="progressbar" aria-valuenow="{{ $presentase }}" aria-valuemin="0"
+                                                    aria-valuemax="100" style="width: {{ $presentase }}%">
+                                                    <b>Sisa {{ $available_seat }} Seat</b>
                                                 </div>
                                             </div>
                                         </div>
