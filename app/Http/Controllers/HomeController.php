@@ -63,7 +63,7 @@ class HomeController extends Controller
         
         $other_packet = $query_other_packet->orderBy('id','DESC')->get();
 
-        $partner_branches = Partner_branch::orderBy('id','DESC')->get();
+        $partner_branches = Partner_branch::where('id_user', $data->photo->packets->informasiTravels->id_user)->orderBy('id','DESC')->get();
 
         $using_seat = Transaction::where('id_packet', $data->photo->packets->id)->where('transaction_status', 'success')->count();
         $available_seat = $data->photo->packets->seat_capasitas - $using_seat;
