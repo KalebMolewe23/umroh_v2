@@ -732,15 +732,15 @@
                 } else if (result.isDenied) {
                     $.ajax({
                         url : "/data_transaction_paid_dp",
-                        type : "GET",
+                        type : "POST",
                         data : {
                             id : id,
                             id_transaction : id_transaction,
                             grand_total : nominal
                         },
                         success:function(res2){
-                        console.log(res2);
-                        $('#myModal').modal('show');
+                            console.log(res2);
+                            $('#myModal').modal('show');
                         }
                     })
                 }
