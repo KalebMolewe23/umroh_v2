@@ -202,7 +202,7 @@
                             </div>
                             <div class="col">
                                 <h5>{{ $data->photo->packets->informasiTravels->travel_name }}</h5>
-                                <span class="text-secondary">Izin Umroh : x</span>
+                                <span class="text-secondary">Izin Umroh : {{ $data->photo->packets->informasiTravels->number_umroh }}</span>
                             </div>
                         </div>
                     </div>

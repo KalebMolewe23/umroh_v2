@@ -17,13 +17,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_packet');
-            $table->integer('payment_type');
-            $table->text('payment_metode');
+            $table->datetime('due_date');
             $table->string('transaction_code');
             $table->string('room_type');
             $table->string('hotel_type');
             $table->string('departing_from');
-            $table->integer('departing_price');
+            $table->integer('dp');
+            $table->integer('grand_total');
             $table->string('transaction_status');
             $table->timestamps();
         });

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_transaction');
             $table->date('payment_date');
             $table->decimal('payment_amount', 10,2);
+            $table->string('payment_image');
+            $table->string('status');
             $table->timestamps();
         });
     }
