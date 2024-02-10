@@ -782,6 +782,7 @@
                 processData: false,
                 success: function(response){
                     console.log(response);
+                    window.location.reload(true);
                 },
                 error: function(xhr, status, error){
                     console.error(xhr.responseText);

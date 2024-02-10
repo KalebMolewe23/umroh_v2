@@ -238,27 +238,27 @@ class User_profileController extends Controller
 
     public function data_transaction_paid_dp(Request $request){
 
-        dd($request->all());
+        // dd($request->all());
 
-        // $data = Transaction::find($request->id_transaction);
-        // $transaction = DB::table('packets')->where('id', $data->id_packet)->first();
-        // $grand_total = $data->grand_total - $transaction->dp;
+        $data = Transaction::find($request->id_transaction);
+        $transaction = DB::table('packets')->where('id', $data->id_packet)->first();
+        $grand_total = $data->grand_total - $transaction->dp;
         
-        // $payment = Payment_detail::create([
-        //     'id_transaction' => $request->id_transaction,
-        //     'payment_date' => now(),
-        //     'payment_amount' => $request->grand_total,
-        //     'status' => 'pending'
-        // ]);
+        $payment = Payment_detail::create([
+            'id_transaction' => $request->id_transaction,
+            'payment_date' => now(),
+            'payment_amount' => $grand_total,
+            'status' => 'pending'
+        ]);
 
-        // if($request->hasFile('payment_image')){
-        //     $request->file('payment_image')->move('assets/payment/', $request->file('payment_image')->getClientOriginalName());
-        //     $payment->payment_image = $request->file('payment_image')->getClientOriginalName();
-        //     $payment->save();
-        // }
+        if($request->hasFile('payment_image')){
+            $request->file('payment_image')->move('assets/payment/', $request->file('payment_image')->getClientOriginalName());
+            $payment->payment_image = $request->file('payment_image')->getClientOriginalName();
+            $payment->save();
+        }
 
-        // $data->transaction_status   = "pending";
-        // $data->save();
+        $data->transaction_status   = "pending";
+        $data->save();
 
         return response()->json(['payment' => $payment, 'data' => $data]);
     }
