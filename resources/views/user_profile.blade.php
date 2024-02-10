@@ -483,11 +483,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-pembayaran-manual" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="saveDataForm" enctype="multipart/form-data">
+                    <form id="form-pembayaran-manual" enctype="multipart/form-data">
+                        <input type="hidden" name="id_transaction" class="id_transaction_post">
                         <input type="file" id="file" class="form-control payment_image" name="payment_image" accept="image/*" hidden required>
                         <div class="img-area" data-img="">
                             <i class="bx bxs-cloud-upload icon"></i>
@@ -729,39 +730,8 @@
                         }
                     })
                 } else if (result.isDenied) {
-                    $('#myModal').modal('show');
-                    document.getElementById('saveDataForm').addEventListener('submit', function(event) {
-                        event.preventDefault();
-                        
-                        var formData = new FormData();
-                        var file = document.getElementById('file').files[0];
-                        console.log(file);
-                        formData.append('payment_image', file);
-                        $.ajax({
-                            url : "/data_transaction_paid_dp",
-                            type : "POST",
-                            data : formData,
-                            processData: false,
-                            contentType: false,
-                            success: function(response) {
-                                console.log(response);
-                            },
-                        });
-                    });
-                    // $.ajax({
-                    //     url : "/data_transaction_paid_dp",
-                    //     type : "POST",
-                    //     data : {
-                    //         id : id,
-                    //         id_transaction : id_transaction,
-                    //         grand_total : nominal
-                    //     },
-                    //     success:function(res2){
-                    //         console.log(res2.data);
-                    //         $('#myModal').modal('show');
-
-                    //     }
-                    // })
+                    $('#modal-pembayaran-manual').modal('show');
+                    $('.id_transaction_post').val(id_transaction);
                 }
             });
         });
@@ -797,6 +767,27 @@
             } else {
                 alert("Maaf ukuran size terlalu besar");
             }
-        })
+        });
+
+        $('#form-pembayaran-manual').submit(function(e){
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: '/data_transaction_paid_dp',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    console.log(response);
+                },
+                error: function(xhr, status, error){
+                    console.error(xhr.responseText);
+                    $('#response').html('Error occurred while uploading the image.');
+                }
+            });
+        });
     </script>
 @endpush

@@ -238,8 +238,7 @@ class User_profileController extends Controller
 
     public function data_transaction_paid_dp(Request $request){
 
-        dump($request);
-        die();
+        dd($request->all());
 
         // $data = Transaction::find($request->id_transaction);
         // $transaction = DB::table('packets')->where('id', $data->id_packet)->first();
