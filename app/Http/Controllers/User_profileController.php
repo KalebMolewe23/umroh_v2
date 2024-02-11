@@ -270,4 +270,39 @@ class User_profileController extends Controller
 
         return response()->json(['payment' => $payment, 'data' => $data]);
     }
+
+    public function proses_edit_user(Request $request, $id){
+        $data = User::find($id);
+
+        $data->name              = $request->input('name');
+        $data->email             = $request->input('email');
+        $data->phone             = $request->input('phone');
+        $data->ktp               = $request->input('ktp');
+        $data->father_name       = $request->input('father_name');
+        $data->blood_groub       = $request->input('blood_groub');
+        $data->date_of_birth     = $request->input('date_of_birth');
+        $data->born_place        = $request->input('born_place');
+        $data->marital_status    = $request->input('marital_status');
+        $data->title             = $request->input('title');
+        $data->gender            = $request->input('gender');
+        $data->citizenship       = $request->input('citizenship');
+        $data->address           = $request->input('address');
+        $data->id_province       = $request->input('id_province');
+        $data->id_regencies      = $request->input('id_regencies');
+        $data->education         = $request->input('education');
+        $data->job               = $request->input('job');
+        $data->status_umroh      = $request->input('status_umroh');
+        $data->passport_name     = $request->input('passport_name');
+        $data->passport_number   = $request->input('passport_number');
+        $data->passport_place    = $request->input('passport_place');
+        $data->passport_date     = $request->input('passport_date');
+        $data->expired           = $request->input('expired');
+        $data->companion_name    = $request->input('companion_name');
+        $data->connection        = $request->input('connection');
+        $data->password          = Hash::make($request->input('password'));
+
+        $data->save();
+
+        return redirect('/user_profile')->with('success', 'Data Berhasil Ditambah');
+    }
 }

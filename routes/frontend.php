@@ -14,3 +14,4 @@ Route::get('/get-data-transaction/{id}', [User_profileController::class, 'getDat
 Route::post('/execute-payment', [User_profileController::class, 'executePayment']);
 Route::post('/pay-off', [User_profileController::class, 'payOff']);
 Route::post('/data_transaction_paid_dp', [User_profileController::class, 'data_transaction_paid_dp']);
+Route::post('/user_profile/proses_edit_user/{id}', [User_profileController::class, 'proses_edit_user']);

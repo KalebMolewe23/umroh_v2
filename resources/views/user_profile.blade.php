@@ -228,24 +228,227 @@
                     <div class="card-header">
                         <h6 class="card-title mt-2">Ubah Profile</h6>
                     </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Nama Lengkap</label>
-                            <input class="form-control" value="<?= $profile->name ?>">
+                    <form action="{{ url('/user_profile/proses_edit_user/'. $id) }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                        <input class="form-control" type="hidden" name="id" value="<?= $id ?>">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Nama Lengkap</label>
+                                        
+                                        <input class="form-control" name="name" value="<?= $profile->name ?>">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>No. KTP</label>
+                                        <input class="form-control" name="ktp" value="<?= $profile->ktp ?>">
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input class="form-control" maxlength="255" name="email" value="<?= $profile->email ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>No. Telp</label>
+                                        <input class="form-control" maxlength="20" name="phone" value="<?= $profile->ktp ?>">
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Nama Ayah Kandung</label>
+                                        <input class="form-control" maxlength="200" name="father_name" value="<?= $profile->father_name ?>">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Golongan Darah</label>
+                                        <select name="blood_groub" class="form-control" required>
+                                            <option value="<?= $profile->blood_groub ?>"><?= $profile->blood_groub ?></option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="AB">AB</option>
+                                            <option value="O">O</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Tempat Lahir</label>
+                                        <input class="form-control" maxlength="200" name="born_place" value="<?= $profile->born_place ?>">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Tanggal Lahir</label>
+                                        <input class="form-control" type="date" name="date_of_birth" value="<?= $profile->date_of_birth ?>">
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Status Perkawinan</label>
+                                        <select name="marital_status" class="form-control" required>
+                                            <option value="<?= $profile->marital_status ?>"><?= $profile->marital_status ?></option>
+                                            <option value="Kawin">Kawin</option>
+                                            <option value="Belum Kawin">Belum Kawin</option>
+                                            <option value="Cerai">Cerai</option>
+                                            <option value="Cerai Mari">Cerai Mati</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <select name="title" class="form-control" required>
+                                            <option value="<?= $profile->title ?>"><?= $profile->title ?></option>
+                                            <option value="MR">MR</option>
+                                            <option value="MRS">MRS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Jenis Kelamin</label>
+                                        <select name="gender" class="form-control" required>
+                                            <option value="<?= $profile->gender ?>"><?= $profile->gender ?></option>
+                                            <option value="Male">Laki-laki</option>
+                                            <option value="Female">Perempuan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Kewarganegaraan</label>
+                                        <input class="form-control" maxlength="200" name="citizenship" value="<?= $profile->citizenship ?>">
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Provinsi</label>
+                                        <select name="id_province" id="provinsi" class="form-control" required>
+                                            <?php $provinsi = DB::table('provinces')->where('id', $profile->id_province)->first(); ?>
+                                            <option value="<?= $provinsi->id ?>"><?= $provinsi->name ?></option>
+                                            <?php $provinsi = DB::table('provinces')->get(); ?>
+                                            @foreach($provinsi as $v_provinsi)
+                                                <option value="<?= $v_provinsi->id ?>"><?= $v_provinsi->name ?></option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Kota</label>
+                                        <select class="form-control" id="kota" name="id_regencies" required>
+                                            <?php $kota = DB::table('regencies')->where('id', $profile->id_regencies)->first(); ?>
+                                            <option value="<?= $kota->id ?>"><?= $kota->name ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label>Alamat</label>
+                                <input class="form-control" maxlength="200" name="address" value="<?= $profile->address ?>">
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Pendidikan Terakhir</label>
+                                        <input class="form-control" maxlength="200" name="education" value="<?= $profile->education ?>">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Kota</label>
+                                        <input class="form-control" maxlength="200" name="job" value="<?= $profile->job ?>">
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Umroh/Haji</label>
+                                        <select name="status_umroh" id="status_umroh" class="form-control" required>
+                                            <option value="<?= $profile->status_umroh ?>"><?= $profile->status_umroh ?></option>
+                                            <option value="UMROH">Umroh</option>
+                                            <option value="HAJI">Haji</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Nama Passport</label>
+                                        <input class="form-control" maxlength="200" name="passport_name" value="<?= $profile->passport_name ?>">
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Nomor Passport</label>
+                                        <input class="form-control" maxlength="200" name="passport_number" value="<?= $profile->passport_number ?>">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Tempat Pembuatan Passport</label>
+                                        <input class="form-control" maxlength="200" name="passport_place" value="<?= $profile->passport_place ?>">
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Tanggal Pembuatan Passport</label>
+                                        <input class="form-control" type="date" name="passport_date" value="<?= $profile->passport_date ?>">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Tanggal Habis Masa Berlaku Passport</label>
+                                        <input class="form-control" type="date" name="expired" value="<?= $profile->expired ?>">
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Penanggung Jawab</label>
+                                        <input class="form-control" type="text" name="companion_name" value="<?= $profile->companion_name ?>">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Hubungan Penanggung Jawab</label>
+                                        <input class="form-control" type="text" name="connection" value="<?= $profile->connection ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label>Password</label>
+                                <input class="form-control" type="password" name="password">
+                            </div><br>
+                            <div class="form-group mt-2">
+                                <button type="submit" class="btn btn-sm text-white btn-block bg-blue"><i
+                                        class='bx bxs-memory-card'></i> Simpan</button>
+                            </div>
                         </div>
-                        <div class="form-group mt-2">
-                            <label>Email</label>
-                            <input class="form-control" value="<?= $profile->email ?>" readonly>
-                        </div>
-                        <div class="form-group mt-2">
-                            <label>Password</label>
-                            <input class="form-control">
-                        </div>
-                        <div class="form-group mt-2">
-                            <button type="submit" class="btn btn-sm text-white btn-block bg-blue"><i
-                                    class='bx bxs-memory-card'></i> Simpan</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="card order-section" style="display: none">
                     <div class="card-header">

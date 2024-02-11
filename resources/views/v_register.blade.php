@@ -128,7 +128,7 @@
                         <div class="row" style="padding:20px">
                             <div class="col">
                                 <select name="status_umroh" id="status_umroh" class="form-control" required>
-                                    <option value="status_umroh"> -Pilih Status Umroh- </option>
+                                    <option value=""> -Pilih Status Umroh- </option>
                                     <option value="UMROH">Umroh</option>
                                     <option value="HAJI">Haji</option>
                                 </select>
