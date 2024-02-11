@@ -332,7 +332,9 @@
                 <div class="card-body">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         <i class='bx bx-plus' ></i> Tambah Komisi
-                    </button><br><br>
+                    </button>
+                    <a href="{{ url('/agen/export_excel_commision'); }}" class="btn btn-success">Export Excel</a>
+                    <br><br>
                     <table class="table table-striped" id="ajax-crud-commision-transaction">
                         <thead>
                             <tr>

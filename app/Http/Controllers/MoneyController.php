@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaction;
 use App\Models\Commision_transaction;
+use App\Exports\ExportDataCustomer;
+use Maatwebsite\Excel\Facades\Excel;
 use Datatables;
 
 class MoneyController extends Controller
@@ -84,7 +86,7 @@ class MoneyController extends Controller
             ->join('packets', 'packets.id', '=', 'transactions.id_packet')
             ->join('agens', 'agens.id', '=', 'commision_transactions.id_agens')
             ->where('packets.id_user', $userId)
-            ->where('status', $userId)
+            // ->where('status', $userId)
             ->get())
             ->addColumn('action', 'agen.money.commision-action')
             ->rawColumns(['action'])
@@ -103,5 +105,9 @@ class MoneyController extends Controller
         $data = Commision_transaction::create($request->all());
 
         return redirect('/agen/get_commision')->with('success', 'Data Hotel Berhasil Ditambah');
+    }
+
+    public function export_excel_commision(){
+        return Excel::download(new ExportDataCustomer, "datacustomer.xlsx");
     }
 }
