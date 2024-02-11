@@ -363,6 +363,22 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    $('#provinsi').on('change', function() {
+            var province_id = this.value;
+            console.log(province_id);
+            $('#kota').html('');
+            $.ajax({
+                url: '{{ route('auth_user/getRegencies') }}?province_id='+province_id,
+                type: 'get',
+                success: function (res){
+                    $('#kota').html('<option value="">Pilih Daerah / Kota / Kabupaten</option>');
+                    $.each(res, function (key, value) {
+                        $('#kota').append('<option value="' + value.id + '"> ' + value.name + '</option>');
+                    });
+                }
+            });
+        });
 </script>
 
 @stack('js')

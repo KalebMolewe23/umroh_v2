@@ -61,6 +61,7 @@ Route::get('/auth_user/login', [Auth_userController::class, 'index'])->name('use
 Route::post('/auth_user/login', [Auth_userController::class, 'loginaksi'])->name('login.aksi_user');
 Route::get('/auth_user/register', [Auth_userController::class, 'register'])->name('user/register');
 Route::post('/auth_user/register', [Auth_userController::class, 'save_registrasi'])->name('register_customer.simpan');
+Route::get('/auth_user/getRegencies/', [Auth_userController::class, 'getRegencies'])->name('auth_user/getRegencies');
 Route::get('/auth_user/logout', [Auth_userController::class, 'logout']);
 Route::get('/email/verify', function() {
     return view('auth.verify-email');
