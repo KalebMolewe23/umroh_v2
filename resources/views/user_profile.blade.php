@@ -13,7 +13,7 @@
     }
 
     .container{
-        height: 50%;
+        min-height: 50%;
     }
 
     th{
