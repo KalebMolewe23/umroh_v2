@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Itinery;
 use App\Models\List_hotel;
 use App\Models\Packet_category;
+use App\Mail\VerifPacket;
+use Illuminate\Support\Facades\Mail;
 
 class PacketController extends Controller
 {
@@ -41,8 +43,18 @@ class PacketController extends Controller
     public function update_verify_umroh(Request $request, $id){
         $data = Itinery::find($id);
 
+        $photo = DB::table('photos')->where('id', $data->id_photo)->first();
+        $packets = DB::table('packets')->where('id', $photo->id_packet)->first();
+        $email = DB::table('informasi_travels')->where('id_user', $packets->id_user)->first();
+
         $data->status = 1;
         $data->save();
+
+        $pesan = "<h4>Selamat paket" .$packets->name_packet. " berhasil di konfirmasi oleh admin.</h4>";
+        $data_email = [
+            'isi' => $pesan
+        ];
+        Mail::to("$email->email")->send(new VerifPacket($data_email));
 
         return redirect('/admin/data_packet_umroh')->with('success', 'Data Berhasil Di Verifikasi');
     }

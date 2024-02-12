@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Informasi_travel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use App\Mail\VerifTravel;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -49,7 +51,7 @@ class CustomerController extends Controller
         $year = $waktusekarang->format('Y');
         if(request()->ajax()){
             return datatables()->of(DB::table('informasi_travels')
-            ->select('informasi_travels.id','travel_name', 'name','employee_name','number_umroh','address','informasi_travels.email as email',DB::raw('CASE WHEN is_verifition != 0 THEN "Sudah Diverifikasi" ELSE "Belum Diverifikasi" END as is_verifition'))
+            ->select('informasi_travels.id','travel_name', 'name','employee_name','number_umroh','informasi_travels.address','informasi_travels.email as email',DB::raw('CASE WHEN is_verifition != 0 THEN "Sudah Diverifikasi" ELSE "Belum Diverifikasi" END as is_verifition'))
             ->join('users', 'users.id', '=', 'informasi_travels.id_user')
             ->whereMonth('informasi_travels.created_at',$month)
             ->whereYear('informasi_travels.created_at',$year)
@@ -71,6 +73,13 @@ class CustomerController extends Controller
 
         $data->is_verifition = 1;
         $data->save();
+
+        $pesan = "<h4>Selamat akun anda berhasil didaftarkan</h4>";
+        $pesan .= "<p>Silahkan gunakan semua fitur yang ada</p>";
+        $data_email = [
+            'isi' => $pesan
+        ];
+        Mail::to("$data->email")->send(new VerifTravel($data_email));
 
         return redirect('/admin/travel_information')->with('success', 'Status Berhasil Dirubah');
     }

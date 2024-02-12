@@ -66,6 +66,7 @@ class Travel_informationController extends Controller
         $data->id_province          = $request->input('id_province');
         $data->id_regencies         = $request->input('id_regencies');
         $data->id_user              = $request->input('id_user');
+        $data->employee_type        = $request->input('employee_type');
         $data->travel_name          = $request->input('travel_name');
         $data->employee_name        = $request->input('employee_name');
         $data->number_umroh         = $request->input('number_umroh');

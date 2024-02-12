@@ -424,6 +424,13 @@
                         </div><br><br>
                         <strong>Profile Travel</strong>
                         <p>Informasi profil travel umroh kamu. Meliputi logo, nama travel, nama PT, nomor PPIU, alamat kantor,dsb</p><br>
+                        <strong>Pilih Tipe Perusahaan</strong><br>
+                        <select class="form-control" name="employee_type">
+                          <option value=""> -Pilih Tipe Perusahaan- </option>
+                          <option value="1">Konsorsium</option>
+                          <option value="2">Non-Konsorsium</option>
+                        </select>
+                        <br>
                         <div class="row">
                             <div class="col">
                                 <strong>Nama Travel</strong><br>
@@ -474,22 +481,21 @@
                 
             <?php }else{ ?>
               <?php if($information->is_verifition == 0){ 
-                $data_travel = DB::table('informasi_travels')->where('id_user', $id)->get();
+                $data_travel = DB::table('informasi_travels')->where('id_user', $id)->first();
 
-                foreach($data_travel as $v_travel){
-                    $id_travel          = $v_travel->id;
-                    $id_province        = $v_travel->id_province;
-                    $id_regencies       = $v_travel->id_regencies;
-                    $id_user            = $v_travel->id_user;
-                    $travel_name        = $v_travel->travel_name;
-                    $image              = $v_travel->image;
-                    $employee_name      = $v_travel->employee_name;
-                    $number_umroh       = $v_travel->number_umroh;
-                    $number_haji        = $v_travel->number_haji;
-                    $address            = $v_travel->address;
-                    $email              = $v_travel->email;
-                }  
-              ?>
+                    $id_travel          = $data_travel->id;
+                    $id_province        = $data_travel->id_province;
+                    $id_regencies       = $data_travel->id_regencies;
+                    $id_user            = $data_travel->id_user;
+                    $employee_type      = $data_travel->employee_type;
+                    $travel_name        = $data_travel->travel_name;
+                    $image              = $data_travel->image;
+                    $employee_name      = $data_travel->employee_name;
+                    $number_umroh       = $data_travel->number_umroh;
+                    $number_haji        = $data_travel->number_haji;
+                    $address            = $data_travel->address;
+                    $email              = $data_travel->email;
+                ?>
                 <div class="card">
                     <div class="card-body">
                         <strong>Ikuti langkah berikut untuk mengaktifkan akun Anda</strong><br>
@@ -531,6 +537,127 @@
                         </div><br><br>
                         <strong>Profile Travel</strong>
                         <p>Informasi profil travel umroh kamu. Meliputi logo, nama travel, nama PT, nomor PPIU, alamat kantor,dsb</p><br>
+                        <select class="form-control" name="employee_type">
+                          <?php if($employee_type == 1){ ?>
+                            <option value="1">Konsorsium</option>
+                            <option value="1">Konsorsium</option>
+                            <option value="2">Non-Konsorsium</option>
+                          <?php }else{ ?>
+                              <option value="2">Non-Konsorsium</option>
+                              <option value="1">Konsorsium</option>
+                              <option value="2">Non-Konsorsium</option>
+                          <?php } ?>
+                        </select><br>
+                        <div class="row">
+                            <div class="col">
+                                <strong>Nama Travel</strong><br>
+                                <input class="form-control" name="travel_name" type="text" maxlength="16" placeholder="Masukkan Nama Travel" value="<?= $travel_name ?>" required>
+                            </div>
+                            <div class="col">
+                                <strong>Nama Perusahaan</strong><br>
+                                <input class="form-control" name="employee_name" type="text" placeholder="Masukkan Nama Perusahaan (Nama PT)" value="<?= $employee_name ?>" required>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col">
+                                <strong>Nomor Ijin Umroh(Wajib Diisi)</strong><br>
+                                <input class="form-control" name="number_umroh" type="text" placeholder="Masukkan Nomor Ijin Umroh" value="<?= $number_umroh ?>" required>
+                            </div>
+                            <div class="col">
+                                <strong>Nomor Ijin Haji (Opsional)</strong><br>
+                                <input class="form-control" name="number_haji" type="text" placeholder="Masukkan Ijin Haji (Opsional)" value="<?= $number_haji ?>">
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col">
+                                <strong>Provinsi</strong><br>
+                                <select class="form-control" id="provinsi" name="id_province" required>
+                                    <option value="">Pilih Provinsi</option>
+                                    @foreach($provinsi as $v_provinsi)
+                                        <option value="<?= $v_provinsi->id ?>"><?= $v_provinsi->name ?></option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col">
+                                <strong>Kota</strong><br>
+                                <select class="form-control" id="kota" name="id_regencies" required>
+                                </select>
+                            </div>
+                        </div><br>
+                        <strong>Alamat Lengkap</strong>
+                        <input class="form-control" name="address" type="text" placeholder="Masukkan Nama Jalan, Gedung, Nomor Rumah, Dan Lainnya" value="<?= $address ?>" required><br>
+                        <strong>Email Travel</strong>
+                        <input class="form-control" name="email" type="email" placeholder="iniemailanda@gmail.com" value="<?= $email ?>" required><br>
+                        <div align="right">
+                            <button type="submit" class="btn btn-primary"><i class='bx bxs-memory-card'></i> Selanjutnya</button>
+                        </div><br>
+                        </div>
+                    </div>
+                </form>
+              <?php }else{ ?>
+                <?php
+                $data_travel = DB::table('informasi_travels')->where('id_user', $id)->first();
+
+                $id_travel          = $data_travel->id;
+                $id_province        = $data_travel->id_province;
+                $id_regencies       = $data_travel->id_regencies;
+                $id_user            = $data_travel->id_user;
+                $travel_name        = $data_travel->travel_name;
+                $image              = $data_travel->image;
+                $employee_name      = $data_travel->employee_name;
+                $number_umroh       = $data_travel->number_umroh;
+                $number_haji        = $data_travel->number_haji;
+                $address            = $data_travel->address;
+                $email              = $data_travel->email;
+              ?>
+                <div class="card">
+                    <div class="card-body">
+                        <strong>Ikuti langkah berikut untuk mengaktifkan akun Anda</strong><br>
+                        <div class="row">
+                            <div class="col">
+                              <a style="color:black;" href="{{ url('agen/travel_information/'.$id_user) }}"> 1. <i class='bx bx-id-card'></i> Melengkapi Profil Travel</a>
+                            </div>
+                            <div class="col">
+                              <a style="color:black;" href="{{ url('agen/person_responsible/'.$id_user) }}">2. <i class='bx bxs-user-circle' ></i> Data Penanggung Jawab</a>
+                            </div>
+                            <div class="col">
+                              <a style="color:black;" href="{{ url('agen/money/'.$id_user) }}">3. <i class='bx bx-money' ></i> Data Keuangan</a>
+                            </div>
+                        </div><br>
+                    </div>
+                </div><br>
+                <form action="{{ url('/agen/proses_update_travel/'.$id_travel) }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="card">
+                        <div class="card-body">
+                        <strong>Lengkapi Data Profil Travel Anda</strong><br>
+                        <strong>Logo</strong>
+                        <input type="hidden" name="id" value="<?= $id_travel; ?>">
+                        <input type="hidden" name="id_user" value="<?= $id_user; ?>">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{!! asset('assets/image_travel/'.$image) !!}" style="width:100px;border-radius:50px" alt="" />
+                            </div>
+                            <div class="col">
+                                <p>Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG</p>
+                                <input type="file" name="image" value="<?= $image ?>">
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div><br><br>
+                        <strong>Profile Travel</strong>
+                        <p>Informasi profil travel umroh kamu. Meliputi logo, nama travel, nama PT, nomor PPIU, alamat kantor,dsb</p><br>
+                        <select class="form-control" name="employee_type">
+                          <?php if($employee_type == 1){ ?>
+                            <option value="1">Konsorsium</option>
+                            <option value="1">Konsorsium</option>
+                            <option value="2">Non-Konsorsium</option>
+                          <?php }else{ ?>
+                              <option value="2">Non-Konsorsium</option>
+                              <option value="1">Konsorsium</option>
+                              <option value="2">Non-Konsorsium</option>
+                          <?php } ?>
+                        </select><br>
                         <div class="row">
                             <div class="col">
                                 <strong>Nama Travel</strong><br>
@@ -578,106 +705,6 @@
                     </div>
                 </form>
               <?php } ?>
-              <?php
-                $data_travel = DB::table('informasi_travels')->where('id_user', $id)->get();
-
-                foreach($data_travel as $v_travel){
-                    $id_travel          = $v_travel->id;
-                    $id_province        = $v_travel->id_province;
-                    $id_regencies       = $v_travel->id_regencies;
-                    $id_user            = $v_travel->id_user;
-                    $travel_name        = $v_travel->travel_name;
-                    $image              = $v_travel->image;
-                    $employee_name      = $v_travel->employee_name;
-                    $number_umroh       = $v_travel->number_umroh;
-                    $number_haji        = $v_travel->number_haji;
-                    $address            = $v_travel->address;
-                    $email              = $v_travel->email;
-                }  
-              ?>
-                <div class="card">
-                    <div class="card-body">
-                        <strong>Ikuti langkah berikut untuk mengaktifkan akun Anda</strong><br>
-                        <div class="row">
-                            <div class="col">
-                              <a style="color:black;" href="{{ url('agen/travel_information/'.$id_user) }}"> 1. <i class='bx bx-id-card'></i> Melengkapi Profil Travel</a>
-                            </div>
-                            <div class="col">
-                              <a style="color:black;" href="{{ url('agen/person_responsible/'.$id_user) }}">2. <i class='bx bxs-user-circle' ></i> Data Penanggung Jawab</a>
-                            </div>
-                            <div class="col">
-                              <a style="color:black;" href="{{ url('agen/money/'.$id_user) }}">3. <i class='bx bx-money' ></i> Data Keuangan</a>
-                            </div>
-                        </div><br>
-                    </div>
-                </div><br>
-                <form action="{{ url('/agen/proses_update_travel/'.$id_travel) }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="card">
-                        <div class="card-body">
-                        <strong>Lengkapi Data Profil Travel Anda</strong><br>
-                        <strong>Logo</strong>
-                        <input type="hidden" name="id" value="<?= $id_travel; ?>">
-                        <input type="hidden" name="id_user" value="<?= $id_user; ?>">
-                        <div class="row">
-                            <div class="col">
-                                <img src="{!! asset('assets/image_travel/'.$image) !!}" style="width:100px;border-radius:50px" alt="" />
-                            </div>
-                            <div class="col">
-                                <p>Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG</p>
-                                <input type="file" name="image" value="<?= $image ?>">
-                            </div>
-                            <div class="col">
-                            </div>
-                        </div><br><br>
-                        <strong>Profile Travel</strong>
-                        <p>Informasi profil travel umroh kamu. Meliputi logo, nama travel, nama PT, nomor PPIU, alamat kantor,dsb</p><br>
-                        <div class="row">
-                            <div class="col">
-                                <strong>Nama Travel</strong><br>
-                                <input class="form-control" name="travel_name" type="text" maxlength="16" placeholder="Masukkan Nama Travel" value="<?= $travel_name ?>" required>
-                            </div>
-                            <div class="col">
-                                <strong>Nama Perusahaan</strong><br>
-                                <input class="form-control" name="employee_name" type="text" placeholder="Masukkan Nama Perusahaan (Nama PT)" value="<?= $employee_name ?>" required>
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col">
-                                <strong>Nomor Ijin Umroh(Wajib Diisi)</strong><br>
-                                <input class="form-control" name="number_umroh" type="text" placeholder="Masukkan Nomor Ijin Umroh" value="<?= $number_umroh ?>" required>
-                            </div>
-                            <div class="col">
-                                <strong>Nomor Ijin Haji (Opsional)</strong><br>
-                                <input class="form-control" name="number_haji" type="text" placeholder="Masukkan Ijin Haji (Opsional)" value="<?= $number_haji ?>">
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col">
-                                <strong>Provinsi</strong><br>
-                                <select class="form-control" id="provinsi" name="id_province" required>
-                                    <option value="">Pilih Provinsi</option>
-                                    @foreach($provinsi as $v_provinsi)
-                                        <option value="<?= $v_provinsi->id ?>"><?= $v_provinsi->name ?></option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col">
-                                <strong>Kota</strong><br>
-                                <select class="form-control" id="kota" name="id_regencies" required>
-                                </select>
-                            </div>
-                        </div><br>
-                        <strong>Alamat Lengkap</strong>
-                        <input class="form-control" name="address" type="text" placeholder="Masukkan Nama Jalan, Gedung, Nomor Rumah, Dan Lainnya" value="<?= $address ?>" required><br>
-                        <strong>Email Travel</strong>
-                        <input class="form-control" name="email" type="email" placeholder="iniemailanda@gmail.com" value="<?= $email ?>" required><br>
-                        <div align="right">
-                            <button type="submit" class="btn btn-primary"><i class='bx bxs-memory-card'></i> Selanjutnya</button>
-                        </div><br>
-                        </div>
-                    </div>
-                </form>
             <?php } ?>
         </div>
     </div>

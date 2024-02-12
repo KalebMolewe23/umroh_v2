@@ -12,6 +12,7 @@ class Informasi_travel extends Model
         'id_province', 
         'id_regencies', 
         'id_user',
+        'employee_type',
         'travel_name',
         'image',
         'employee_name',
