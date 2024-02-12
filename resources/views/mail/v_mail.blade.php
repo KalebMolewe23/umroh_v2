@@ -6,7 +6,6 @@
     <title>Verifikasi Akun</title>
 </head>
 <body>
-    <h1>Selamat anda berhasil membuat akun.</h1>
-    <p>Selanjutnya klik tombol dibawah ini untuk verifikasi akun anda</p>
+    {!! $data_email['isi'] !!}
 </body>
 </html>

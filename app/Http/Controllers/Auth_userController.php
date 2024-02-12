@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\DB;
+use App\Mail\KirimEmail;
+use Illuminate\Support\Facades\Mail;
 
 class Auth_userController extends Controller
 {
@@ -117,11 +119,23 @@ class Auth_userController extends Controller
             'password'          => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
-        Auth::login($user);
+        $pesan = "<h4>Selamat anda berhasil membuat akun.</h4>";
+        $pesan .= "<p>Selanjutnya klik tombol dibawah ini untuk verifikasi akun anda</p>";
+        $pesan .= "
+            <form action='{{ url('/agen/update_status_money_pending_dp/') }}' method='post'>
+                <button type='submit' class='btn btn-success'>Aktivation Account</button>
+            </form>
+        ";
+        $data_email = [
+            'isi' => $pesan
+        ];
+        Mail::to("$user->email")->send(new kirimEmail($data_email));
 
-        return redirect()->route('home');
+        // Auth::login($user);
+
+        return redirect()->route('user/login');
 
     }
 

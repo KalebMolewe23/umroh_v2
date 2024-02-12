@@ -20,6 +20,7 @@ use App\Http\Controllers\DataController;
 use App\Http\Controllers\PacketController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\MoneyController;
+use App\Http\Controllers\KirimEmailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,6 +64,7 @@ Route::get('/auth_user/register', [Auth_userController::class, 'register'])->nam
 Route::post('/auth_user/register', [Auth_userController::class, 'save_registrasi'])->name('register_customer.simpan');
 Route::get('/auth_user/getRegencies/', [Auth_userController::class, 'getRegencies'])->name('auth_user/getRegencies');
 Route::get('/auth_user/logout', [Auth_userController::class, 'logout']);
+
 Route::get('/email/verify', function() {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
