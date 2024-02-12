@@ -121,7 +121,7 @@ class Auth_userController extends Controller
 
         Auth::login($user);
 
-        return redirect('/home')->with('success', 'Data Berhasil Ditambah');
+        return redirect()->route('home');
 
     }
 
