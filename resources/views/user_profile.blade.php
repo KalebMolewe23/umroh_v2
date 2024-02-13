@@ -571,6 +571,7 @@
                                             <th>Berangkat Dari</th>
                                             <th>Total Biaya</th>
                                             <th>Status</th>
+                                            <th>Rating</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -582,6 +583,9 @@
                                                 <td>{{ $item_sudah_bayar->departing_from }}</td>
                                                 <td>{{ $item_sudah_bayar->grand_total }}</td>
                                                 <td>{{ $item_sudah_bayar->transaction_status }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-primary" data-id-packet="{{ $item_sudah_bayar->id_packet }}">Beri Penilaian</button>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

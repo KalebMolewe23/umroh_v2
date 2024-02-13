@@ -10,8 +10,7 @@ use App\Models\Itinery;
         <div class="row">
             <div class="col-3">
                 <div class="card">
-                    <p style="padding-left:30px;padding-top:10px;width:800px">Filter</p>
-                    <hr><h5 style="padding-left:30px;width:800px">Lokasi Keberangkatan</h5>
+                    <h5 style="padding-left:30px;width:800px;margin-top:10px">Lokasi Keberangkatan</h5>
                     <center>
                         <div class="boxContainer">
                             <table class="elementsContainer">
@@ -30,21 +29,21 @@ use App\Models\Itinery;
                     </center><hr>
                     <h5 style="padding-left:30px;width:800px">Kategori Paket</h5>
                     <center>
-                        <button class="button-search">Semua Paket</button>
+                        <button class="button-search btn-category-packet" data-id="0">Semua Paket</button>
                         <?php
                             $kategori = DB::table('packet_categories')->get();
 
                             foreach($kategori as $v_kategori){
                         ?>
-                            <button class="button-search" name="<?= $v_kategori->id; ?>"><?= $v_kategori->categorie_name ?></button>
+                            <button class="button-search btn-category-packet" data-id="<?= $v_kategori->id; ?>"><?= $v_kategori->categorie_name ?></button>
                         <?php } ?>
                     </center><hr>
-                    <h5 style="padding-left:30px;width:800px">Biaya Umroh</h5>
+                    <h5 style="padding-left:30px;width:800px">Biaya DP Umroh</h5>
                     <center>
-                        <button class="button-search">Semua Biaya</button>
-                        <button class="button-search">< Rp 30jt</button>
-                        <button class="button-search">Rp 30jt - 40jt</button>
-                        <button class="button-search">> Rp 40jt</button>
+                        <button class="button-search btn-price" data-price="0">Semua Biaya</button>
+                        <button class="button-search btn-price" data-price="1">< Rp 30jt</button>
+                        <button class="button-search btn-price" data-price="2">Rp 30jt - 40jt</button>
+                        <button class="button-search btn-price" data-price="3">> Rp 40jt</button>
                     </center>
                     <br>
                 </div>
@@ -103,7 +102,7 @@ use App\Models\Itinery;
                                 }
                             @endphp
 
-                            <div class="col-md-4 mt-2">
+                            <div class="col-md-4 mt-2 list-item">
                                 <a style="color:black; text-decoration:none;" href="{{ url('/detail-product/' . $itineries->id . '&day=' . $counter + 1) }}">
                                     <div class="card">
                                         <div class="card-body">
@@ -127,6 +126,9 @@ use App\Models\Itinery;
                                                 <small>Quad, <span class="text-secondary">Sekamar Ber-4</span> <span
                                                         style="float: right;" class="text-warning fw-bolder">Rp
                                                         {{ number_format($item->hotels->quad_1) }}</span></small>
+
+                                                <span style="display: none" class="price-dp">{{ $item->packets->dp }}</span>
+                                                <span style="display: none" class="category-packet">{{ $item->packets->id_category_packet }}</span>
                                             </div>
                                             <hr>
                                             <div class="row">
@@ -159,3 +161,42 @@ use App\Models\Itinery;
         </div>
     </div>
 @endsection
+
+@push('js')
+<script>
+    $('.btn-category-packet').click(function() {
+        $('.btn-category-packet').removeClass('btn-bordered');
+        $(this).addClass('btn-bordered');
+        filterData();
+    });
+
+    $('.btn-price').click(function() {
+        $('.btn-price').removeClass('btn-bordered');
+        $(this).addClass('btn-bordered');
+        filterData();
+    });
+
+    function filterData() {
+        var id = $('.btn-category-packet.btn-bordered').data('id');
+        var priceVal = $('.btn-price.btn-bordered').data('price');
+
+        $('.list-item').each(function() {
+            var idCategory = $(this).find('.category-packet').text();
+            var priceText = $(this).find('.price-dp').text();
+            var price = parseInt(priceText);
+
+            if ((priceVal == 0 || priceVal == undefined) && (id == 0 || id == idCategory)) {
+                $(this).show();
+            } else if (priceVal == 1 && price < 30000000 && (id == 0 || id == idCategory)) {
+                $(this).show();
+            } else if (priceVal == 2 && price >= 30000000 && price <= 40000000 && (id == 0 || id == idCategory)) {
+                $(this).show();
+            } else if (priceVal == 3 && price >= 40000000 && (id == 0 || id == idCategory)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+</script>
+@endpush

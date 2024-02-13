@@ -136,6 +136,11 @@
         background-color: <?= $bg->bg1; ?>;
     }
 
+    .btn-bordered{
+        background-color: <?= $bg->bg1; ?> !important;
+        color:white;
+    }
+
     #preloader{
         background: white;
         height: 100vh;
