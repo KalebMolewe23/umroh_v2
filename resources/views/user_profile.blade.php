@@ -673,7 +673,7 @@
                                                     <span id="copy-btn">Copy</span>
                                                 </div>
                                                 Atas Nama : {{ $money->owner_rek }}<br>
-                                                <input type="file" id="file" class="form-control" name="payment_image" accept="image/*" hidden required>
+                                                <input type="file" id="file" class="form-control" name="payment_image" accept="image/*" required>
                                                 <div class="img-area" data-img="">
                                                     <i class="bx bxs-cloud-upload icon"></i>
                                                     <h3>Upload Bukti Pembayaran</h3>
@@ -737,7 +737,7 @@
                                                     <span id="copy-btn">Copy</span>
                                                 </div>
                                                 Atas Nama : {{ $money->owner_rek }}<br>
-                                                <input type="file" id="file-money" class="form-control" name="payment_image" accept="image/*" hidden required>
+                                                <input type="file" id="file-money" class="form-control" name="payment_image" accept="image/*" required>
                                                 <div class="img-area-money" data-img="">
                                                     <i class="bx bxs-cloud-upload icon"></i>
                                                     <h3>Upload Bukti Pembayaran</h3>
@@ -1064,34 +1064,6 @@
             }
         });
 
-        const selectImageMoney = document.querySelector('.select-image-money');
-        const inputFileMoney = document.querySelector('#file-money');
-        const imgAreaMoney = document.querySelector('.img-area-money');
-
-        selectImageMoney.addEventListener('click', function (){
-            inputFileMoney.click();
-        })
-
-        inputFileMoney.addEventListener('change', function(){
-            const image_money = this.files[0]
-            if(image_money.size < 2000000){
-                const reader = new FileReader();
-                reader.onload = ()=> {
-                    const allImg = imgAreaMoney.querySelectorAll('img');
-                    allImg.forEach(item=> item.remove());
-                    const imgUrl = reader.result;
-                    const img = document.createElement('img');
-                    img.src = imgUrl;
-                    imgAreaMoney.appendChild(img);
-                    imgAreaMoney.classList.add('active');
-                    imgAreaMoney.dataset.img = image_money.name;
-                }
-                reader.readAsDataURL(image_money);
-            } else {
-                alert("Maaf ukuran size terlalu besar");
-            }
-        });
-
         $('#form-pembayaran-manual').submit(function(e){
             e.preventDefault();
 
@@ -1112,6 +1084,34 @@
                     $('#response').html('Error occurred while uploading the image.');
                 }
             });
+        });
+
+        const selectImageMoney = document.querySelector('.select-image-money');
+        const inputFileMoney = document.querySelector('#file-money');
+        const imgAreaMoney = document.querySelector('.img-area-money');
+
+        selectImageMoney.addEventListener('click', function (){
+            inputFileMoney.click();
+        })
+
+        inputFileMoney.addEventListener('change', function(){
+            const image_money = this.files[0]
+            if(image_money.size < 2000000){
+                const reader = new FileReader();
+                reader.onload = ()=> {
+                    const allImg_money = imgAreaMoney.querySelectorAll('img');
+                    allImg_money.forEach(item=> item.remove());
+                    const imgUrl_money = reader.result;
+                    const img_money = document.createElement('img');
+                    img_money.src = imgUrl_money;
+                    imgAreaMoney.appendChild(img_money);
+                    imgAreaMoney.classList.add('active');
+                    imgAreaMoney.dataset.img_money = image_money.name;
+                }
+                reader.readAsDataURL(image_money);
+            } else {
+                alert("Maaf ukuran size terlalu besar");
+            }
         });
     </script>
 @endpush

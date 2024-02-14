@@ -56,6 +56,7 @@ Route::get('/form_order', [ProductController::class, 'form_order'])->name('form_
 Route::get('/send_email', [ProductController::class, 'sendMail'])->name('send_email');
 Route::get('/user_profile', [User_profileController::class, 'index'])->name('user_profile');
 Route::get('/user_profile/order', [OrderController::class, 'index'])->name('user_profile/order');
+Route::post('/data_transaction_paid_dp', [User_profileController::class, 'data_transaction_paid_dp'])->name('/data_transaction_paid_dp');
 
 //login & register user
 Route::get('/auth_user/login', [Auth_userController::class, 'index'])->name('user/login');

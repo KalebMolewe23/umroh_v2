@@ -31,6 +31,7 @@ class MoneyController extends Controller
             ->join('users', 'users.id', '=', 'transactions.id_user')
             ->where('packets.id_user', $userId)
             ->where('payment_details.status', "success")
+            ->orderBy('payment_details.created_at', 'asc')
             ->get())
             ->addColumn('action', 'agen.money.money-action')
             ->rawColumns(['action'])
