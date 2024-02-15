@@ -43,12 +43,41 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
 
     $(document).ready(function () {
 
         $('.data_user').select2();
         $('.data_packet').select2();
+
+        $('#form-register').on('submit', function(e){
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: '/store-customer',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    Swal.fire({
+                        title: "Berhasil!",
+                        text: response.msg,
+                        icon: "success"
+                    });
+                    $('.choose-customer').hide();
+                    $('.choose-package').show();
+                    console.log(response.id_user);
+                },
+                error: function(xhr, status, error){
+                    console.error(xhr.responseText);
+                    $('#response').html('Error occurred while uploading the image.');
+                }
+            });
+        })
 
         $('#select-customer').on('select2:select', function(e) {
             var selectedOption = $(this).find(':selected');
@@ -78,6 +107,8 @@
             var companion_name = selectedOption.data('companion_name');
             var connection = selectedOption.data('connection');
 
+            $('.id_user').val($(this).val());
+
             $('#customer-name').val(name);
             $('#customer-ktp').val(ktp);
             $('#customer-email').val(email);
@@ -106,18 +137,9 @@
         });
 
         $('#select-packet').on('select2:select', function(e) {
-            var selectedOptionPacket = $(this).find(':selected');
-            var name_packet = selectedOptionPacket.data('name_packet');
-            var quad_1 = selectedOptionPacket.data('quad_1');
-            var triple_1 = selectedOptionPacket.data('triple_1');
-            var double_1 = selectedOptionPacket.data('double_1');
-            var dp = selectedOptionPacket.data('dp');
-
-            $('#packet-name_packet').val(name_packet);
-            $('#packet-quad_1').val(quad_1);
-            $('#packet-triple_1').val(triple_1);
-            $('#packet-double_1').val(double_1);
-            $('#packet-dp').val(dp);
+            let id = $(this).val();
+            let id_user = $('.id_user').val();
+            window.location.href = `/detail-product/${id}&day=0&id_user=${id_user}`;
         });
 
         $("#id_maskapai").select2({
@@ -1564,6 +1586,8 @@
     });
 
 </script>
+
+@stack('js')
 
   </body>
 </html>

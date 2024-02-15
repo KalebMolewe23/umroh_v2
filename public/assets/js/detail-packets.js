@@ -62,7 +62,8 @@ $('body').on('click', '.save', function(){
             hotel_type : hotel_type,
             departing_from : departing_from,
             grand_total : grand_total,
-            detail : form
+            detail : form,
+            flag_transaction_code : flag_transaction_code
         },
         success:function(response){
             if (response.code == 200) {
@@ -73,7 +74,11 @@ $('body').on('click', '.save', function(){
                 });
 
                 setTimeout(() => {
-                    window.location.href = '/user_profile?flag=true'
+                    if (flag_transaction_code == "OFF") {
+                        window.location.href = '/agen/get_order';
+                    }else{
+                        window.location.href = '/user_profile?flag=true'
+                    }
                 }, 2000);
             }else{
                 Swal.fire({

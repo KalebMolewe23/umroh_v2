@@ -47,6 +47,7 @@ class HomeController extends Controller
     public function detailProduct($id){
         $id = explode("&", $id);
         $day = $id[1];
+        $id_user = @$id[2];
 
         $data = Itinery::with('photo.packets.informasiTravels', 'photo.hotels.moneyPackets', 'photo.conditions', 'photo.hotels.facility', 'photo.packets.tiketGroup', 'photo.packets.partnerBranches.regency')->where('id', $id[0])->first();
         $data_due_date = DB::table('settingdue_dates')->first();
@@ -70,7 +71,7 @@ class HomeController extends Controller
 
         $presentase_seat = ($available_seat / $data->photo->packets->seat_capasitas) * 100;
 
-        return view('v_detail_packets', compact('data', 'day', 'other_packet', 'due_date', 'partner_branches', 'available_seat', 'presentase_seat'));
+        return view('v_detail_packets', compact('data', 'day', 'other_packet', 'due_date', 'partner_branches', 'available_seat', 'presentase_seat', 'id_user'));
     }
 
     public function store(Request $request){
@@ -111,7 +112,7 @@ class HomeController extends Controller
             'id_user' => $request->id_user,
             'id_packet' => $request->id_packet,
             'due_date' => $request->due_date,
-            'transaction_code' => 'ON'.date('dmYs').$count,
+            'transaction_code' => $request->flag_transaction_code.date('dmYs').$count,
             'transaction_status' => 'BELUM BAYAR',
             'room_type' => $request->room_type,
             'hotel_type' => $request->hotel_type,

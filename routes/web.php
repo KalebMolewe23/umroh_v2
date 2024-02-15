@@ -85,6 +85,7 @@ Route::post('/login_agen', [Auth_agenController::class, 'loginaksi'])->name('log
 Route::get('/logout_agen', [Auth_agenController::class, 'logout'])->name('logout_agen')->middleware('auth_agen');
 Route::get('/regis_agen', [Auth_agenController::class, 'registrasi'])->name('regis_agen');
 Route::post('/regis_agen', [Auth_agenController::class, 'save_registrasi'])->name('register.simpan');
+Route::post('/store-customer', [OrderController::class, 'storeCustomer']);
 
 Route::middleware('auth_agen')->group(function(){ 
 

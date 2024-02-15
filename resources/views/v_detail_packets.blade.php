@@ -771,7 +771,15 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const id_packet = {{ $data->photo->packets->id }};
-        const auth_id = "<?= (!empty(Auth::user()->id) ? Auth::user()->id : null) ?>";
+        let auth_id = "<?= (!empty(Auth::user()->id) ? Auth::user()->id : null) ?>";
+        let params = "<?= str_replace('id_user=', '', $id_user) ?>";
+        let flag_transaction_code = "ON";
+        
+        if (params != "") {
+            auth_id = params;
+            flag_transaction_code = "OFF";
+        }
+
         $(document).ready(function(){
             var myCarousel = new bootstrap.Carousel(document.getElementById('carouselExampleControls'), {
                 interval: false // Set interval to false to disable auto sliding
