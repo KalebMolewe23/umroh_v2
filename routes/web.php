@@ -96,6 +96,9 @@ Route::middleware('auth_agen')->group(function(){
     
     //get infromation provider
     Route::get('/agen/select_airport/', [DataController::class, 'airport'])->name('select_airport.index');
+    
+    //get user
+    Route::get('/agen/select_user/', [DataController::class, 'user'])->name('select_user.index');
 
     //tampilan agen
     Route::get('/agen/dashboard', [AgenController::class, 'index'])->name('agen/dashboard');
@@ -164,6 +167,9 @@ Route::middleware('auth_agen')->group(function(){
     Route::get('/agen/edit_itinery/{id}', [Add_paketController::class, 'edit_itinery'])->name('agen/edit_itinery');
     Route::post('/agen/procces_update_itinerary/{id}', [Add_paketController::class, 'procces_update_itinerary'])->name('agen/procces_update_itinerary');
     Route::delete('/agen/delete_itinery/{id}', [Add_paketController::class, 'delete_itinery'])->name('agen/delete_itinery');
+
+    //pesanan
+    Route::get('/agen/add_order', [OrderController::class, 'index'])->name('agen/add_order');
     
     //agen
     Route::get('/agen/add_agen', [Data_agenController::class, 'add_agen'])->name('agen/add_agen');

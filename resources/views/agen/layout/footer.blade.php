@@ -47,6 +47,79 @@
 
     $(document).ready(function () {
 
+        $('.data_user').select2();
+        $('.data_packet').select2();
+
+        $('#select-customer').on('select2:select', function(e) {
+            var selectedOption = $(this).find(':selected');
+            var name = selectedOption.data('name');
+            var ktp = selectedOption.data('ktp');
+            var email = selectedOption.data('email');
+            var phone = selectedOption.data('phone');
+            var father_name = selectedOption.data('father_name');
+            var blood_groub = selectedOption.data('blood_groub');
+            var born_place = selectedOption.data('born_place');
+            var date_of_birth = selectedOption.data('date_of_birth');
+            var marital_status = selectedOption.data('marital_status');
+            var title = selectedOption.data('title');
+            var gender = selectedOption.data('gender');
+            var citizenship = selectedOption.data('citizenship');
+            var id_province = selectedOption.data('id_province');
+            var id_regencies = selectedOption.data('id_regencies');
+            var address = selectedOption.data('address');
+            var education = selectedOption.data('education');
+            var job = selectedOption.data('job');
+            var status_umroh = selectedOption.data('status_umroh');
+            var passport_name = selectedOption.data('passport_name');
+            var passport_number = selectedOption.data('passport_number');
+            var passport_place = selectedOption.data('passport_place');
+            var passport_date = selectedOption.data('passport_date');
+            var expired = selectedOption.data('expired');
+            var companion_name = selectedOption.data('companion_name');
+            var connection = selectedOption.data('connection');
+
+            $('#customer-name').val(name);
+            $('#customer-ktp').val(ktp);
+            $('#customer-email').val(email);
+            $('#customer-phone').val(phone);
+            $('#customer-father_name').val(father_name);
+            $('#customer-blood_groub').val(blood_groub);
+            $('#customer-born_place').val(born_place);
+            $('#customer-date_of_birth').val(date_of_birth);
+            $('#customer-marital_status').val(marital_status);
+            $('#customer-title').val(title);
+            $('#customer-gender').val(gender);
+            $('#customer-citizenship').val(citizenship);
+            $('#customer-id_province').val(id_province);
+            $('#customer-id_regencies').val(id_regencies);
+            $('#customer-address').val(address);
+            $('#customer-education').val(education);
+            $('#customer-job').val(job);
+            $('#customer-status_umroh').val(status_umroh);
+            $('#customer-passport_name').val(passport_name);
+            $('#customer-passport_number').val(passport_number);
+            $('#customer-passport_place').val(passport_place);
+            $('#customer-passport_date').val(passport_date);
+            $('#customer-expired').val(expired);
+            $('#customer-companion_name').val(companion_name);
+            $('#customer-connection').val(connection);
+        });
+
+        $('#select-packet').on('select2:select', function(e) {
+            var selectedOptionPacket = $(this).find(':selected');
+            var name_packet = selectedOptionPacket.data('name_packet');
+            var quad_1 = selectedOptionPacket.data('quad_1');
+            var triple_1 = selectedOptionPacket.data('triple_1');
+            var double_1 = selectedOptionPacket.data('double_1');
+            var dp = selectedOptionPacket.data('dp');
+
+            $('#packet-name_packet').val(name_packet);
+            $('#packet-quad_1').val(quad_1);
+            $('#packet-triple_1').val(triple_1);
+            $('#packet-double_1').val(double_1);
+            $('#packet-dp').val(dp);
+        });
+
         $("#id_maskapai").select2({
             placeholder:'Pilih Maskapai',
             ajax: {

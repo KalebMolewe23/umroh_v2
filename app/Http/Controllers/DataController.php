@@ -31,4 +31,13 @@ class DataController extends Controller
 
         return response()->json($data);
     }
+
+    public function user(){
+        $data = DB::table('users')
+        ->where('name', 'LIKE', '%'.request('q').'%')
+        ->distinct()
+        ->paginate(10);
+
+        return response()->json($data);
+    }
 }
