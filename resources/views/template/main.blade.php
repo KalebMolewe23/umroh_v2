@@ -82,44 +82,6 @@
         margin-bottom: 15px !important;
     }
 
-    .boxContainer{
-        margin:auto;
-        margin-top:5%;
-        position:relative;
-        width: 250px;
-        height: 42px;
-        border: 2px solid <?= $bg->bg1; ?>;
-        padding: 0px 10px;
-        border-radius: 10px;
-    }
-
-    .elementsContainer{
-        width: 100%;
-        height: 100%;
-        vertical-align: middle;
-    }
-
-    .search{
-        border: none;
-        height: 100%;
-        width: 100%;
-        padding: 0px 5px;
-        border-radius: 50px;
-        font-size: 18px;
-        font-family: "Nunito";
-        color: #4244242;
-        font-weight: 500;
-    }
-
-    .search:focus{
-        outline:none;
-    }
-
-    .bx-search-alt-2{
-        font-size:26;
-        color: <?= $bg->bg1; ?>
-    }
-
     .button-search{
         margin:auto;
         margin-top:5%;
@@ -252,7 +214,7 @@
                             <div class="card-body p-24">
                                 <div class="row">
                                     <div class="col-2">
-                                        <div
+                                        <div class="data_whatsapp"
                                             style="background-color:#0be881;border-radius: 100%;width:40px;height:40px">
                                             <center>
                                                 <i style="font-size: 18px;margin-top:10px" class="fab fa-whatsapp"></i>
@@ -270,7 +232,7 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-2">
-                                        <div
+                                        <div class="data_email"
                                             style="background-color:#f53b57;border-radius: 100%;width:40px;height:40px">
                                             <center>
                                                 <i style="font-size: 18px;margin-top:10px;color:white"

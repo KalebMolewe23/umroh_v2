@@ -44,6 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'companion_name',
         'connection',
         'password',
+        'is_member',
     ];
 
     /**

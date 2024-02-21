@@ -3,14 +3,18 @@ use App\Models\Hotel;
 use App\Models\Itinery;
 ?>
 
+<?php $bg = DB::table('cms')->first(); ?>
+<?php $information = DB::table('information')->first(); ?>
+<?php $social_media = DB::table('social_media')->where('status', 1)->get(); ?>
+
 @extends('template.main')
 
 @section('content')
     <div class="container" style="margin-top: 30px;z-index: 999; position:relative">
         <div class="row">
             <div class="col-3">
-                <div class="card">
-                    <h5 style="padding-left:30px;width:800px;margin-top:10px">Lokasi Keberangkatan</h5>
+                <div class="card"><br>
+                    <h5>&nbsp;&nbsp;Lokasi Keberangkatan</h5>
                     <center>
                         <div class="boxContainer">
                             <table class="elementsContainer">
@@ -27,7 +31,7 @@ use App\Models\Itinery;
                             </table>
                         </div>
                     </center><hr>
-                    <h5 style="padding-left:30px;width:800px">Kategori Paket</h5>
+                    <h5>&nbsp;&nbsp;Kategori Paket</h5>
                     <center>
                         <button class="button-search btn-category-packet" data-id="0">Semua Paket</button>
                         <?php
@@ -38,7 +42,7 @@ use App\Models\Itinery;
                             <button class="button-search btn-category-packet" data-id="<?= $v_kategori->id; ?>"><?= $v_kategori->categorie_name ?></button>
                         <?php } ?>
                     </center><hr>
-                    <h5 style="padding-left:30px;width:800px">Biaya DP Umroh</h5>
+                    <h5>&nbsp;&nbsp;Biaya DP Umroh</h5>
                     <center>
                         <button class="button-search btn-price" data-price="0">Semua Biaya</button>
                         <button class="button-search btn-price" data-price="1">< Rp 30jt</button>
@@ -50,17 +54,17 @@ use App\Models\Itinery;
             </div>
             <div class="col-9">
                 <h4>Paket Umroh</h4><br>
-                <div class="card" style="padding-left:30px;padding-top:20px;width:800px">
+                <div class="card_packet">
                     <div class="row">
                         <div class="col">
-                            <select style="width:300px" class="form-control">
+                            <select class="form-control">
                                 <option value="">Keberangkatan Paling Awal</option>
                                 <option value="">Paling Murah</option>
                                 <option value="">Paling Mahal</option>
                             </select>
                         </div>
                         <div class="col">
-                            <select style="width:300px" class="form-control">
+                            <select class="form-control">
                                 <option value="">Semua Waktu</option>
                                 <option value="1">Januari</option>
                                 <option value="2">Februari</option>
@@ -75,11 +79,136 @@ use App\Models\Itinery;
                                 <option value="11">November</option>
                                 <option value="12">Desember</option>
                             </select>
-
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary">Filter</button>
                         </div>
                     </div>
                     <br>
-                </div><br>
+                </div>
+                
+                <style>
+                        .boxContainer{
+                            margin:auto;
+                            margin-top:5%;
+                            position:relative;
+                            width: 250px;
+                            height: 42px;
+                            border: 2px solid <?= $bg->bg1; ?>;
+                            padding: 0px 10px;
+                            border-radius: 10px;
+                        }
+    
+                        .elementsContainer{
+                            width: 100%;
+                            height: 100%;
+                            vertical-align: middle;
+                        }
+    
+                        .search{
+                            border: none;
+                            height: 100%;
+                            width: 100%;
+                            padding: 0px 5px;
+                            border-radius: 50px;
+                            font-size: 18px;
+                            font-family: "Nunito";
+                            color: #4244242;
+                            font-weight: 500;
+                        }
+    
+                        .search:focus{
+                            outline:none;
+                        }
+    
+                        .bx-search-alt-2{
+                            font-size:26;
+                            color: <?= $bg->bg1; ?>
+                        }
+                        
+                        .card_packet {
+                            position: relative;
+                            display: flex;
+                            flex-direction: column;
+                            min-width: 0;
+                            word-wrap: break-word;
+                            background-color: #fff;
+                            background-clip: border-box;
+                            border: 1px solid rgba(0,0,0,.125);
+                            border-radius: 0.25rem;
+                            padding-left:30px;
+                            padding-top:20px;
+                            width:800px;
+                        }
+
+                        @media only screen and (max-width: 1200px) {
+                            .boxContainer{
+                                width: 150px;
+                            }
+
+                            .button-search{
+                                width: 150px;
+                            }
+
+                            h5{
+                                font-size: 15px;
+                            }
+
+                            .card_packet {
+                                width: 680px;
+                            }
+                        }
+
+                        @media only screen and (max-width: 1000px) {
+                            .boxContainer{
+                                width: 455px;
+                            }
+
+                            .button-search{
+                                width: 282px;
+                            }
+
+                            .button_search_data{
+                                margin-left: -35px;
+                            }
+
+                            h5{
+                                font-size: 20px;
+                            }
+
+                            .col-3{
+                                width: 100%;
+                            }
+
+                            .card_packet {
+                                width: 519px;
+                            }
+                        }
+
+                        @media only screen and (max-width: 767px) {
+                            .card_packet {
+                                width: 517px;
+                            }
+                        }
+                        
+                        @media only screen and (max-width: 540px) {
+                            .boxContainer{
+                                width: 300px;
+                            }
+
+                            .card_packet {
+                                width: 377px;
+                            }
+                        }
+
+                        @media only screen and (max-width: 478px) {
+                            .card_packet {
+                                width: 377px;
+                            }
+                        }
+                    </style>
+                
+                <br>
                 <div class="col-md-12">
                     <div class="row">
                         @foreach ($data as $item)
