@@ -107,6 +107,7 @@
                                 </select>
                             </div>
                             <div class="col">
+                                <label>Kewarganegaraan</label>
                                 <input class="form-control" type="text" maxlength="200" class="@error('citizenship')is-invalid @enderror" name="citizenship" id="citizenship" placeholder="masukkan kewarganegaraan anda" required/>
                             </div>
                         </div>
