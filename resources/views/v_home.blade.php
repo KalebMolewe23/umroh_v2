@@ -22,7 +22,7 @@ use App\Models\Itinery;
     </div>
     <div class="container" style="margin-top: -30px;z-index: 999; position:relative">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card_filter_packet">
                 <div class="card-body">
                     <form action="/" method="GET">
                         <div class="row">
@@ -82,6 +82,32 @@ use App\Models\Itinery;
                 </div>
             </div>
         </div>
+
+        <style>
+
+            .card_filter_packet {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 1px solid rgba(0,0,0,.125);
+                border-radius: 0.25rem;
+            }
+
+            @media only screen and (max-width: 990px) {
+                .micro-slider{
+                    display: none;
+                } 
+                
+                .card_filter_packet {
+                    margin-top: 100px;
+                }
+            }
+        </style>
+
         <div class="col-md-12 mt-5">
             <span>Paket Umroh dengan Keberangkatan Paling Awal</span>
             <div class="row">
