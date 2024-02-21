@@ -31,9 +31,9 @@
                     <p>Masukkan Data Diri Anda</p>
                     <form action="{{ route('login.aksi_user') }}" method="POST" class="register-form" id="login-form">
                         @csrf
-                        <input style="width:500px;" type="text" class="form-control" name="email" id="email" placeholder="masukkan email anda" required><br>
-                        <input style="width:500px;" type="password" class="form-control" name="password" id="password" placeholder="masukkan password anda" required><br>
-                        <button style="width:500px;" type="submit" class="btn text-white btn-block bg-blue">Masuk</button>
+                        <input type="text" class="form-control_login" name="email" id="email" placeholder="masukkan email anda" required><br>
+                        <input type="password" class="form-control_login" name="password" id="password" placeholder="masukkan password anda" required><br>
+                        <button type="submit" class="btn text-white btn-block bg-blue">Masuk</button>
                     </form>
                     <a style="text-decoration: none; color: <?= $bg->bg1 ?>" href=""><p>Lupa Password?</p></a>
                     <br>
@@ -42,6 +42,46 @@
                     </center>
                 </div>
             </div>
+            <style>
+                .form-control_login {
+                    display: block;
+                    width: 80%;
+                    padding: 0.375rem 0.75rem;
+                    font-size: 1rem;
+                    font-weight: 400;
+                    line-height: 1.5;
+                    color: #212529;
+                    background-color: #fff;
+                    background-clip: padding-box;
+                    border: 1px solid #ced4da;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    border-radius: 0.25rem;
+                    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                }
+
+                @media only screen and (max-width: 1000px) {
+                    .col-3{
+                        display: none;
+                    }
+                }
+
+                @media only screen and (max-width: 775px) {
+                    h4{
+                        display: none;
+                    }
+                    .col-3{
+                        display: block;
+                    }
+                    .col {
+                        flex: 0 0 100%; */
+                        /* flex-grow: 1; */
+                        /* flex-shrink: 0; */
+                        /* flex-basis: 0%; */
+                    }
+                }
+            </style>
         </div>
     </div><br><br><br><br><br><br><br>
 @endsection
