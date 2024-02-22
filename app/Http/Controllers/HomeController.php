@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -182,5 +183,20 @@ class HomeController extends Controller
         $title = "Blog";
 
         return view('v_blog', ['title' => $title]);
+    }
+
+    public function schedule(){
+        $title = "Jadwal Sholat & Al-quran";
+
+        // $response = Http::get('https://api.aladhan.com/v1/timingsByCity', [
+        //     'city' => 'Jakarta',
+        //     'country' => 'Indonesia',
+        //     'method' => 5, // Metode perhitungan (misalnya: 5 untuk Metode Ithna Ashari)
+        // ]);
+    
+        // $prayerTimes = $response->json()['data']['timings'];
+
+        return view('v_schedule', ['title' => $title]);
+        // return view('v_schedule', ['title' => $title], compact('prayerTimes'));
     }
 }
