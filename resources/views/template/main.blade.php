@@ -346,6 +346,14 @@
                 }
             });
         });
+
+    <?php if (session()->has('swal_icon')) {?>
+        Swal.fire({
+            icon: "<?= session()->get('swal_icon') ?>",
+            title: "<?= session()->get('swal_title') ?>",
+            text: "<?= session()->get('swal_text') ?>",
+        });
+    <?php } ?>
 </script>
 
 <script type="text/javascript">

@@ -32,7 +32,10 @@ class Auth_userController extends Controller
         ])->validate();
 
         if (!Auth::attempt($request->only('email','password'), $request->boolean('remember'))){
-            $request->session()->flash('error', 'Kata sandi yang Anda masukkan salah');
+            session()->flash('swal_icon', 'error');
+            session()->flash('swal_title', 'Maaf');
+            session()->flash('swal_text', 'Password anda salah, silahkan masukkan kembali email dan password anda');
+
             return redirect()->route('user/login');
         }else{
             $request->session()->regenerate();
@@ -159,6 +162,10 @@ class Auth_userController extends Controller
 
         // Auth::login($user);
 
+        session()->flash('swal_icon', 'success');
+        session()->flash('swal_title', 'Selamat');
+        session()->flash('swal_text', 'Akun anda berhasil dibuat, silahkan lakukan validasi pada email anda');
+
         return redirect()->route('user/login');
 
     }
@@ -208,6 +215,9 @@ class Auth_userController extends Controller
         $data->password = Hash::make("password");
         $data->save();
         
+        session()->flash('swal_icon', 'success');
+        session()->flash('swal_title', 'Selamat');
+        session()->flash('swal_text', 'Password anda berhasil di reset, silahkan cek email anda');
         return redirect('/auth_user/login')->with('success', 'Data Berhasil Ditambah');
     }
 }
