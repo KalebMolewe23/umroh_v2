@@ -12,6 +12,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\DB;
 use App\Mail\KirimEmail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class Auth_userController extends Controller
 {
@@ -121,12 +122,34 @@ class Auth_userController extends Controller
 
         // event(new Registered($user));
 
-        $pesan = "<h4>Selamat anda berhasil membuat akun.</h4>";
-        $pesan .= "<p>Selanjutnya klik tombol dibawah ini untuk verifikasi akun anda</p>";
-        $pesan .= "
-            <form action='{{ url('/agen/update_status_money_pending_dp/') }}' method='post'>
-                <button type='submit' class='btn btn-success'>Aktivation Account</button>
-            </form>
+        //update email verifikasi saat melakukan verify akun melalui email
+        $data_id_user = DB::table('users')->where('email', $request->email)->first();
+        $token = csrf_field();
+        $verificationUrl = URL::to('verification_account/' . $data_id_user->id);
+
+        $data_web = DB::table('cms')->first();
+        //get image didalam asset dan kolom dari cms
+        $imageData = base64_encode(file_get_contents(asset('assets/img/' . $data_web->logo)));
+        $imageHtml = "<img src='data:image/png;base64,{$imageData}' class='card-img-top' alt='Logo'>";
+        $pesan = "
+            <center>
+                <div class='card' style='width: 41rem;position: relative;display: flex;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #fff;background-clip: border-box;border: 1px solid rgba(0,0,0,.125);border-radius: 1.25rem;'>
+                    <br>
+                    $imageHtml
+                    <div class='card-body'>
+                        <h3 style='color:black'>Assalamualaikum, Selamat akun anda berhasil dibuat.</h3>
+                        <p style='color:black'>Selanjutnya klik tombol dibawah ini untuk melakukan verifikasi akun anda.</p>
+                        <form action='$verificationUrl' method='POST'>
+                            $token                        
+                            <button style='width: 142px;background-color: #15baef;border-radius: 10px;color: white;height: 50px;'>
+                                <strong>Verifikasi Akun</strong>
+                            </button>
+                        </form>    
+                        <br><br>
+                        <center><p style='color:red;text-decoration: none;'>Info lebih lanjut, silahkan klik di link ini<a style='color:red;text-decoration: none;' href='https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0'> https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0</a></p></center>
+                    </div>
+                </div>
+            </center>
         ";
         $data_email = [
             'isi' => $pesan
@@ -145,5 +168,14 @@ class Auth_userController extends Controller
         $request->session()->invalidate();
 
         return redirect('/');
+    }
+
+    public function verify_account(Request $request, $id){
+        $data = User::find($id);
+        
+        $data->email_verified_at = now();
+        $data->save();
+
+        return redirect('/auth_user/login')->with('success', 'Data Berhasil Ditambah');
     }
 }
