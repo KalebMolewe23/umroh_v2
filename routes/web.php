@@ -66,6 +66,7 @@ Route::post('/auth_user/register', [Auth_userController::class, 'save_registrasi
 Route::get('/auth_user/getRegencies/', [Auth_userController::class, 'getRegencies'])->name('auth_user/getRegencies');
 Route::get('/auth_user/logout', [Auth_userController::class, 'logout']);
 Route::post('/verification_account/{id}', [Auth_userController::class, 'verify_account'])->name('/verification_account');
+Route::post('/change_password', [Auth_userController::class, 'change_password'])->name('/change_password');
 
 Route::get('/email/verify', function() {
     return view('auth.verify-email');

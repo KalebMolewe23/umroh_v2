@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\DB;
 use App\Mail\KirimEmail;
+use App\Mail\ResetMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 
@@ -31,14 +32,14 @@ class Auth_userController extends Controller
         ])->validate();
 
         if (!Auth::attempt($request->only('email','password'), $request->boolean('remember'))){
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed')
-            ]);
+            $request->session()->flash('error', 'Kata sandi yang Anda masukkan salah');
+            return redirect()->route('user/login');
+        }else{
+            $request->session()->regenerate();
+    
+            return redirect()->route('home');
         }
 
-        $request->session()->regenerate();
-
-        return redirect()->route('home');
     }
 
     public function register(){
@@ -176,6 +177,37 @@ class Auth_userController extends Controller
         $data->email_verified_at = now();
         $data->save();
 
+        return redirect('/auth_user/login')->with('success', 'Data Berhasil Ditambah');
+    }
+
+    public function change_password(Request $request){
+
+        $email = $request->email;
+        
+        $pesan = "
+            <center>
+                <div class='card' style='width: 41rem;position: relative;display: flex;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #fff;background-clip: border-box;border: 1px solid rgba(0,0,0,.125);border-radius: 1.25rem;'>
+                    <br>
+                    <div class='card-body'>
+                        <h3 style='color:black'>Assalamualaikum, berikut informasi password baru anda.</h3>
+                        <p style='color:black'>Email : $email</p>
+                        <p style='color:black'>Password : password</p>
+                        <br><br><center><p style='color:red;text-decoration: none;'>Info lebih lanjut, silahkan klik di link ini<a style='color:red;text-decoration: none;' href='https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0'> https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0</a></p></center>
+                    </div>
+                </div>
+            </center>
+        ";
+        $data_email = [
+            'isi' => $pesan
+        ];
+        Mail::to("$email")->send(new ResetMail($data_email));
+        
+        $data_user = DB::table('users')->where('email', $email)->first();
+
+        $data = User::find($data_user->id);
+        $data->password = Hash::make("password");
+        $data->save();
+        
         return redirect('/auth_user/login')->with('success', 'Data Berhasil Ditambah');
     }
 }
