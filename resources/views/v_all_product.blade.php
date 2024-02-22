@@ -9,6 +9,8 @@ use App\Models\Itinery;
 
 @extends('template.main')
 
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 @section('content')
     <div class="container" style="margin-top: 30px;z-index: 999; position:relative">
         <div class="row">
@@ -59,32 +61,22 @@ use App\Models\Itinery;
                         @csrf
                         <div class="row">
                             <div class="col">
-                                <select name="order_by" class="form-control order_by">
-                                    <option value="paling_awal">Keberangkatan Paling Awal</option>
-                                    <option value="paling_murah">DP Paling Murah</option>
-                                    <option value="paling_mahal">DP Paling Mahal</option>
-                                </select>
+                                <div class="form-group">
+                                    <label class="form-label">Tanggal Awal</label>
+                                    <input autocomplete="off" type="text" class="form-control tanggal_awal" name="tanggal_awal">
+                                </div>
                             </div>
                             <div class="col">
-                                <select name="departure_date" class="form-control departure_date">
-                                    <option value="">Semua Waktu</option>
-                                    <option value="1">Januari</option>
-                                    <option value="2">Februari</option>
-                                    <option value="3">Maret</option>
-                                    <option value="4">April</option>
-                                    <option value="5">Mei</option>
-                                    <option value="6">Juni</option>
-                                    <option value="7">July</option>
-                                    <option value="8">Agustus</option>
-                                    <option value="9">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
+                                <div class="form-group">
+                                    <label class="form-label">Tanggal Akhir</label>
+                                    <input autocomplete="off" type="text" class="form-control tanggal_akhir" name="tanggal_akhir">
+                                </div>
                             </div>
                             <div class="col">
-                                <button class="btn btn-primary">Filter</button>
-                                <button type="button" class="btn btn-light reset">Reset</button>
+                                <div class="form-group" style="margin-top: 32px">
+                                    <button class="btn btn-primary">Filter</button>
+                                    <button type="button" class="btn btn-light reset">Reset</button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -297,16 +289,18 @@ use App\Models\Itinery;
 @endsection
 
 @push('js')
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-    const departure_date = "{{ @$_GET['departure_date'] ?? "" }}";
+    const tanggal_awal = "{{ @$_GET['tanggal_awal'] ?? "" }}";
+    const tanggal_akhir = "{{ @$_GET['tanggal_akhir'] ?? "" }}";
     const order_by = "{{ @$_GET['order_by'] ?? "" }}";
     
     $(document).ready(function(){
-        $('.departure_date').val(departure_date);
-        $('.order_by').val(order_by);
-        if (order_by == "") {
-            $('.order_by').val('paling_awal');
-        }
+        $('.tanggal_awal').val(tanggal_awal);
+        $('.tanggal_akhir').val(tanggal_akhir);
+        $('.tanggal_awal, .tanggal_akhir').datepicker({
+            dateFormat: 'dd-mm-yy',
+        });
     });
 
     $('.btn-category-packet').click(function() {

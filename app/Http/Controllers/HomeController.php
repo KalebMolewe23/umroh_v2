@@ -150,26 +150,13 @@ class HomeController extends Controller
             });
         }
         
-        if (!empty($params['order_by'])) {
-            if ($params['order_by'] == "paling_awal") {
-                $query->join('packets', 'photos.id_packet', '=', 'packets.id')
-                ->orderBy('packets.departure_date', 'ASC')
-                ->select('photos.*');
-            }
-            if ($params['order_by'] == "paling_murah") {
-                $query->join('packets', 'photos.id_packet', '=', 'packets.id')
-                ->orderBy('packets.dp', 'ASC')
-                ->select('photos.*');
-            }
-            if ($params['order_by'] == "paling_mahal") {
-                $query->join('packets', 'photos.id_packet', '=', 'packets.id')
-                ->orderBy('packets.dp', 'DESC')
-                ->select('photos.*');
-            }
-        }else{
-            $query->join('packets', 'photos.id_packet', '=', 'packets.id')
-            ->orderBy('packets.departure_date', 'ASC')
-            ->select('photos.*');
+        if (!empty($params['tanggal_awal'])) {
+            $tanggal_awal = date('Y-m-d', strtotime($params['tanggal_awal']));
+            $tanggal_akhir = date('Y-m-d', strtotime($params['tanggal_akhir']));
+            $query->whereHas('packets', function ($query) use ($tanggal_awal, $tanggal_akhir) {
+                $query->where('departure_date', '>=', $tanggal_awal);
+                $query->where('departure_date', '<=', $tanggal_akhir);
+            });
         }
 
         $data = $query->get();
