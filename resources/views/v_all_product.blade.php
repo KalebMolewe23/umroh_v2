@@ -15,7 +15,7 @@ use App\Models\Itinery;
     <div class="container" style="margin-top: 30px;z-index: 999; position:relative">
         <div class="row">
             <div class="col-3">
-                <div class="card"><br>
+                <div class="card" data-aos="zoom-out-right"><br>
                     <h5>&nbsp;&nbsp;Lokasi Keberangkatan</h5>
                     <center>
                         <div class="boxContainer">
@@ -56,7 +56,7 @@ use App\Models\Itinery;
             </div>
             <div class="col-9">
                 <h4>Paket Umroh</h4><br>
-                <div class="card_packet">
+                <div class="card_packet" data-aos="zoom-out-left">
                     <form action="/all_product" method="GET">
                         @csrf
                         <div class="row">
@@ -227,7 +227,7 @@ use App\Models\Itinery;
                                 }
                             @endphp
 
-                            <div class="col-md-4 mt-2 list-item">
+                            <div class="col-md-4 mt-2 list-item" data-aos="zoom-out-left">
                                 <a style="color:black; text-decoration:none;" href="{{ url('/detail-product/' . $itineries->id . '&day=' . $counter + 1) }}">
                                     <div class="card">
                                         <div class="card-body">

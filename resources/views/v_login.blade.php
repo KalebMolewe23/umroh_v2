@@ -12,16 +12,16 @@
             <div class="row">
                 <h4>Mengapa memilih website kami?</h4><br><br>
                 <div class="col">
-                    <div class="row">
+                    <div class="row" data-aos="zoom-out-right">
                         <div class="col-3">
                             <img src="{!! asset('assets/img/Image_33_222x.png') !!}" width="100px">
                         </div>
-                        <div class="col-9">
+                        <div class="col-9" >
                             <h5>Jaminan Berangkat dan Pembayaran Aman</h5>
                             <p>Dana aman 100% dan hanya kami bayarkan kepada biro umroh setelah anda mendapatkan tiket pesawat dan visa.</p>
                         </div>
                     </div><br>
-                    <div class="row">
+                    <div class="row" data-aos="zoom-out-right">
                         <div class="col-3">
                             <img src="{!! asset('assets/img/Image_36_222x.png') !!}" width="100px">
                         </div>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card"><br>
+                    <div class="card" data-aos="zoom-out-left"><br>
                         <center><h5>Assalamualaikum,</h5>
                         <p>Masukkan Data Diri Anda</p>
                         <form action="{{ route('login.aksi_user') }}" method="POST" class="register-form" id="login-form">
