@@ -18,6 +18,16 @@
     <script type="text/javascript"
     src="https://app.sandbox.midtrans.com/snap/snap.js"
     data-client-key="{{ config('midtrans.client_key') }}"></script>
+
+    <!-- blog css -->
+    <link rel="stylesheet" href="{{ asset('assets/blog/fonts/icomoon/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/blog/fonts/flaticon/font/flaticon.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/blog/css/tiny-slider.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/blog/css/aos.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/blog/css/glightbox.min.css') }}" />
+    <!-- <link rel="stylesheet" href="{{ asset('assets/blog/css/style.css') }}" /> -->
+
+    <link rel="stylesheet" href="{{ asset('assets/blog/css/flatpickr.min.css') }}" />
 </head>
 
 <style>
@@ -185,9 +195,9 @@
                 </ul>
                 <span class="navbar-text" style="margin-right:20px">
                     <i class="fas fa-kaaba"></i>
-                    <a style="text-decoration: none;padding-right:20px;" class="nav-item" href="http://127.0.0.1:8000/all_product">Paket Umrah</a>
+                    <a style="text-decoration: none;padding-right:20px;" class="nav-item" href="{{ url('/all_product') }}">Paket Umrah</a>
                     <i class="far fa-newspaper"></i>
-                    <a style="text-decoration: none;padding-right:20px;" class="nav-item" href="#">Blog</a>
+                    <a style="text-decoration: none;padding-right:20px;" class="nav-item" href="{{ url('/blog') }}#">Blog</a>
                     <i class="fas fa-th-large"></i>
                     <a style="text-decoration: none;" class="nav-item" href="#">Lainnya</a>
                 </span>

@@ -8,6 +8,7 @@ Route::get('/all_product', [HomeController::class, 'all_product'])->name('/all_p
 Route::get('/search_city', [HomeController::class, 'search_city'])->name('/search_city');
 Route::get('/detail-product/{id}', [HomeController::class, 'detailProduct']);
 Route::post('/home/store', [HomeController::class, 'store'])->name('home.store');
+Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 
 // user profile
 Route::get('/get-data-transaction/{id}', [User_profileController::class, 'getData']);

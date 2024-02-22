@@ -177,4 +177,10 @@ class HomeController extends Controller
 
         return view('v_all_product', compact('posts','search', 'data'));
     }
+
+    public function blog(){
+        $title = "Blog";
+
+        return view('v_blog', ['title' => $title]);
+    }
 }
