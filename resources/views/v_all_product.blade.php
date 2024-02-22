@@ -21,10 +21,10 @@ use App\Models\Itinery;
                                 <form method="get" action="/search_city">
                                     <tr>
                                         <td>
-                                            <input type="text" name="search" placeholder="Cari Kota" class="search">
+                                            <input type="text" name="search" placeholder="Cari Kota" class="search_city search">
                                         </td>
                                         <td>
-                                            <button type="submit" class="button_search_data"><i class='bx bx-search-alt-2'></i></button>
+                                            <button type="button" class="button_search_data"><i class='bx bx-search-alt-2'></i></button>
                                         </td>
                                     </tr>
                                 </form>
@@ -55,35 +55,39 @@ use App\Models\Itinery;
             <div class="col-9">
                 <h4>Paket Umroh</h4><br>
                 <div class="card_packet">
-                    <div class="row">
-                        <div class="col">
-                            <select class="form-control">
-                                <option value="">Keberangkatan Paling Awal</option>
-                                <option value="">Paling Murah</option>
-                                <option value="">Paling Mahal</option>
-                            </select>
+                    <form action="/all_product" method="GET">
+                        @csrf
+                        <div class="row">
+                            <div class="col">
+                                <select name="order_by" class="form-control order_by">
+                                    <option value="paling_awal">Keberangkatan Paling Awal</option>
+                                    <option value="paling_murah">DP Paling Murah</option>
+                                    <option value="paling_mahal">DP Paling Mahal</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select name="departure_date" class="form-control departure_date">
+                                    <option value="">Semua Waktu</option>
+                                    <option value="1">Januari</option>
+                                    <option value="2">Februari</option>
+                                    <option value="3">Maret</option>
+                                    <option value="4">April</option>
+                                    <option value="5">Mei</option>
+                                    <option value="6">Juni</option>
+                                    <option value="7">July</option>
+                                    <option value="8">Agustus</option>
+                                    <option value="9">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary">Filter</button>
+                                <button type="button" class="btn btn-light reset">Reset</button>
+                            </div>
                         </div>
-                        <div class="col">
-                            <select class="form-control">
-                                <option value="">Semua Waktu</option>
-                                <option value="1">Januari</option>
-                                <option value="2">Februari</option>
-                                <option value="3">Maret</option>
-                                <option value="4">April</option>
-                                <option value="5">Mei</option>
-                                <option value="6">Juni</option>
-                                <option value="7">July</option>
-                                <option value="8">Agustus</option>
-                                <option value="9">September</option>
-                                <option value="10">Oktober</option>
-                                <option value="11">November</option>
-                                <option value="12">Desember</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <button class="btn btn-primary">Filter</button>
-                        </div>
-                    </div>
+                    </form>
                     <br>
                 </div>
                 
@@ -258,6 +262,7 @@ use App\Models\Itinery;
 
                                                 <span style="display: none" class="price-dp">{{ $item->packets->dp }}</span>
                                                 <span style="display: none" class="category-packet">{{ $item->packets->id_category_packet }}</span>
+                                                <span style="display: none" class="departure-city">{{ $item->packets->departure_city }}</span>
                                             </div>
                                             <hr>
                                             <div class="row">
@@ -293,10 +298,25 @@ use App\Models\Itinery;
 
 @push('js')
 <script>
+    const departure_date = "{{ @$_GET['departure_date'] ?? "" }}";
+    const order_by = "{{ @$_GET['order_by'] ?? "" }}";
+    
+    $(document).ready(function(){
+        $('.departure_date').val(departure_date);
+        $('.order_by').val(order_by);
+        if (order_by == "") {
+            $('.order_by').val('paling_awal');
+        }
+    });
+
     $('.btn-category-packet').click(function() {
         $('.btn-category-packet').removeClass('btn-bordered');
         $(this).addClass('btn-bordered');
         filterData();
+    });
+
+    $('.reset').click(function() {
+        window.location.href = '/all_product';
     });
 
     $('.btn-price').click(function() {
@@ -305,22 +325,31 @@ use App\Models\Itinery;
         filterData();
     });
 
+    $('.button_search_data').click(function(){
+        filterData();
+    })
+
     function filterData() {
         var id = $('.btn-category-packet.btn-bordered').data('id');
         var priceVal = $('.btn-price.btn-bordered').data('price');
+        var departureCityVal = $('.search_city').val();
 
         $('.list-item').each(function() {
             var idCategory = $(this).find('.category-packet').text();
             var priceText = $(this).find('.price-dp').text();
+            var departureCity = $(this).find('.departure-city').text();
             var price = parseInt(priceText);
 
-            if ((priceVal == 0 || priceVal == undefined) && (id == 0 || id == idCategory)) {
+            departureCity = departureCity.toLowerCase();
+            departureCityVal = departureCityVal.toLowerCase();
+
+            if ((priceVal == 0 || priceVal == undefined) && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
                 $(this).show();
-            } else if (priceVal == 1 && price < 30000000 && (id == 0 || id == idCategory)) {
+            } else if (priceVal == 1 && price < 30000000 && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
                 $(this).show();
-            } else if (priceVal == 2 && price >= 30000000 && price <= 40000000 && (id == 0 || id == idCategory)) {
+            } else if (priceVal == 2 && price >= 30000000 && price <= 40000000 && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
                 $(this).show();
-            } else if (priceVal == 3 && price >= 40000000 && (id == 0 || id == idCategory)) {
+            } else if (priceVal == 3 && price >= 40000000 && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
                 $(this).show();
             } else {
                 $(this).hide();

@@ -141,7 +141,38 @@ class HomeController extends Controller
     }
 
     public function all_product(){
-        $data = Photo::with('packets.tiketGroup', 'hotels')->orderBy('id','DESC')->get();
+        $params = $_GET;
+        $query = Photo::with('packets.tiketGroup', 'hotels');
+
+        if (!empty($params['departure_date'])) {
+            $query->whereHas('packets', function ($query) use ($params) {
+                $query->whereMonth('departure_date', '=', $params['departure_date']);
+            });
+        }
+        
+        if (!empty($params['order_by'])) {
+            if ($params['order_by'] == "paling_awal") {
+                $query->join('packets', 'photos.id_packet', '=', 'packets.id')
+                ->orderBy('packets.departure_date', 'ASC')
+                ->select('photos.*');
+            }
+            if ($params['order_by'] == "paling_murah") {
+                $query->join('packets', 'photos.id_packet', '=', 'packets.id')
+                ->orderBy('packets.dp', 'ASC')
+                ->select('photos.*');
+            }
+            if ($params['order_by'] == "paling_mahal") {
+                $query->join('packets', 'photos.id_packet', '=', 'packets.id')
+                ->orderBy('packets.dp', 'DESC')
+                ->select('photos.*');
+            }
+        }else{
+            $query->join('packets', 'photos.id_packet', '=', 'packets.id')
+            ->orderBy('packets.departure_date', 'ASC')
+            ->select('photos.*');
+        }
+
+        $data = $query->get();
         return view('v_all_product', compact('data'));
     }
 
