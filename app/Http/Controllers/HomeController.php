@@ -185,6 +185,30 @@ class HomeController extends Controller
         return view('v_blog', ['title' => $title]);
     }
 
+    public function all_blog(){
+        $title = "Semua Data Blog";
+
+        $content = DB::table('title_blogs')
+        ->select('image_blog', 'title_blogs.created_at', 'name_type_blog', 'title_blog')
+        ->join('blog_types', 'blog_types.id', '=', 'title_blogs.id_blog_type')
+        ->get();
+
+        $latest = DB::table('title_blogs')
+        ->select('image_blog', 'title_blogs.created_at', 'name_type_blog', 'title_blog')
+        ->join('blog_types', 'blog_types.id', '=', 'title_blogs.id_blog_type')
+        ->latest()
+        ->take(3)
+        ->get();
+
+        $category = DB::table('title_blogs')
+        ->select('blog_types.id', 'name_type_blog')
+        ->join('blog_types', 'blog_types.id', '=', 'title_blogs.id_blog_type')
+        ->distinct()
+        ->get();
+
+        return view('v_all_blog', ['title' => $title, 'content' => $content, 'latest' => $latest, 'category' => $category]);
+    }
+
     public function schedule(){
         $title = "Jadwal Sholat & Al-quran";
 

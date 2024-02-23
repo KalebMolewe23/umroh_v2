@@ -17,7 +17,7 @@
             <h4 class="posts-entry-title" style="color:black"><?= $blog_1->name_type_blog; ?></h4>
           </div>
           <div class="col-sm-6 text-sm-end">
-            <a href="category.html" style="color:black;text-decoration: none;" class="read-more">View All</a>
+            <a href="{{ url('/all_blog') }}" style="color:black;text-decoration: none;" class="read-more">View All</a>
           </div>
       </div>
 

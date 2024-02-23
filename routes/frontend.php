@@ -9,6 +9,7 @@ Route::get('/search_city', [HomeController::class, 'search_city'])->name('/searc
 Route::get('/detail-product/{id}', [HomeController::class, 'detailProduct']);
 Route::post('/home/store', [HomeController::class, 'store'])->name('home.store');
 Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
+Route::get('/all_blog', [HomeController::class, 'all_blog'])->name('all_blog');
 Route::get('/schedule', [HomeController::class, 'schedule'])->name('schedule');
 
 // user profile
