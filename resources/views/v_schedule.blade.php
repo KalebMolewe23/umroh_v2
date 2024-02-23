@@ -23,17 +23,18 @@
             display: inline-block;
             text-align: center;
             position: relative;
+            text-align: center;
         }
         
         .clock span::after{
             font-size: 16px;
             position: absolute;
-            bottom: -5px;
+            bottom: 5px;
             left: 50%;
             transform: translateX(-50%);
         }
 
-        #hrs::after{
+        /* #hrs::after{
             content: 'Jam';
         }
 
@@ -43,7 +44,7 @@
 
         #sec::after{
             content: 'Detik';
-        }
+        } */
     </style>
 
     <div class="container" style="margin-top: 30px;z-index: 999; position:relative">
