@@ -17,7 +17,7 @@
             <h4 class="posts-entry-title" style="color:black"><?= $blog_1->name_type_blog; ?></h4>
           </div>
           <div class="col-sm-6 text-sm-end">
-            <a href="{{ url('/all_blog') }}" style="color:black;text-decoration: none;" class="read-more">View All</a>
+            <a href="{{ url('/all_blog/'.$blog_1->id) }}" style="color:black;text-decoration: none;" class="read-more">View All</a>
           </div>
       </div>
 
@@ -25,7 +25,7 @@
         @foreach($content_blog_1 as $v_content_blog_1)
           <div class="col-lg-4 mb-4">
             <div class="post-entry-alt">
-              <a href="single.html" class="img-link"
+              <a href="{{ url('/content_blog/'.$v_content_blog_1->id) }}" class="img-link"
                 ><img
                   src="{{ asset('/assets/blog/images/'.$v_content_blog_1->image_blog) }}"
                   alt="Image"
@@ -33,7 +33,7 @@
               /></a>
               <div class="excerpt">
                 <h5>
-                  <a href="single.html" style="color:black;text-decoration: none;">
+                  <a href="{{ url('/content_blog/'.$v_content_blog_1->id) }}" style="color:black;text-decoration: none;">
                     {{ $v_content_blog_1->title_blog }}
                   </a>
                 </h5>
@@ -63,7 +63,7 @@
           <h4 class="posts-entry-title">{{ $blog_2->name_type_blog }}</h4>
         </div>
         <div class="col-sm-6 text-sm-end">
-          <a href="category.html" class="read-more" style="color:black;text-decoration: none;">View All</a>
+          <a href="{{ url('/all_blog/'.$blog_2->id) }}" class="read-more" style="color:black;text-decoration: none;">View All</a>
         </div>
       </div>
 
@@ -71,7 +71,7 @@
         @foreach($content_blog_2 as $v_content_blog_2)
           <div class="col-md-6 col-lg-3">
             <div class="blog-entry">
-              <a href="single.html" class="img-link">
+              <a href="{{ url('/content_blog/'.$v_content_blog_2->id) }}" class="img-link">
                 <img
                   src="{{ asset('/assets/blog/images/'.$v_content_blog_2->image_blog) }}"
                   alt="Image"
@@ -79,7 +79,7 @@
                 />
               </a>
               <h5>
-                <a href="single.html" style="color:black;text-decoration: none;"
+                <a href="{{ url('/content_blog/'.$v_content_blog_2->id) }}" style="color:black;text-decoration: none;"
                   >{{ $v_content_blog_2->title_blog }}</a
                 >
               </h5>

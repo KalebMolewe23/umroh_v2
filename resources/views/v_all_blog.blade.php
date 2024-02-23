@@ -12,7 +12,7 @@
 
                     @foreach($content as $v_content)
                         <div class="blog-entry d-flex blog-entry-search-item" data-aos="zoom-out-left">
-                            <a href="single.html" class="img-link me-4">
+                            <a href="{{ url('/content_blog/'.$v_content->id) }}" class="img-link me-4">
                                 <img stle="width:300px;" src="{{ asset('/assets/blog/images/'.$v_content->image_blog) }}" alt="Image" class="img-fluid" />
                             </a>
                             <div>
@@ -21,12 +21,12 @@
                                 >{{ $date->format('d F Y'); }} &bullet; <a href="#" style="color:black;text-decoration: none;">{{ $v_content->name_type_blog }}</a></span
                                 >
                                 <h4>
-                                <a style="color:black;text-decoration: none;" href="single.html"
+                                <a style="color:black;text-decoration: none;" href="{{ url('/content_blog/'.$v_content->id) }}"
                                     >{{ $v_content->title_blog }}</a
                                 >
                                 </h4>
                                 <p>
-                                <a href="single.html" class="btn btn-sm btn-outline-primary" 
+                                <a href="{{ url('/content_blog/'.$v_content->id) }}" class="btn btn-sm btn-outline-primary" 
                                     >Read More</a
                                 >
                                 </p>
@@ -54,7 +54,7 @@
                             <ul style="list-style-type: none;">
                                 @foreach($latest as $v_latest)
                                     <li>
-                                        <a style="color:black;text-decoration: none;" href="">
+                                        <a style="color:black;text-decoration: none;" href="{{ url('/content_blog/'.$v_latest->id) }}">
                                             <img
                                                 src="{{ asset('/assets/blog/images/'.$v_latest->image_blog) }}"
                                                 alt="Image placeholder"
@@ -88,7 +88,7 @@
                                 ->count();
                             ?>
                                 <li>
-                                    <a style="color:black;text-decoration: none;" href="#">{{ $v_category->name_type_blog }} <span>({{ $total }})</span></a>
+                                    <a style="color:black;text-decoration: none;" href="{{ url('/all_blog/'.$v_category->id_blog_type) }}">{{ $v_category->name_type_blog }} <span>({{ $total }})</span></a>
                                 </li>
                             <?php } ?>
                         </ul>
