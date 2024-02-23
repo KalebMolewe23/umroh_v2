@@ -44,7 +44,7 @@
                             type="text"
                             class="form-control"
                             id="s"
-                            placeholder="Type a keyword and hit enter"
+                            placeholder="Cari postingan lainnya dan klik enter"
                             />
                         </form>
                     </div>
