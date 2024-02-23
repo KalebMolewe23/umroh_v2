@@ -33,7 +33,7 @@
                             type="text"
                             class="form-control"
                             id="s"
-                            placeholder="Cari postingan lainnya"
+                            placeholder="Cari postingan lainnya dan klik enter"
                             />
                         </form>
                     </div><br>
