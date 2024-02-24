@@ -143,12 +143,9 @@ class Auth_userController extends Controller
                     <div class='card-body'>
                         <h3 style='color:black'>Assalamualaikum, Selamat akun anda berhasil dibuat.</h3>
                         <p style='color:black'>Selanjutnya klik tombol dibawah ini untuk melakukan verifikasi akun anda.</p>
-                        <form action='$verificationUrl' method='POST'>
-                            $token                        
-                            <button style='width: 142px;background-color: #15baef;border-radius: 10px;color: white;height: 50px;'>
-                                <strong>Verifikasi Akun</strong>
-                            </button>
-                        </form>    
+                        <a href='$verificationUrl' target='_blank' style='width: 142px;background-color: #15baef;border-radius: 10px;color: white;height: 50px;'>
+                            <strong>Verifikasi Akun</strong>
+                        </a>
                         <br><br>
                         <center><p style='color:red;text-decoration: none;'>Info lebih lanjut, silahkan klik di link ini<a style='color:red;text-decoration: none;' href='https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0'> https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0</a></p></center>
                     </div>
