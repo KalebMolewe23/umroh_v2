@@ -182,7 +182,9 @@ class HomeController extends Controller
     public function blog(){
         $title = "Blog";
 
-        return view('v_blog', ['title' => $title]);
+        $keyword = (!empty($_GET['keyword']) ? $_GET['keyword'] : null);
+
+        return view('v_blog', ['title' => $title, 'keyword' => $keyword]);
     }
 
     public function all_blog($id){

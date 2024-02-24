@@ -27,12 +27,14 @@
                 </div><br>
                 <div class="col-md-12 col-lg-4 sidebar">
                     <div class="sidebar-box search-form-wrap" data-aos="zoom-out-right">
-                        <form action="#" class="sidebar-search-form">
+                        <form action="{{ route('blog') }}" method="GET" class="sidebar-search-form">
+                            @csrf
                             <span class="bi-search"></span>
                             <input
                             type="text"
                             class="form-control"
                             id="s"
+                            name="keyword"
                             placeholder="Cari postingan lainnya dan klik enter"
                             />
                         </form>

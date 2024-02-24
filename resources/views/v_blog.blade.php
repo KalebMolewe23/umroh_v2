@@ -7,10 +7,13 @@
       <?php
         $blog_1 = DB::table('blog_types')->where('id', 1)->first();
 
-        $content_blog_1 = DB::table('title_blogs')
-        ->where('id_blog_type', $blog_1->id)
-        ->take(3)
-        ->get();
+        $query_1 = DB::table('title_blogs')->where('id_blog_type', $blog_1->id);
+
+        if ($keyword != null) {
+          $query_1->where('title_blog', 'like', '%'.$keyword.'%');
+        }
+
+        $content_blog_1 = $query_1->take(3)->get();
       ?>
       <div class="d-flex justify-content-between mb-4">
           <div class="col-sm-6">
@@ -50,12 +53,15 @@
     <div class="container" style="margin-top: 30px;z-index: 999; position:relative">
 
       <?php
-        $blog_2 = DB::table('blog_types')->whereNotIn('id', [1])->first();
-        
-        $content_blog_2 = DB::table('title_blogs')
-        ->where('id_blog_type', $blog_2->id)
-        ->take(4)
-        ->get();
+        $blog_2 = DB::table('blog_types')->where('id', '!=', 1)->first();
+
+        $query_2 = DB::table('title_blogs')->where('id_blog_type', $blog_2->id);
+
+        if ($keyword != null) {
+          $query_2->where('title_blog', 'like', '%'.$keyword.'%');
+        }
+
+        $content_blog_2 = $query_2->take(3)->get();
       ?>
 
       <div class="d-flex justify-content-between mb-4">
