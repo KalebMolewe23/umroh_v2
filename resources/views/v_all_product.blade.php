@@ -47,9 +47,8 @@ use App\Models\Itinery;
                     <h5>&nbsp;&nbsp;Biaya DP Umroh</h5>
                     <center>
                         <button class="button-search btn-price" data-price="0">Semua Biaya</button>
-                        <button class="button-search btn-price" data-price="1">< Rp 30jt</button>
-                        <button class="button-search btn-price" data-price="2">Rp 30jt - 40jt</button>
-                        <button class="button-search btn-price" data-price="3">> Rp 40jt</button>
+                        <button class="button-search btn-price" data-price="1">< Rp 5jt</button>
+                        <button class="button-search btn-price" data-price="2">> Rp 5jt</button>
                     </center>
                     <br>
                 </div>
@@ -339,11 +338,9 @@ use App\Models\Itinery;
 
             if ((priceVal == 0 || priceVal == undefined) && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
                 $(this).show();
-            } else if (priceVal == 1 && price < 30000000 && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
+            } else if (priceVal == 1 && price < 5000000 && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
                 $(this).show();
-            } else if (priceVal == 2 && price >= 30000000 && price <= 40000000 && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
-                $(this).show();
-            } else if (priceVal == 3 && price >= 40000000 && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
+            } else if (priceVal == 2 && price >= 5000000 && (id == 0 || id == idCategory) && (departureCityVal == "" || departureCityVal == departureCity)) {
                 $(this).show();
             } else {
                 $(this).hide();
