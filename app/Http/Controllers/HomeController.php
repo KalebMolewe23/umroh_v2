@@ -184,29 +184,33 @@ class HomeController extends Controller
 
         $keyword = (!empty($_GET['keyword']) ? $_GET['keyword'] : null);
 
-        return view('v_blog', ['title' => $title, 'keyword' => $keyword]);
+        $query_1 = DB::table('blog_contents')->select('blog_contents.id', 'thumbnail', 'users.name', 'blog_contents.title')->join('users', 'users.id', '=', 'blog_contents.id_user');
+
+        if ($keyword != null) {
+          $query_1->where('blog_contents.title', 'like', '%'.$keyword.'%');
+        }
+
+        $content_blog_1 = $query_1->take(3)->get();
+
+        return view('v_blog', ['title' => $title, 'keyword' => $keyword, 'blog_1' => $content_blog_1]);
     }
 
     public function all_blog($id){
         $title = "Semua Data Blog";
 
-        $content = DB::table('title_blogs')
-        ->select('image_blog', 'title_blogs.created_at', 'name_type_blog', 'title_blog', 'title_blogs.id')
-        ->join('blog_types', 'blog_types.id', '=', 'title_blogs.id_blog_type')
-        ->where('id_blog_type', $id)
+        $category = DB::table('blog_categories')->get();
+
+        $content = DB::table('blog_contents')
+        ->select('blog_contents.id', 'thumbnail', 'users.name', 'blog_contents.title', 'short_desc', 'long_desc', 'blog_contents.created_at', 'category_name')
+        ->join('blog_categories', 'blog_categories.id', '=', 'blog_contents.id_category')
+        ->join('users', 'users.id', '=', 'blog_contents.id_user')
+        ->where('blog_categories.id', $id)
         ->get();
 
-        $latest = DB::table('title_blogs')
-        ->select('image_blog', 'title_blogs.created_at', 'name_type_blog', 'title_blog', 'title_blogs.id')
-        ->join('blog_types', 'blog_types.id', '=', 'title_blogs.id_blog_type')
-        ->latest()
+        $latest = DB::table('blog_contents')
+        ->select('blog_contents.id', 'thumbnail', 'users.name', 'blog_contents.title', 'blog_contents.created_at')
+        ->join('users', 'users.id', '=', 'blog_contents.id_user')->latest()
         ->take(3)
-        ->get();
-
-        $category = DB::table('title_blogs')
-        ->select('blog_types.id', 'name_type_blog', 'id_blog_type')
-        ->join('blog_types', 'blog_types.id', '=', 'title_blogs.id_blog_type')
-        ->distinct()
         ->get();
 
         return view('v_all_blog', ['title' => $title, 'content' => $content, 'latest' => $latest, 'category' => $category]);
@@ -216,31 +220,22 @@ class HomeController extends Controller
 
         $title = "Isi Konten";
 
-        $data_title = DB::table('title_blogs')
-        ->where('id', $id)
+        $category = DB::table('blog_categories')->get();
+
+        $content = DB::table('blog_contents')
+        ->select('blog_contents.id', 'thumbnail', 'users.name', 'blog_contents.title', 'short_desc', 'long_desc')
+        ->join('blog_categories', 'blog_categories.id', '=', 'blog_contents.id_category')
+        ->join('users', 'users.id', '=', 'blog_contents.id_user')
+        ->where('blog_contents.id', $id)
         ->first();
 
-        $content = DB::table('content_blogs')
-        ->join('title_contents', 'title_contents.id', '=', 'content_blogs.id_content_title')
-        ->join('title_blogs', 'title_blogs.id', '=', 'title_contents.id_blog_title')
-        ->join('blog_types', 'blog_types.id', '=', 'title_blogs.id_blog_type')
-        ->where('id_blog_title', $id)
-        ->get();
-
-        $latest = DB::table('title_blogs')
-        ->select('image_blog', 'title_blogs.created_at', 'name_type_blog', 'title_blog', 'title_blogs.id')
-        ->join('blog_types', 'blog_types.id', '=', 'title_blogs.id_blog_type')
-        ->latest()
+        $latest = DB::table('blog_contents')
+        ->select('blog_contents.id', 'thumbnail', 'users.name', 'blog_contents.title', 'blog_contents.created_at')
+        ->join('users', 'users.id', '=', 'blog_contents.id_user')->latest()
         ->take(3)
         ->get();
 
-        $category = DB::table('title_blogs')
-        ->select('blog_types.id', 'name_type_blog', 'id_blog_type')
-        ->join('blog_types', 'blog_types.id', '=', 'title_blogs.id_blog_type')
-        ->distinct()
-        ->get();
-
-        return view('v_content_blog', ['title' => $title, 'data_title' => $data_title, 'content' => $content, 'latest' => $latest, 'category' => $category]);
+        return view('v_content_blog', ['title' => $title, 'content' => $content, 'latest' => $latest, 'category' => $category]);
     }
 
     public function schedule(){
