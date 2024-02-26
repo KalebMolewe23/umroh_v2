@@ -406,6 +406,16 @@ footer:after{
     font-size: 14px;
 }
 
+@media screen and (max-width: 988px){
+    .left-right-sec:nth-child(even) .text-inner {
+        margin: 55px -51px 0 0;
+    }
+
+    .sec1 .text{
+        width: 70%;
+    }
+}
+
 @media screen and (max-width: 600px){
     .timeline{
         margin: 50px auto;

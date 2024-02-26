@@ -21,6 +21,7 @@ use App\Http\Controllers\PacketController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\MoneyController;
 use App\Http\Controllers\KirimEmailController;
+use App\Http\Controllers\BlogController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,7 +66,7 @@ Route::get('/auth_user/register', [Auth_userController::class, 'register'])->nam
 Route::post('/auth_user/register', [Auth_userController::class, 'save_registrasi'])->name('register_customer.simpan');
 Route::get('/auth_user/getRegencies/', [Auth_userController::class, 'getRegencies'])->name('auth_user/getRegencies');
 Route::get('/auth_user/logout', [Auth_userController::class, 'logout']);
-Route::post('/verification_account/{id}', [Auth_userController::class, 'verify_account'])->name('/verification_account');
+Route::get('/verification_account/{id}', [Auth_userController::class, 'verify_account'])->name('/verification_account');
 Route::post('/change_password', [Auth_userController::class, 'change_password'])->name('/change_password');
 
 Route::get('/email/verify', function() {
@@ -251,6 +252,11 @@ Route::middleware('auth_agen')->group(function(){
     Route::get('/admin/information/{id}', [CmsController::class, 'information'])->name('/admin/information');
     Route::post('/admin/proses_update_information/{id}', [CmsController::class, 'proses_update_information'])->name('admin/proses_update_information/');
     Route::get('/admin/sosmed/', [CmsController::class, 'sosmed'])->name('/admin/sosmed');
+    Route::get('/admin/blog/', [BlogController::class, 'index'])->name('/admin/blog');
+    Route::post('/admin/save_blog/', [BlogController::class, 'save_blog'])->name('/admin/save_blog');
+    Route::post('/admin/edit_blog/{id}', [BlogController::class, 'edit_blog'])->name('/admin/edit_blog');
+    Route::DELETE('/admin/delete_blog/{id}', [BlogController::class, 'delete_blog'])->name('/admin/delete_blog');
+    Route::get('/admin/content_blog/', [BlogController::class, 'content_blog'])->name('/admin/content_blog');
     Route::post('/admin/proses_update_sosmed/{id}', [CmsController::class, 'proses_update_sosmed'])->name('admin/proses_update_sosmed/');
     Route::post('/admin/status_active_sosmed/{id}', [CmsController::class, 'status_active_sosmed'])->name('admin/status_active_sosmed/');
     Route::post('/admin/status_noactive_sosmed/{id}', [CmsController::class, 'status_noactive_sosmed'])->name('admin/status_noactive_sosmed/');

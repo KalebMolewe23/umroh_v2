@@ -1148,6 +1148,17 @@
             order: [[0, 'desc']]
         });
 
+        $('#ajax-data-category-blog').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('/admin/blog') }}",
+            columns: [
+                { data: 'category_name', name: 'category_name' },
+                { data: 'action', name: 'action', orderable: false },
+            ],
+            order: [[0, 'desc']]
+        });
+
         $('#ajax-crud-money-transaction').DataTable({
             processing: true,
             serverSide: true,

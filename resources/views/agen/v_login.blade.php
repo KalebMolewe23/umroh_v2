@@ -46,9 +46,6 @@
             </div>
             <div class="right-menu">
                 <ul>
-                    <li><a href="#about">Tentang Travel</a></li>
-                    <li><a href="#information">Tiket Group & Rontokan</a></li>
-                    <li><a href="#join">Gabung Sekarang</a></li>
                     <li><a href="#" onclick="toggle()"><button class="button-search">Login</button></a></li>
                 </ul>
             </div>

@@ -125,6 +125,12 @@
                 <div data-i18n="Basic">Social Media</div>
               </a>
             </li>
+            <li class="menu-item">
+              <a href="/admin/blog/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxl-blogger"></i>
+                <div data-i18n="Basic">Blog</div>
+              </a>
+            </li>
 
             <!-- Layouts -->
             <li class="menu-item">

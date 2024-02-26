@@ -133,13 +133,12 @@ class Auth_userController extends Controller
 
         $data_web = DB::table('cms')->first();
         //get image didalam asset dan kolom dari cms
-        $imageData = base64_encode(file_get_contents(asset('assets/img/' . $data_web->logo)));
-        $imageHtml = "<img src='data:image/png;base64,{$imageData}' class='card-img-top' alt='Logo'>";
+        // $imageData = base64_encode(file_get_contents(asset('assets/img/' . $data_web->logo)));
+        // $imageHtml = "<img src='data:image/png;base64,{$imageData}' class='card-img-top' alt='Logo'>";
         $pesan = "
             <center>
                 <div class='card' style='width: 41rem;position: relative;display: flex;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #fff;background-clip: border-box;border: 1px solid rgba(0,0,0,.125);border-radius: 1.25rem;'>
                     <br>
-                    $imageHtml
                     <div class='card-body'>
                         <h3 style='color:black'>Assalamualaikum, Selamat akun anda berhasil dibuat.</h3>
                         <p style='color:black'>Selanjutnya klik tombol dibawah ini untuk melakukan verifikasi akun anda.</p>
