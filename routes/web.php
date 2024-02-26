@@ -257,6 +257,9 @@ Route::middleware('auth_agen')->group(function(){
     Route::post('/admin/edit_blog/{id}', [BlogController::class, 'edit_blog'])->name('/admin/edit_blog');
     Route::DELETE('/admin/delete_blog/{id}', [BlogController::class, 'delete_blog'])->name('/admin/delete_blog');
     Route::get('/admin/content_blog/', [BlogController::class, 'content_blog'])->name('/admin/content_blog');
+    Route::post('/admin/save_content_blog/', [BlogController::class, 'save_content_blog'])->name('/admin/save_content_blog');
+    Route::post('/admin/edit_content/{id}', [BlogController::class, 'edit_content'])->name('/admin/edit_content');
+    Route::DELETE('/admin/delete_content/{id}', [BlogController::class, 'delete_content'])->name('/admin/delete_content');
     Route::post('/admin/proses_update_sosmed/{id}', [CmsController::class, 'proses_update_sosmed'])->name('admin/proses_update_sosmed/');
     Route::post('/admin/status_active_sosmed/{id}', [CmsController::class, 'status_active_sosmed'])->name('admin/status_active_sosmed/');
     Route::post('/admin/status_noactive_sosmed/{id}', [CmsController::class, 'status_noactive_sosmed'])->name('admin/status_noactive_sosmed/');

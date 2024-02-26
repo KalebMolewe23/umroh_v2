@@ -1159,6 +1159,28 @@
             order: [[0, 'desc']]
         });
 
+        $('#ajax-data-content-blog').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('/admin/content_blog') }}",
+            columns: [
+                { data: 'category_name', name: 'category_name' },
+                { data: 'name', name: 'name' },
+                { data: 'title', name: 'title' },
+                { 
+                    data: 'thumbnail',
+                    name: 'thumbnail',
+                    render: function(data, type, full, meta) {
+                        return '<img src="' + data + '" style="max-width:100px; max-height:100px;" />';
+                    },
+                    orderable: false,
+                    searchable: false
+                },
+                { data: 'action', name: 'action', orderable: false },
+            ],
+            order: [[0, 'desc']]
+        });
+
         $('#ajax-crud-money-transaction').DataTable({
             processing: true,
             serverSide: true,
