@@ -241,15 +241,10 @@ class HomeController extends Controller
     public function schedule(){
         $title = "Jadwal Sholat & Al-quran";
 
-        // $response = Http::get('https://api.aladhan.com/v1/timingsByCity', [
-        //     'city' => 'Jakarta',
-        //     'country' => 'Indonesia',
-        //     'method' => 5, // Metode perhitungan (misalnya: 5 untuk Metode Ithna Ashari)
-        // ]);
-    
-        // $prayerTimes = $response->json()['data']['timings'];
+        //Jakarta bulan 1
+        $response = Http::get('https://api.aladhan.com/v1/calendar/2024/1?latitude=-6.175110&longitude=106.865036&method=2');
+        $prayerTimes = $response->json()['data'];
 
-        return view('v_schedule', ['title' => $title]);
-        // return view('v_schedule', ['title' => $title], compact('prayerTimes'));
+        return view('v_schedule', ['title' => $title], compact('prayerTimes'));
     }
 }

@@ -142,7 +142,7 @@ class Auth_userController extends Controller
                     <div class='card-body'>
                         <h3 style='color:black'>Assalamualaikum, Selamat akun anda berhasil dibuat.</h3>
                         <p style='color:black'>Selanjutnya klik tombol dibawah ini untuk melakukan verifikasi akun anda.</p>
-                        <a href='$verificationUrl' target='_blank' style='width: 142px;background-color: #15baef;border-radius: 10px;color: white;height: 50px;'>
+                        <a href='$verificationUrl' target='_blank' style='display: inline-block;width: 142px;background-color: #15baef;border-radius: 10px;color: white;height: 50px;'>
                             <strong>Verifikasi Akun</strong>
                         </a>
                         <br><br>

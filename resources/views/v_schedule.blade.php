@@ -91,7 +91,8 @@
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
-                                <th></th>
+                                <th>Provinsi</th>
+                                <th>Tanggal</th>
                                 <th>Imsyak</th>
                                 <th>Subuh</th>
                                 <th>Dzuhur</th>
@@ -101,51 +102,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Jakarta</td>
-                                <td>04.23(WIB)</td>
-                                <td>04.33(WIB)</td>
-                                <td>12.06(WIB)</td>
-                                <td>15.26(WIB)</td>
-                                <td>18.17(WIB)</td>
-                                <td>19.30(WIB)</td>
-                            </tr>
-                            <tr>
-                                <td>Jawa Timur</td>
-                                <td>04.17(WIB)</td>
-                                <td>05.36(WIB)</td>
-                                <td>11.45(WIB)</td>
-                                <td>14.51(WIB)</td>
-                                <td>17.53(WIB)</td>
-                                <td>19.04(WIB)</td>
-                            </tr>
-                            <tr>
-                                <td>Jawa Barat</td>
-                                <td>04.35(WIB)</td>
-                                <td>05.54(WIB)</td>
-                                <td>12.03(WIB)</td>
-                                <td>15.10(WIB)</td>
-                                <td>18.11(WIB)</td>
-                                <td>19.22(WIB)</td>
-                        </tr>
-                        <tr>
-                            <td>Jawa Tengah</td>
-                            <td>04.25(WIB)</td>
-                            <td>05.44(WIB)</td>
-                            <td>11.53(WIB)</td>
-                            <td>15.00(WIB)</td>
-                            <td>18.01(WIB)</td>
-                            <td>19.12(WIB)</td>
-                        </tr>
-                        <tr>
-                            <td>DI Yogyakarta</td>
-                            <td>04.24(WIB)</td>
-                            <td>05.43(WIB)</td>
-                            <td>11.52(WIB)</td>
-                            <td>14.58(WIB)</td>
-                            <td>18.01(WIB)</td>
-                            <td>19.12(WIB)</td>
-                        </tr>
+                            @foreach($prayerTimes as $day)
+                                <tr>
+                                    <td>DKI Jakarta</td>
+                                    <td>{{ $day['date']['readable'] }}</td>
+                                    <td>{{ $day['timings']['Fajr'] }}</td>
+                                    <td>{{ $day['timings']['Sunrise'] }}</td>
+                                    <td>{{ $day['timings']['Dhuhr'] }}</td>
+                                    <td>{{ $day['timings']['Asr'] }}</td>
+                                    <td>{{ $day['timings']['Maghrib'] }}</td>
+                                    <td>{{ $day['timings']['Isha'] }}</td>
+                                </tr>
+                            @endforeach       
                     </tbody>
                 </table>
             </div><br>
