@@ -30,6 +30,7 @@ class PacketController extends Controller
             ->join('packets', 'packets.id', '=', 'photos.id_packet')
             ->join('ticket_groups', 'ticket_groups.id', '=', 'packets.id_ticket')
             ->join('packet_categories', 'packet_categories.id', '=', 'packets.id_category_packet')
+            ->orderBy('itineries.id', 'asc')
             ->get())
             ->addColumn('action', 'admin.umroh.umroh-action')
             ->rawColumns(['action'])
@@ -50,7 +51,19 @@ class PacketController extends Controller
         $data->status = 1;
         $data->save();
 
-        $pesan = "<h4>Selamat paket" .$packets->name_packet. " berhasil di konfirmasi oleh admin.</h4>";
+        $pesan = "
+        <center>
+            <div class='card' style='width: 41rem;position: relative;display: flex;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #fff;background-clip: border-box;border: 1px solid rgba(0,0,0,.125);border-radius: 1.25rem;'>
+                <br>
+                <div class='card-body'>
+                    <h3 style='color:black'>Assalamualaikum,</h3>
+                    <h4 style='color:black'>Selamat paket " .$packets->name_packet. " berhasil di konfirmasi.</h4>
+                    <br><br>
+                    <center><p style='color:red;text-decoration: none;'>Info lebih lanjut, silahkan klik di link ini<a style='color:red;text-decoration: none;' href='https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0'> https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0</a></p></center>
+                </div>    
+            </div>
+        </center>
+        ";
         $data_email = [
             'isi' => $pesan
         ];

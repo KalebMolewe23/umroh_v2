@@ -18,17 +18,11 @@ class Auth_agenController extends Controller
 
         $title = "Login Agen Travel";
 
-        $tiket = DB::table('bursa_tickets')->join('maskapais', 'maskapais.id' ,'=', 'bursa_tickets.id_maskapai')->get();
+        $today = Carbon::today()->toDateString();
 
-        foreach($tiket as $v_tiket){
+        $tiket = DB::table('bursa_tickets')->join('maskapais', 'maskapais.id' ,'=', 'bursa_tickets.id_maskapai')->where('departure_date', '>=', $today)->get();
 
-            $tanggal_awal = Carbon::parse($v_tiket->homecoming_date);
-            $tanggal_akhir = Carbon::parse($v_tiket->departure_date_arrival);
-            
-            $selisihHari = $tanggal_awal->diffInDays($tanggal_akhir);
-        }
-
-        return view('agen.v_login', ['ticket' => $tiket, 'title' => $title, 'hari' => $selisihHari]);
+        return view('agen.v_login', ['ticket' => $tiket, 'title' => $title]);
     }
 
     // public function loginaksi(Request $request){

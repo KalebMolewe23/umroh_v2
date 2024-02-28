@@ -160,6 +160,12 @@ class HomeController extends Controller
             });
         }
 
+        $today = Carbon::today()->toDateString();
+
+        $query->whereHas('packets', function ($query) use ($today) {
+            $query->where('departure_date', '>=', $today);
+        });
+
         $data = $query->get();
         return view('v_all_product', compact('data'));
     }

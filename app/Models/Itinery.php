@@ -26,6 +26,7 @@ class Itinery extends Model
         'activity_12',
         'activity_13',
         'activity_14',
+        'status'
     ];
 
     public function photo()

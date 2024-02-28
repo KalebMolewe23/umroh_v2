@@ -357,11 +357,11 @@
                     </div><br>
                     <h5 class="m-0 me-2">Informasi Harga</h5><br>
                     <h5 class="m-0 me-2">Informasi Harga Bayi(< 2 Tahun)</h5>
-                    <input class="form-control" name="price_baby" type="text" placeholder="Masukkan Harga Bayi" id="price_baby"><br>
+                    <input class="form-control" name="price_baby" type="text" placeholder="Masukkan Harga Bayi" id="price_baby" required><br>
                     <h5 class="m-0 me-2">Informasi Harga Anak(2 - 5 Tahun)</h5>
-                    <input class="form-control" name="price_child" type="text" placeholder="Masukkan Harga Anak" id="price_child"><br>
+                    <input class="form-control" name="price_child" type="text" placeholder="Masukkan Harga Anak" id="price_child" required><br>
                     <h5 class="m-0 me-2">Informasi Harga Dewasa</h5>
-                    <input class="form-control" name="price_adult" type="text" placeholder="Masukkan Harga Dewasa" id="price_adult">
+                    <input class="form-control" name="price_adult" type="text" placeholder="Masukkan Harga Dewasa" id="price_adult" required>
                 </div>
             </div><br>
             <div align="right">

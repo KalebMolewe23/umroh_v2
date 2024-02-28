@@ -123,7 +123,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="row">
-            <div class="col-8">
+            <div class="col-8" data-aos="zoom-out-right">
                 <!-- Hero -->
                 <div class="card">
                     <div class="card-body">
@@ -451,7 +451,7 @@
                 </div>
             </div>
 
-            <form action="" method="POST" class="col" id="form-send">
+            <form action="" method="POST" class="col" id="form-send" data-aos="zoom-out-left">
                 <!-- Init All Price -->
                 <input type="hidden" class="price_quad_1" value="{{ $data->photo->hotels->quad_1 }}">
                 <input type="hidden" class="price_quad_2" value="{{ $data->photo->hotels->quad_2 }}">
@@ -669,7 +669,7 @@
                 </div>
             </form>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-5" data-aos="zoom-out-top">
             <center>
                 <h4 class="fw-bold head-title">Paket Umroh Lainnya</h4>
             </center>

@@ -36,6 +36,7 @@ class Add_paketController extends Controller
         ->whereYear('ticket_groups.created_at', date('Y'))
         ->whereMonth('ticket_groups.created_at', date('m'))
         ->where('id_user', $userId)
+        ->orderBy('ticket_groups.id', 'desc')
         ->distinct()
         ->get();
 
