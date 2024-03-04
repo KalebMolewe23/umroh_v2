@@ -165,8 +165,12 @@ use App\Models\Itinery;
                                     </div>
                                     <div class="row mt-3">
                                         <small>Quad, <span class="text-secondary">Sekamar Ber-4</span> <span
-                                                style="float: right;" class="text-warning fw-bolder">Rp
-                                                {{ number_format($item->hotels->quad_1) }}</span></small>
+                                                style="float: right;" class="text-warning fw-bolder">
+                                                <?php 
+                                                    $price_ticket = DB::table('packets')->where('packets.id', $item->id_packet)->join('ticket_groups','ticket_groups.id', '=', 'packets.id_ticket')->first(); 
+                                                    $total_ticket = $item->hotels->quad_1 + $price_ticket->price_ticket;
+                                                ?>
+                                                Rp {{ number_format($total_ticket) }}</span></small>
                                     </div>
                                     <hr>
                                     <div class="row">

@@ -478,15 +478,21 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="fw-bolder total-amount">Rp {{ number_format($data->photo->hotels->quad_1) }}</h2>
+                        <?php 
+                            $price_ticket = DB::table('packets')->where('packets.id', $data->photo->packets->id)->join('ticket_groups','ticket_groups.id', '=', 'packets.id_ticket')->first(); 
+                            $total_ticket_quad = $data->photo->hotels->quad_1 + $price_ticket->price_ticket;
+                            $total_ticket_triple = $data->photo->hotels->triple_1 + $price_ticket->price_ticket;
+                            $total_ticket_double = $data->photo->hotels->double_1 + $price_ticket->price_ticket;
+                        ?>
+                        <h2 class="fw-bolder total-amount">Rp {{ number_format($total_ticket_quad) }}</h2>
                         <div class="text-secondary">
-                            <small>Quad - Sekamar Ber-4:Rp <span class="sekamar-quad">{{ number_format($data->photo->hotels->quad_1) }}</span></small>
+                            <small>Quad - Sekamar Ber-4:Rp <span class="sekamar-quad">{{ number_format($total_ticket_quad) }}</span></small>
                         </div>
                         <div class="text-secondary">
-                            <small>Triple - Sekamar Ber-3:Rp <span class="sekamar-triple">{{ number_format($data->photo->hotels->triple_1) }}</span></small>
+                            <small>Triple - Sekamar Ber-3:Rp <span class="sekamar-triple">{{ number_format($total_ticket_triple) }}</span></small>
                         </div>
                         <div class="text-secondary">
-                            <small>Double - Sekamar Ber-2:Rp <span class="sekamar-double">{{ number_format($data->photo->hotels->double_1) }}</span></small>
+                            <small>Double - Sekamar Ber-2:Rp <span class="sekamar-double">{{ number_format($total_ticket_double) }}</span></small>
                         </div>
                         <div class="col mt-1 mb-1">
                             <div class="progress" style="height: 20px;">

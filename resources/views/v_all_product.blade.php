@@ -209,8 +209,8 @@ use App\Models\Itinery;
                         @foreach ($data as $item)
                             @php
                                 $hotel = Hotel::with('listHotel')
-                                            ->where('id_packet', $item->id_packet)
-                                            ->first();
+                                    ->where('id_packet', $item->id_packet)
+                                    ->first();
 
                                 $itineries = Itinery::where('id_photo', $item->id)->first();
 
@@ -224,7 +224,18 @@ use App\Models\Itinery;
                                         }
                                     }
                                 }
+
+                                $usingSeat = DB::table('transactions')
+                                                ->where('id_packet', $item->packets->id)
+                                                ->where('transaction_status', 'success')
+                                                ->count();
+
+                                $available_seat = $item->packets->seat_capasitas - $usingSeat;
+
+                                $presentase = ($available_seat / $item->packets->seat_capasitas) * 100;
                             @endphp
+
+                            @if ($available_seat > 0)
 
                             <div class="col-md-4 mt-2 list-item" data-aos="zoom-out-left">
                                 <a style="color:black; text-decoration:none;" href="{{ url('/detail-product/' . $itineries->id . '&day=' . $counter + 1) }}">
@@ -248,8 +259,12 @@ use App\Models\Itinery;
                                             </div>
                                             <div class="row mt-3">
                                                 <small>Quad, <span class="text-secondary">Sekamar Ber-4</span> <span
-                                                        style="float: right;" class="text-warning fw-bolder">Rp
-                                                        {{ number_format($item->hotels->quad_1) }}</span></small>
+                                                        style="float: right;" class="text-warning fw-bolder">
+                                                        <?php 
+                                                            $price_ticket = DB::table('packets')->where('packets.id', $item->id_packet)->join('ticket_groups','ticket_groups.id', '=', 'packets.id_ticket')->first(); 
+                                                            $total_ticket = $item->hotels->quad_1 + $price_ticket->price_ticket;
+                                                        ?>
+                                                        Rp {{ number_format($total_ticket) }}</span></small>
 
                                                 <span style="display: none" class="price-dp">{{ $item->packets->dp }}</span>
                                                 <span style="display: none" class="category-packet">{{ $item->packets->id_category_packet }}</span>
@@ -279,6 +294,9 @@ use App\Models\Itinery;
                                     </div>
                                 </a>
                             </div>
+
+                            @endif
+
                         @endforeach
                     </div>
                 </div>
