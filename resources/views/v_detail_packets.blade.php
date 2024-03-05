@@ -123,7 +123,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="row">
-            <div class="col-8" data-aos="zoom-out-right">
+            <div class="col-8-packet" data-aos="zoom-out-right">
                 <!-- Hero -->
                 <div class="card">
                     <div class="card-body">
@@ -134,11 +134,25 @@
                                 <div class="carousel-item active">
                                     <img style="height: 460px"
                                         src="{{ asset('assets/image_travel/' . $data->photo->image) }}" alt="">
+                                    <style>
+                                        @media only screen and (max-width: 1400px) {
+                                            img{
+                                                width: 100%;
+                                            }
+                                        }
+                                    </style>
                                 </div>
                                 @if ($data->photo->video)
                                     <div class="carousel-item">
                                         <video style="height: 460px" controls
                                             src="{{ asset('assets/video_travel/' . $data->photo->video) }}"></video>
+                                        <style>
+                                            @media only screen and (max-width: 1400px) {
+                                                video{
+                                                    width: 100%;
+                                                }
+                                            }
+                                        </style>
                                     </div>
                                 @endif
                             </div>
@@ -275,17 +289,34 @@
                         <small class=""><i class="fas fa-map-marker-alt"></i> {{ $hotel_mekkah->address }}</small>
                         <div class="row mt-2">
                             <div class="col-md-3">
-                                <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_mekkah->img_1) }}" alt="">
+                                <img class="img_produk" src="{{ asset('assets/images/'.$hotel_mekkah->img_1) }}" alt="">
                             </div>
                             <div class="col-md-3">
-                                <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_mekkah->img_2) }}" alt="">
+                                <img class="img_produk" src="{{ asset('assets/images/'.$hotel_mekkah->img_2) }}" alt="">
                             </div>
                             <div class="col-md-3">
-                                <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_mekkah->img_3) }}" alt="">
+                                <img class="img_produk" src="{{ asset('assets/images/'.$hotel_mekkah->img_3) }}" alt="">
                             </div>
                             <div class="col-md-3">
-                                <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_mekkah->img_4) }}" alt="">
+                                <img class="img_produk" src="{{ asset('assets/images/'.$hotel_mekkah->img_4) }}" alt="">
                             </div>
+                            <style>
+                                .img_produk{
+                                    border-radius: 10px;
+                                    width: 100%;
+                                    height: 150px;
+                                }
+                                @media only screen and (max-width: 1400px) {
+                                    .img_produk{
+                                        border-radius: 10px;
+                                        width: 100%;
+                                        height: 150px;
+                                        margin-top: 20px;
+                                        justify-content: center;
+                                        display: flex;
+                                    }
+                                }
+                            </style>
                         </div>
                         <div class="row mt-3">
                             <small style="font-size: 17px" class="fw-bold">Fasilitas Populer</small>
@@ -476,7 +507,7 @@
                 <input type="hidden" class="hotel-type-post">
                 <input type="hidden" class="departing-from-post">
 
-                <div class="card">
+                <div class="card-transaction">
                     <div class="card-body">
                         <?php 
                             $price_ticket = DB::table('packets')->where('packets.id', $data->photo->packets->id)->join('ticket_groups','ticket_groups.id', '=', 'packets.id_ticket')->first(); 
@@ -713,7 +744,7 @@
 
                     <div class="col-md-4 mt-2">
                         <a style="color:black; text-decoration:none;" href="{{ url('/detail-product/' . $itineries->id . '&day=' . $counter + 1) }}">
-                            <div class="card">
+                            <div class="card_produk_lainnya">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-3">

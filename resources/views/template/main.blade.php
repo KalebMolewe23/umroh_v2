@@ -62,6 +62,30 @@
 
 <style>
 
+    .card_produk_lainnya{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: 0.25rem;
+    }
+
+    .card-transaction{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, .125);
+        border-radius: 0.25rem;
+    }
+
     .col-2-profile{
         flex: 0 0 auto;
         width: 16.66666667%;
@@ -70,6 +94,11 @@
     .col-10-profile {
         flex: 0 0 auto;
         width: 83.33333333%;
+    }
+
+    .col-8-packet {
+        flex: 0 0 auto;
+        width: 66.66666667%;
     }
 
     .micro-slider {
@@ -221,9 +250,83 @@
             margin-top: 20px;
         }
 
+        .col-8-packet {
+            flex: 0 0 auto;
+            width: 80%;
+        }
+
+        .col-md-4{
+            width: 50%;
+        }
+
         .p-2 {
             display: flex;
             justify-content: center;
+        }
+
+        .col{
+            margin-top: 20px;
+            width: 80%;
+        }
+
+        .card-transaction{
+            width: 1030px;
+        }
+
+        .card_produk_lainnya{
+            width: 380px;
+        }
+
+    }
+
+    @media only screen and (max-width: 1280px) {
+        .col-8-packet {
+            flex: 0 0 auto;
+            width: 100%;
+        }
+
+        .card-transaction{
+            width: 1116px;
+        }
+
+        .card_produk_lainnya{
+            width: 522px;
+        }
+
+    }
+
+    @media only screen and (max-width: 1130px) {
+        .card-transaction{
+            width: 938px;
+        }
+
+        .card_produk_lainnya{
+            width: 436px;
+        }
+    }
+
+    @media only screen and (max-width: 900px) {
+        .card-transaction{
+            width: 695px;
+        }
+
+        .card_produk_lainnya{
+            width: 330px;
+        }
+    }
+
+    @media only screen and (max-width: 450px) {
+
+        .col-2{
+            width: 50%;
+        }
+
+        .card-transaction{
+            width: 425px;
+        }
+
+        .card_produk_lainnya{
+            width: 200px;
         }
     }
 </style>

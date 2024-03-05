@@ -63,7 +63,7 @@ class HomeController extends Controller
                   ->where('id', '!=', $data->photo->packets->id);
         });
         
-        $other_packet = $query_other_packet->orderBy('id','DESC')->get();
+        $other_packet = $query_other_packet->take(6)->orderBy('id','DESC')->get();
 
         $partner_branches = Partner_branch::where('id_user', $data->photo->packets->informasiTravels->id_user)->orderBy('id','DESC')->get();
 
