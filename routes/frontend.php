@@ -18,3 +18,4 @@ Route::get('/get-data-transaction/{id}', [User_profileController::class, 'getDat
 Route::post('/execute-payment', [User_profileController::class, 'executePayment']);
 Route::post('/pay-off', [User_profileController::class, 'payOff']);
 Route::post('/user_profile/proses_edit_user/{id}', [User_profileController::class, 'proses_edit_user']);
+Route::post('/user_profile/batal_order/{id}', [User_profileController::class, 'batal_order']);

@@ -1,6 +1,7 @@
 @extends('template.main')
 
 <style>
+
     .card-body > h6:hover{
         cursor: pointer;
         background-color: #f5f5f5;
@@ -209,13 +210,14 @@
     .select-image:hover{
         background: blue;
     }
+
 </style>
 
 @section('content')
     <div class="container mt-4 content">
         <div class="row">
-            <div class="col-2">
-                <div class="card">
+            <div class="col-2-profile">
+                <div class="card" data-aos="zoom-out-right">
                     <div class="card-body">
                         <h6 class="p-2 menu-list active-menu account-menu"><i class='bx bxs-user-circle'></i> Akun</h6>
                         <h6 class="p-2 menu-list order-menu"><i class='bx bxs-cart-add'></i> Pesanan Saya</h6>
@@ -223,8 +225,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-10">
-                <div class="card account-section">
+            <div class="col-10-profile">
+                <div class="card account-section" data-aos="zoom-out-left">
                     <div class="card-header">
                         <h6 class="card-title mt-2">Ubah Profile</h6>
                     </div>
@@ -450,7 +452,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="card order-section" style="display: none">
+                <div class="card order-section" style="display: none" data-aos="zoom-out-right">
                     <div class="card-header">
                         <h6 class="card-title mt-2">Pesanan Saya</h6>
                     </div>
@@ -480,7 +482,7 @@
                                             <th>Tipe Hotel</th>
                                             <th>Berangkat Dari</th>
                                             <th>Status</th>
-                                            <th>Aksi</th>
+                                            <th style="width:225px">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -492,7 +494,17 @@
                                                 <td>{{ $item->departing_from }}</td>
                                                 <td>{{ $item->transaction_status }}</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-success pay" data-id="{{ $item->id }}">Bayar</button>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <button class="btn btn-sm btn-success pay" data-id="{{ $item->id }}">Bayar</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <form action="{{ url('/user_profile/batal_order/'.$item->id) }}" method="post" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <button style="width:130px;height:30px;display:flex;justify-content:center;align-items:center;" type="submit" class="btn btn-danger"><i class='bx bx-x'></i> Batal Order</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -770,9 +782,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary"><i class='bx bxs-memory-card'></i> Simpan</button>
                 </div>
             </div>
         </div>

@@ -62,6 +62,16 @@
 
 <style>
 
+    .col-2-profile{
+        flex: 0 0 auto;
+        width: 16.66666667%;
+    }
+
+    .col-10-profile {
+        flex: 0 0 auto;
+        width: 83.33333333%;
+    }
+
     .micro-slider {
         background-color: <?= $bg->bg1; ?>;
         height: 320px;
@@ -199,7 +209,23 @@
         box-shadow: 0 0 5px #15baef;
     }
 
-    
+    @media only screen and (max-width: 1400px) {
+        .col-2-profile{
+            flex: 0 0 auto;
+            width: 100%;
+        }
+
+        .col-10-profile{
+            flex: 0 0 auto;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .p-2 {
+            display: flex;
+            justify-content: center;
+        }
+    }
 </style>
 
 @stack('css')

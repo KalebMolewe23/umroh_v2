@@ -158,6 +158,9 @@ class User_profileController extends Controller
         $data->password = Hash::make($request->input('password'));
         $data->save();
 
+        session()->flash('swal_icon', 'success');
+        session()->flash('swal_title', 'Selamat');
+        session()->flash('swal_text', 'Profil, berhasil dirubah.');
         return redirect('/agen/profile/'.$id)->with('success', 'Data Berhasil Di Update');
     }
 
@@ -215,6 +218,9 @@ class User_profileController extends Controller
         $data->transaction_status  = "pending";
         $data->save();
 
+        session()->flash('swal_icon', 'success');
+        session()->flash('swal_title', 'Terima Kasih');
+        session()->flash('swal_text', 'Segera, anda melakukan pelunasan transaksi');
         return redirect('/user_profile')->with('success', 'Data Background Berhasil Di Update');
     }
 
@@ -241,6 +247,9 @@ class User_profileController extends Controller
         $data->dp                   = 1;
         $data->save();
 
+        session()->flash('swal_icon', 'success');
+        session()->flash('swal_title', 'Terima Kasih');
+        session()->flash('swal_text', 'Segera, anda melunaskan untuk pembayaran DP');
         return redirect('/user_profile')->with('success', 'Data Background Berhasil Di Update');
     }
 
@@ -268,6 +277,9 @@ class User_profileController extends Controller
         $data->transaction_status   = "pending";
         $data->save();
 
+        session()->flash('swal_icon', 'success');
+        session()->flash('swal_title', 'Terima Kasih');
+        session()->flash('swal_text', 'Anda, berhasil membayar dp. Silahkan tunggu informasi selanjutnya');
         return response()->json(['payment' => $payment, 'data' => $data]);
     }
 
@@ -304,5 +316,18 @@ class User_profileController extends Controller
         $data->save();
 
         return redirect('/user_profile')->with('success', 'Data Berhasil Ditambah');
+    }
+
+    public function batal_order(Request $request, $id){
+        $data = Transaction::find($id);
+
+        $data->transaction_status          = "BATAL ORDER";
+
+        $data->save();
+
+        session()->flash('swal_icon', 'success');
+        session()->flash('swal_title', 'Transaksi Berhasil Dirubah');
+        session()->flash('swal_text', 'Anda, berhasil membatalkan transaksi ini');
+        return redirect('/user_profile')->with('success', 'Pemesanan Berhasil Dibatalkan');
     }
 }
