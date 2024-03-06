@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_transaction');
+            $table->unsignedBigInteger('id_travel');
             $table->unsignedBigInteger('id_user');
             $table->integer('rating');
             $table->string('opinion');

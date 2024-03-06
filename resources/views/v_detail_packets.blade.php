@@ -216,9 +216,48 @@
                             </div>
                             <div class="col">
                                 <h5>{{ $data->photo->packets->informasiTravels->travel_name }}</h5>
+                                <?php
+                                    $travel = DB::table('informasi_travels')->where('travel_name', $data->photo->packets->informasiTravels->travel_name)->first();
+                                    $rating = DB::table('ratings')->where('id_travel', $travel->id)->count();
+                                if($rating == 0){
+                                ?>
+                                    <span class="text-secondary">Belum Ada Penilaian</span><br>
+                                <?php }else{ ?>
+                                    <span class="text-secondary">{{ $rating }} Penilaian</span><br>
+                                <?php } ?>
                                 <span class="text-secondary">Izin Umroh : {{ $data->photo->packets->informasiTravels->number_umroh }}</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Penilaian Travel -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="fw-bold head-title">Penilaian Travel</h5>
+                        <div class="head-border"></div>
+                        <?php
+                            $travel = DB::table('informasi_travels')->where('travel_name', $data->photo->packets->informasiTravels->travel_name)->first();
+                            $data_rating = DB::table('ratings')->select('users.name as name_user', 'regencies.name as name_city', 'opinion', 'rating')->join('users', 'users.id', '=', 'ratings.id_user')->join('regencies', 'regencies.id', '=', 'users.id_regencies',)->where('id_travel', $travel->id)->get();
+                            $maxStars = 5;
+                            foreach($data_rating as $v_rating){
+                        ?>
+                            <p>{{ $v_rating->name_user }} - {{ $v_rating->name_city }}</p>
+                            <p>
+                            @if ($v_rating->rating >= 0 && $v_rating->rating <= $maxStars)
+                                @for ($i = 1; $i <= $maxStars; $i++)
+                                    @if ($i <= $v_rating->rating)
+                                        <i style='color:orange;' class='bx bx-star star'></i>
+                                    @else
+                                        <i class='bx bx-star star'></i>
+                                    @endif
+                                @endfor
+                            @else
+                                <!-- Handle invalid rating here -->
+                            @endif
+                            </p>
+                            <p>{{ $v_rating->opinion }}</p><br><hr>
+                        <?php } ?>
                     </div>
                 </div>
 

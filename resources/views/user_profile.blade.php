@@ -891,8 +891,10 @@
                 btn.addEventListener('click', function () {
                     var idPacket = this.getAttribute('data-id-packet');
                     var iddataPacket = this.getAttribute('data-id-data-travel');
+                    var iddataTravel = this.getAttribute('data-id-travel');
                     var inputElement = document.createElement('input');
                     var inputElementPacket = document.createElement('input');
+                    var inputElementTravel = document.createElement('input');
                     inputElement.setAttribute('type', 'hidden');
                     inputElement.setAttribute('name', 'id_transaction');
                     inputElement.setAttribute('value', iddataPacket);
@@ -902,10 +904,16 @@
                     inputElementPacket.setAttribute('name', 'id_packet');
                     inputElementPacket.setAttribute('value', iddataPacket);
                     inputElementPacket.classList.add('form-control');
+                    
+                    inputElementTravel.setAttribute('type', 'hidden');
+                    inputElementTravel.setAttribute('name', 'id_travel');
+                    inputElementTravel.setAttribute('value', iddataTravel);
+                    inputElementTravel.classList.add('form-control');
 
                     modalBody.innerHTML = '<h3>' + idPacket + '</h3></center>';
                     modalBody.appendChild(inputElement);
                     modalBody.appendChild(inputElementPacket);
+                    modalBody.appendChild(inputElementTravel);
                 });
             });
         });
