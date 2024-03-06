@@ -220,7 +220,7 @@ class User_profileController extends Controller
 
         session()->flash('swal_icon', 'success');
         session()->flash('swal_title', 'Terima Kasih');
-        session()->flash('swal_text', 'Segera, anda melakukan pelunasan transaksi');
+        session()->flash('swal_text', 'Silahkan tunggu untuk konfirmasi pembayaran');
         return redirect('/user_profile')->with('success', 'Data Background Berhasil Di Update');
     }
 

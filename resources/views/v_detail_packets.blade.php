@@ -344,48 +344,78 @@
                             </div>
                         </div>
                         <hr>
-                        <span>Madinah</span><br>
-                        <small style="font-size: 17px" class="fw-bold">{{ $hotel_madinah->name_hotel }}</small><br>
-                        <small class=""><i class="fas fa-map-marker-alt"></i> {{ $hotel_madinah->address }}</small>
-                        <div class="row mt-2">
-                            <div class="col-md-3">
-                                <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_madinah->img_1) }}" alt="">
-                            </div>
-                            <div class="col-md-3">
-                                <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_madinah->img_2) }}" alt="">
-                            </div>
-                            <div class="col-md-3">
-                                <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_madinah->img_3) }}" alt="">
-                            </div>
-                            <div class="col-md-3">
-                                <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_madinah->img_4) }}" alt="">
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <small style="font-size: 17px" class="fw-bold">Fasilitas Populer</small>
-                            <div class="row">
-                                <div class="col">
-                                    <i class="fas fa-wifi"></i> Free Wifi
+                        <?php if($hotel->id_hotel_madinah == null) {?>
+                            <span>Madinah</span><br>
+                            <p>Hotel Tidak Disediakan</p>
+                            <div class="row mt-3">
+                                <small style="font-size: 17px" class="fw-bold">Fasilitas Populer</small>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fas fa-wifi"></i> Free Wifi
+                                    </div>
+                                    <div class="col">
+                                        <i class="fas fa-user-friends"></i> Ruangan keluarga
+                                    </div>
+                                    <div class="col">
+                                        <i class="fas fa-wheelchair"></i> Disabilitas
+                                    </div>
+                                    <div class="col">
+                                        <i class="fas fa-utensils"></i> Tempat makan
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <i class="fas fa-user-friends"></i> Ruangan keluarga
-                                </div>
-                                <div class="col">
-                                    <i class="fas fa-wheelchair"></i> Disabilitas
-                                </div>
-                                <div class="col">
-                                    <i class="fas fa-utensils"></i> Tempat makan
+                                <div class="row">
+                                    <div class="col-3">
+                                        <i class="fas fa-bus"></i> Shuttle Bandara
+                                    </div>
+                                    <div class="col">
+                                        <i class="fas fa-hands-helping"></i> Pelayanan kamar
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-3">
-                                    <i class="fas fa-bus"></i> Shuttle Bandara
+                        <?php }else{ ?>
+                            <span>Madinah</span><br>
+                            <small style="font-size: 17px" class="fw-bold">{{ $hotel_madinah->name_hotel }}</small><br>
+                            <small class=""><i class="fas fa-map-marker-alt"></i> {{ $hotel_madinah->address }}</small>
+                            <div class="row mt-2">
+                                <div class="col-md-3">
+                                    <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_madinah->img_1) }}" alt="">
                                 </div>
-                                <div class="col">
-                                    <i class="fas fa-hands-helping"></i> Pelayanan kamar
+                                <div class="col-md-3">
+                                    <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_madinah->img_2) }}" alt="">
+                                </div>
+                                <div class="col-md-3">
+                                    <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_madinah->img_3) }}" alt="">
+                                </div>
+                                <div class="col-md-3">
+                                    <img style="border-radius:10px;width: 100%;height: 150px;" src="{{ asset('assets/images/'.$hotel_madinah->img_4) }}" alt="">
                                 </div>
                             </div>
-                        </div>
+                            <div class="row mt-3">
+                                <small style="font-size: 17px" class="fw-bold">Fasilitas Populer</small>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fas fa-wifi"></i> Free Wifi
+                                    </div>
+                                    <div class="col">
+                                        <i class="fas fa-user-friends"></i> Ruangan keluarga
+                                    </div>
+                                    <div class="col">
+                                        <i class="fas fa-wheelchair"></i> Disabilitas
+                                    </div>
+                                    <div class="col">
+                                        <i class="fas fa-utensils"></i> Tempat makan
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <i class="fas fa-bus"></i> Shuttle Bandara
+                                    </div>
+                                    <div class="col">
+                                        <i class="fas fa-hands-helping"></i> Pelayanan kamar
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
 

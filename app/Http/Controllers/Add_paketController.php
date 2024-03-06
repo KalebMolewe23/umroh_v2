@@ -331,7 +331,6 @@ class Add_paketController extends Controller
             ->join('hotels', 'hotels.id', '=', 'hotels.id')
             ->whereYear('itineries.created_at', date('Y'))
             ->where('itineries.id_user', $userId)
-            ->where('itineries.status', 1)
             ->orderBy('itineries.id', 'desc')
             ->distinct()
             ->get())
@@ -644,7 +643,14 @@ class Add_paketController extends Controller
         $title = "Tambah Jadwal Kegiatan";
 
         $paket = DB::table('packets')->where('id_user', $userId)->get();
-        $data_packet = DB::table('photos')->select('photos.id', 'name_packet')->join('packets', 'packets.id', '=', 'photos.id_packet')->where('photos.id_user', $userId)->orderBy('photos.id', 'desc')->get();
+        $data_packet = DB::table('photos')
+        ->select('photos.id', 'name_packet')
+        ->join('packets', 'packets.id', '=', 'photos.id_packet')
+        ->where('photos.id_user', $userId)
+        ->whereYear('photos.created_at', date('Y'))
+        ->whereMonth('photos.created_at', date('m'))
+        ->orderBy('photos.id', 'desc')
+        ->get();
 
         return view('agen.paket.v_add_itinerary', ['id' => $userId, 'paket' => $paket, 'data_paket' =>$data_packet, 'title' => $title]);
     }

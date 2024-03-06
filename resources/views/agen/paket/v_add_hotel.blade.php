@@ -367,7 +367,7 @@
                         <br>
                         <h5 class="m-0 me-2"><i class='bx bxs-building'></i> Hotel Maddinah</h5>
                         <h5 class="m-0 me-2">Nama Hotel</h5>
-                        <select class="form-control" name="id_hotel_madinah" id="id_hotel_madinah" required>
+                        <select class="form-control" name="id_hotel_madinah" id="id_hotel_madinah">
                             <option value="">Pilih Hotel</option>
                             @foreach($madinah as $v_madinah)
                                 <option value="<?= $v_madinah->id ?>" data-address_m="<?= $v_madinah->address ?>" data-star_m="<?= $v_madinah->star ?>"><?= $v_madinah->name_hotel ?></option>

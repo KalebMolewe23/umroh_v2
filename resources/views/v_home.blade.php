@@ -117,7 +117,11 @@ use App\Models\Itinery;
                                     ->where('id_packet', $item->id_packet)
                                     ->first();
 
-                        $itineries = Itinery::where('id_photo', $item->id)->first();
+                        try{
+                            $itineries = Itinery::where('id_photo', $item->id)->first();
+                        } catch (ModelNotFoundException $e) {
+                            $itineries = null;
+                        }
 
                         $counter = 0;
 
@@ -144,7 +148,7 @@ use App\Models\Itinery;
                     @if ($available_seat > 0)
 
                     <div class="col-md-4 mt-2">
-                        <a href="{{ url('/detail-product/' . $itineries->id . '&day=' . $counter + 1) }}">
+                        <a href="{{ url('/detail-product/' . optional($itineries)->id . '&day=' . $counter + 1) }}">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
