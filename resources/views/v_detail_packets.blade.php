@@ -584,6 +584,7 @@
                             $total_ticket_triple = $data->photo->hotels->triple_1 + $price_ticket->price_ticket;
                             $total_ticket_double = $data->photo->hotels->double_1 + $price_ticket->price_ticket;
                         ?>
+                        <input type="hidden" class="price_packet" value="{{ $price_ticket->price_ticket }}">
                         <h2 class="fw-bolder total-amount">Rp {{ number_format($total_ticket_quad) }}</h2>
                         <div class="text-secondary">
                             <small>Quad - Sekamar Ber-4:Rp <span class="sekamar-quad">{{ number_format($total_ticket_quad) }}</span></small>

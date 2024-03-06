@@ -1,5 +1,6 @@
 let total_amout = $('.total-amount');
 let price_quad = Number($('.price_quad_1').val());
+let price_packet = Number($('.price_packet').val());
 let subtotals = {
     adult: 0,
     child: 0,
@@ -167,8 +168,8 @@ function formatNumberWithCommas(number) {
 function updateTotalAmount() {
     // Calculate the total amount based on subtotals
     let grandTotal = Object.values(subtotals).reduce((acc, curr) => acc + curr, 0);
-    total_amout.text(`Rp ` + formatNumberWithCommas(grandTotal + price_quad + price_keberangkatan));
-    $('.total-amount-post').val(grandTotal + price_quad + price_keberangkatan);
+    total_amout.text(`Rp ` + formatNumberWithCommas(grandTotal + price_quad + price_keberangkatan + price_packet));
+    $('.total-amount-post').val(grandTotal + price_quad + price_keberangkatan + price_packet);
 }
 
 // Initialize the total amount when the page loads
