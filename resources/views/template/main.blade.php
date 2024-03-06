@@ -62,6 +62,52 @@
 
 <style>
 
+    .rating{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-gap: .5rem;
+        font-size: 2rem;
+        color: orange;
+        margin-bottom: 2rem;
+    }
+
+    .rating .star {
+        cursor: pointer;
+    }
+    .rating .star.active {
+        opacity: 0;
+        animation: animate .5s calc(var(--i) * .1s) ease-in-out forwards;
+    }
+
+    .rating .star:hover{
+        transform: scale(1.1);
+    }
+
+    @keyframes animate {
+        0% {
+            opacity: 0;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    textarea{
+        width: 100%;
+        background: #F0F0F0;
+        padding: 1rem;
+        border-radius: .5rem;
+        border: none;
+        outline: none;
+    }
+
     .card_produk_lainnya{
         position: relative;
         display: flex;

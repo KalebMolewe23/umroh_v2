@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Rating;
 
 class User_profileController extends Controller
 {
@@ -329,5 +330,15 @@ class User_profileController extends Controller
         session()->flash('swal_title', 'Transaksi Berhasil Dirubah');
         session()->flash('swal_text', 'Anda, berhasil membatalkan transaksi ini');
         return redirect('/user_profile')->with('success', 'Pemesanan Berhasil Dibatalkan');
+    }
+
+    public function save_rating(Request $request){
+        $data = Rating::create($request->all());
+        $data->save();
+
+        session()->flash('swal_icon', 'success');
+        session()->flash('swal_title', 'Terima kasih');
+        session()->flash('swal_text', 'Masukkan anda sudah kami simpan.');
+        return redirect('/user_profile')->with('success', 'Data Berhasil Ditambah');
     }
 }

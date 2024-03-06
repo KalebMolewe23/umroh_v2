@@ -595,9 +595,19 @@
                                                 <td>{{ $item_sudah_bayar->departing_from }}</td>
                                                 <td>{{ $item_sudah_bayar->grand_total }}</td>
                                                 <td>{{ $item_sudah_bayar->transaction_status }}</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary" data-id-packet="{{ $item_sudah_bayar->id_packet }}">Beri Penilaian</button>
-                                                </td>
+                                                <?php
+                                                    $data_packets = DB::table('packets')->where('id', $item_sudah_bayar->id_packet)->first();
+                                                    $travel = DB::table('informasi_travels')->where('id_user', $data_packets->id_user)->first();
+                                                    $rating = DB::table('ratings')->where('id_transaction', $item_sudah_bayar->id)->count();
+
+                                                    if($rating){
+                                                ?>
+                                                    <td></td>
+                                                <?php }else{ ?>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-primary beri-penilaian-btn" data-id-data-travel="{{ $item_sudah_bayar->id }}" data-id-travel="{{ $travel->id }}" data-id-packet="{{ $travel->travel_name }}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Beri Penilaian</button>
+                                                    </td>
+                                                <?php } ?>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -606,6 +616,37 @@
                         </div>
                     </div>
                 </div> 
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal penilaian-->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/user_profile/save_rating" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" value="{{ $id }}" name="id_user">
+                    <div class="modal-header" id="modalBodyContent">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" >
+                        <p>Berikan masukkan terhadap kami disini...</p>
+                        <div class="rating">
+                            <input type="number" name="rating" hidden>
+                            <i class='bx bx-star star' style="--i: 0;"></i>
+                            <i class='bx bx-star star' style="--i: 1;"></i>
+                            <i class='bx bx-star star' style="--i: 2;"></i>
+                            <i class='bx bx-star star' style="--i: 3;"></i>
+                            <i class='bx bx-star star' style="--i: 4;"></i>
+                        </div>
+                        <textarea name="opinion" cols="30" rows="5" placeholder="Tulis Masukkan Untuk Kami"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -815,6 +856,59 @@
 @push('js')
 
     <script>
+        const allStar = document.querySelectorAll('.rating .star')
+        const ratingValue = document.querySelector('.rating input')
+
+        allStar.forEach((item, idx)=> {
+            item.addEventListener('click', function () {
+                let click = 0
+                ratingValue.value = idx + 1
+
+                allStar.forEach(i=> {
+                    i.classList.replace('bxs-star', 'bx-star')
+                    i.classList.remove('active')
+                })
+                for(let i=0; i<allStar.length; i++) {
+                    if(i <= idx) {
+                        allStar[i].classList.replace('bx-star', 'bxs-star')
+                        allStar[i].classList.add('active')
+                    } else {
+                        allStar[i].style.setProperty('--i', click)
+                        click++
+                    }
+                }
+            })
+        })
+    </script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var beriPenilaianBtns = document.querySelectorAll('.beri-penilaian-btn');
+            var modalBody = document.getElementById('modalBodyContent');
+
+            beriPenilaianBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var idPacket = this.getAttribute('data-id-packet');
+                    var iddataPacket = this.getAttribute('data-id-data-travel');
+                    var inputElement = document.createElement('input');
+                    var inputElementPacket = document.createElement('input');
+                    inputElement.setAttribute('type', 'hidden');
+                    inputElement.setAttribute('name', 'id_transaction');
+                    inputElement.setAttribute('value', iddataPacket);
+                    inputElement.classList.add('form-control');
+
+                    inputElementPacket.setAttribute('type', 'hidden');
+                    inputElementPacket.setAttribute('name', 'id_packet');
+                    inputElementPacket.setAttribute('value', iddataPacket);
+                    inputElementPacket.classList.add('form-control');
+
+                    modalBody.innerHTML = '<h3>' + idPacket + '</h3></center>';
+                    modalBody.appendChild(inputElement);
+                    modalBody.appendChild(inputElementPacket);
+                });
+            });
+        });
 
         var copybtn = document.getElementById("copy-btn");
         var link = document.getElementById("link");
