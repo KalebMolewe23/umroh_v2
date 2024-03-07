@@ -207,7 +207,30 @@ use App\Models\Itinery;
             </div>
             <center>
                 <a href="/all_product"><button class="btn btn-info text-white mt-4 bg-blue">Lihat Lebih Banyak</button></a>
-            </center>
+            </center><br><br>
+            <h5><strong>Rekan Biro Travel Kami</strong></h5>
+            <p>Lebih Dari 100 Biro Travel Umroh telah Menjadi Rekan Kami</p>
+            <br>
+            <div class="row">
+                <?php 
+                    $travel = DB::table('informasi_travels')->orderBy('id', 'desc')->get();
+                ?>
+                @foreach($travel as $v_travel)
+                    <div class="col">
+                        <img src="{{ asset('assets/image_travel/'.$v_travel->image) }}" width="100px"><br>
+                        <p>{{ $v_travel->travel_name }}</p>
+                    </div>
+                @endforeach
+            </div><br><br>
+            <h5><strong>Tentang Kami</strong></h5>
+            <br><br>
+            <h5>Diliput Oleh</h5><br>
+            <div class="row">
+                <div class="col">
+                    <img src="{{ asset('assets/sponsor/tribun.png') }}" width="100px"><br>
+                    <p>tribunnews.com</p>
+                </div>
+            </div><br><br>
         </div>
     </div>
 @endsection

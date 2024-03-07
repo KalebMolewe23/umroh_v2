@@ -20,28 +20,14 @@ class Auth_agenController extends Controller
 
         $today = Carbon::today()->toDateString();
 
-        $tiket = DB::table('bursa_tickets')->join('maskapais', 'maskapais.id' ,'=', 'bursa_tickets.id_maskapai')->where('departure_date', '>=', $today)->get();
+        $tiket = DB::table('bursa_tickets')
+        ->join('maskapais', 'maskapais.id' ,'=', 'bursa_tickets.id_maskapai')
+        // ->where('departure_date', '>=', $today)
+        ->orderBy('bursa_tickets.id', 'DESC')
+        ->get();
 
         return view('agen.v_login', ['ticket' => $tiket, 'title' => $title]);
     }
-
-    // public function loginaksi(Request $request){
-    //     Validator::make($request->all(),[
-    //         'email'     => 'required|email',
-    //         'password'  => 'required'
-    //     ])->validate();
-
-    //     if (!Auth::attempt($request->only('email','password'), $request->boolean('remember'))){
-    //         throw ValidationException::withMessages([
-    //             'email' => trans('auth.failed')
-    //         ]);
-    //     }
-
-    //     $request->session()->regenerate();
-
-    //     return redirect()->route('agen/dashboard');
-
-    // }
 
     public function loginaksi(Request $request){
         $request->validate([

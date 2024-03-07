@@ -1,3 +1,4 @@
+<?php use Carbon\Carbon; ?>
 <?php $bg = DB::table('cms')->first(); ?>
 <?php $information = DB::table('information')->first(); ?>
 <?php $social_media = DB::table('social_media')->where('status', 1)->get(); ?>
@@ -78,70 +79,94 @@
 
         <section class="sec1" data-scene>
             <div class="container">
-                <div class="information" id="information">
-                <h2><strong>Tiket Group & Rontokan</strong></h2>
-                <div class="sec1-inner">
-                    <div class="text text-left" data-aos="zoom-out-right">
-                        <div class="card">
-                            <p>Filter</p>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card" data-aos="zoom-out-right">
+                            <br><h6><strong>&nbsp;&nbsp;Filter</strong></h6><hr>
+                            <h6>&nbsp;&nbsp;Jenis Tiket</h6>
+                            <button class="button-search btn-category-packet" data-id="0">Semua Jenis</button>
+                            <button class="button-search btn-category-packet" data-id="2">Rontokan</button>
+                            <button class="button-search btn-category-packet" data-id="1">Group</button><hr>
+                            <h6>&nbsp;&nbsp;Harga</h6>
+                            <button class="button-search btn-category-packet" data-id="0">Semua Harga</button>
+                            <button class="button-search btn-category-packet" data-id="1">< Rp.10.000.000</button>
+                            <button class="button-search btn-category-packet" data-id="2">< Rp. 15.000.000</button>
+                            <button class="button-search btn-category-packet" data-id="3">< Rp. 20.000.000</button>
                             <hr>
-                            <p><strong>Jenis Tiket</strong></p>
-                            <center>
-                                <button class="button-search">Semua Jenis</button><br><br>
-                                <button class="button-search">Rontokan</button><br><br>
-                                <button class="button-search">Group</button>
-                            </center><br><hr>
-                            <p><strong>Rute</strong></p>
-                            <center>
-                                <button class="button-search">Semua Rute</button><br><br>
-                                <button class="button-search">Direct</button><br><br>
-                                <button class="button-search">Transit</button>
-                            </center><br><hr>
-                            <p><strong>Harga</strong></p>
-                            <center>
-                                <button class="button-search">Semua Harga</button><br><br>
-                                <button class="button-search">< Rp.10.000.000</button><br><br>
-                                <button class="button-search">< Rp.15.000.000</button><br><br>
-                                <button class="button-search">< Rp.20.000.000</button>
-                            </center><br>
+                            <h6>&nbsp;&nbsp;kota Kedatangan</h6>
+                            <button class="button-search btn-category-packet" data-id="">Semua kota</button>
+                            <button class="button-search btn-category-packet" data-id="JED">Jeddah</button>
+                            <button class="button-search btn-category-packet" data-id="MAD">Madinah</button><hr>
                         </div>
                     </div>
-                    <div class="text text-right" data-aos="zoom-out-left">
-                        @foreach($ticket as $v_tiket)
-                            <div class="card" style="padding-left:30px;padding-top:20px;">
-                                <div class="row">
-                                    <div class="col-7">
-                                        <i class='bx bxs-calendar'></i><?= $v_tiket->departure_date_arrival ?> - <?= $v_tiket->homecoming_date ?>
-                                    </div>
-                                    <div class="col-3">
-                                        <i class='bx bx-handicap'></i><?= $v_tiket->seat_capasitas ?>,
-                                        @if($v_tiket->ticket_type == 1)
-                                            Group
-                                        @else
-                                            Rontokan
-                                        @endif 
+                    <div class="col-8">
+                        <h5><strong>Tiket Group & Rontokan</strong></h5>
+                        <div class="card" data-aos="zoom-out-left">
+                            <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="col"><br>
+                                    <div class="form-group">
+                                        <label class="form-label">Tanggal Awal</label>
+                                        <input autocomplete="off" type="text" class="form-control tanggal_awal" name="tanggal_awal">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-7">
-                                        <i class='bx bxs-plane-alt' ></i><img src="{{ asset('assets/maskapai_image/'.$v_tiket->image) }}" width="50px"><?= $v_tiket->name_maskapai ?>, Direct</img>
-                                    </div>
-                                    <div class="col-4">
-                                        <i class='bx bxs-time'></i><?= $hari ?> hari
+                                <div class="col"><br>
+                                    <div class="form-group">
+                                        <label class="form-label">Tanggal Akhir</label>
+                                        <input autocomplete="off" type="text" class="form-control tanggal_akhir" name="tanggal_akhir">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-7">
-                                        <i class='bx bxs-map'></i><?= $v_tiket->id_departure_city ?>-<?= $v_tiket->id_departure_city_arrival ?>,<?= $v_tiket->id_homecoming_city ?>-<?= $v_tiket->id_homecoming_city_arrival ?>
-                                    </div>
-                                    <div class="col-4">
-                                        <strong><h5 style="color:orange">Rp <?= number_format($v_tiket->price_ticket,2,',','.') ?></h5></strong>
-                                    </div>
+                                <div class="col"><br>
+                                    <div class="form-group" style="margin-top: 32px">
+                                        <button class="btn btn-primary">Filter</button>
+                                        <button type="button" class="btn btn-light reset">Reset</button>
+                                    </div><br>
                                 </div>
                             </div>
+                        </div><br>
+
+                        @foreach($ticket as $v_ticket)
+                            <div class="card" data-aos="zoom-out-left">
+                                <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="col"><br>
+                                        <i class='bx bxs-calendar'></i> {{ Carbon::parse($v_ticket->departure_date)->format('d-m-Y') }}  - {{ Carbon::parse($v_ticket->homecoming_date)->format('d-m-Y') }}
+                                    </div>
+                                    <div class="col"><br>
+                                        <i class='bx bxs-dock-top'></i> {{ $v_ticket->seat_capasitas }} seat, 
+                                        <?php if($v_ticket->ticket_type == 1){ ?>
+                                            Group
+                                        <?php }else{ ?>
+                                            Rontokan
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="col">
+                                        <i class='bx bxs-plane-alt' ></i> <img src="{{ asset('assets/maskapai_image/'.$v_ticket->image) }}" width="50px">{{ $v_ticket->name_maskapai }}, Direct
+                                    </div>
+                                    <div class="col">
+                                        <?php 
+                                            $tanggal1 = Carbon::parse($v_ticket->departure_date);
+                                            $tanggal2 = Carbon::parse($v_ticket->homecoming_date);
+                                            
+                                            $selisih = $tanggal2->diffInDays($tanggal1);
+                                        ?>
+                                        <i class='bx bxs-time' ></i> {{ $selisih }} Hari
+                                    </div>
+                                </div>
+                                <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="col">
+                                        <i class='bx bx-map'></i> {{ $v_ticket->id_departure_city }} - {{ $v_ticket->id_departure_city_arrival }}
+                                    </div>
+                                    <div class="col">
+                                        <small>Rp. {{ number_format($v_ticket->price_ticket) }}</small>
+                                    </div>
+                                </div><br>
+                                <center>
+                                    <a href="https://api.whatsapp.com/send?phone={{ $information->whatsapp }}&text=Saya%20tertarik%20dengan%20tiket%20pada%20tanggal%20*{{ Carbon::parse($v_ticket->departure_date)->format('d-m-Y') }}%20sampai%20tanggal%20{{ Carbon::parse($v_ticket->homecoming_date)->format('d-m-Y') }}%20pada%20maskapai%20{{ $v_ticket->name_maskapai }}*"><button style="width:700px;" class="btn btn-primary">Minta penawaran</button></a>
+                                </center><br>
+                            </div><br>
                         @endforeach
                     </div>
-                </div>
                 </div>
             </div>
         </section>

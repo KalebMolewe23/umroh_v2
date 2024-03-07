@@ -188,11 +188,6 @@
                     <div data-i18n="Basic">Data Pesanan</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="/agen/order_group" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Penawaran Group</div>
-                  </a>
-                </li>
               </ul>
             </li>
             <!-- Manajemen -->
