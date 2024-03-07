@@ -248,7 +248,7 @@ class HomeController extends Controller
         $title = "Jadwal Sholat & Al-quran";
 
         //Jakarta bulan 1
-        $response = Http::get('https://api.aladhan.com/v1/calendar/2024/1?latitude=-6.175110&longitude=106.865036&method=2');
+        $response = Http::get('https://api.aladhan.com/v1/calendar/'.date('Y').'/'.date('n').'?latitude=-6.175110&longitude=106.865036&method=2');
         $prayerTimes = $response->json()['data'];
 
         return view('v_schedule', ['title' => $title], compact('prayerTimes'));
