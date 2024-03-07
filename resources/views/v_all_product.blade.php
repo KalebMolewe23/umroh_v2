@@ -212,7 +212,11 @@ use App\Models\Itinery;
                                     ->where('id_packet', $item->id_packet)
                                     ->first();
 
-                                $itineries = Itinery::where('id_photo', $item->id)->first();
+                                try{
+                                    $itineries = Itinery::where('id_photo', $item->id)->first();
+                                } catch (ModelNotFoundException $e) {
+                                    $itineries = null;
+                                }
 
                                 $counter = 0;
 
@@ -238,7 +242,7 @@ use App\Models\Itinery;
                             @if ($available_seat > 0)
 
                             <div class="col-md-4 mt-2 list-item" data-aos="zoom-out-left">
-                                <a style="color:black; text-decoration:none;" href="{{ url('/detail-product/' . $itineries->id . '&day=' . $counter + 1) }}">
+                                <a style="color:black; text-decoration:none;" href="{{ url('/detail-product/' . optional($itineries)->id . '&day=' . $counter + 1) }}">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="row">
@@ -252,7 +256,7 @@ use App\Models\Itinery;
                                                         <div class="progress-bar bg-blue progress-bar-striped progress-bar-animated"
                                                             role="progressbar" aria-valuenow="75" aria-valuemin="0"
                                                             aria-valuemax="100" style="width: 75%">
-                                                            <b>Sisa {{ $item->packets->seat_capasitas }} Seat</b>
+                                                            <b>Sisa {{ $available_seat }} Seat</b>
                                                         </div>
                                                     </div>
                                                 </div>

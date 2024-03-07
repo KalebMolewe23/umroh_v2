@@ -166,7 +166,7 @@ class HomeController extends Controller
             $query->where('departure_date', '>=', $today);
         });
 
-        $data = $query->get();
+        $data = $query->orderBy('id', 'DESC')->get();
         return view('v_all_product', compact('data'));
     }
 
