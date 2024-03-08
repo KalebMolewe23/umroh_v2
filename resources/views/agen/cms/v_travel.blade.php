@@ -597,6 +597,7 @@
                 $id_province        = $data_travel->id_province;
                 $id_regencies       = $data_travel->id_regencies;
                 $id_user            = $data_travel->id_user;
+                $employee_type      = $data_travel->employee_type;
                 $travel_name        = $data_travel->travel_name;
                 $image              = $data_travel->image;
                 $employee_name      = $data_travel->employee_name;
