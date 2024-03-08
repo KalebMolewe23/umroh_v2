@@ -82,7 +82,7 @@ class MoneyController extends Controller
 
         if(request()->ajax()){
             return datatables()->of(DB::table('commision_transactions')
-            ->select('commision_transactions.id', 'commision_transactions.created_at', 'name_packet', 'name_agen')
+            ->select(DB::raw('DATE_FORMAT(commision_transactions.created_at, "%d-%m-%Y") as created_at'), 'commision_transactions.id', 'name_packet', 'name_agen')
             ->join('transactions', 'transactions.id', '=', 'commision_transactions.id_transaction')
             ->join('packets', 'packets.id', '=', 'transactions.id_packet')
             ->join('agens', 'agens.id', '=', 'commision_transactions.id_agens')

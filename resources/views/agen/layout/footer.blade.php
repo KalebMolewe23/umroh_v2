@@ -1131,6 +1131,23 @@
             }
         });
 
+        $('#ajax-crud-order-datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('/agen/get_order') }}",
+            columns: [
+                { data: 'transaction_code', name: 'transaction_code' },
+                { data: 'created_at', name: 'created_at' },
+                { data: 'room_type', name: 'room_type' },
+                { data: 'departing_from', name: 'departing_from' },
+                { data: 'dp', name: 'dp' },
+                { data: 'grand_total', name: 'grand_total' },
+                { data: 'transaction_status', name: 'transaction_status' },
+                { data: 'action', name: 'action', orderable: false },
+            ],
+            order: [[0, 'desc']]
+        });
+
         $('#ajax-crud-datatable-agen').DataTable({
             processing: true,
             serverSide: true,

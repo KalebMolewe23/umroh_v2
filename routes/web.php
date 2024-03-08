@@ -174,6 +174,8 @@ Route::middleware('auth_agen')->group(function(){
 
     //pesanan
     Route::get('/agen/add_order', [OrderController::class, 'index'])->name('agen/add_order');
+    Route::get('/agen/get_order', [OrderController::class, 'get_order'])->name('agen/get_order');
+    Route::get('/agen/export_excel_transaction', [OrderController::class, 'export_excel_transaction'])->name('agen/export_excel_transaction');
     
     //agen
     Route::get('/agen/add_agen', [Data_agenController::class, 'add_agen'])->name('agen/add_agen');

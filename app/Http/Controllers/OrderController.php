@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Exports\ExportOrder;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -57,5 +59,35 @@ class OrderController extends Controller
             'id_user' => $id_user,
             'msg' => $msg
         ]);
+    }
+
+    public function get_order(){
+        if (Auth::check()){
+            $userId = Auth::id();
+        }else{
+
+        }
+
+        $title = "Data Pesanan";
+
+        if(request()->ajax()){
+            return datatables()->of(DB::table('transactions')
+            ->select(DB::raw('FORMAT(grand_total, 2) as grand_total, FORMAT(transactions.dp, 2) as dp, DATE_FORMAT(transactions.created_at, "%d-%m-%Y") as created_at'), 'transactions.id as id' , 'transaction_code', 'room_type', 'departing_from', 'transaction_status')
+            ->join('packets', 'packets.id', '=', 'transactions.id_packet')
+            ->where('packets.id_user', $userId)
+            ->orderBy('transactions.id', 'desc')
+            ->distinct()
+            ->get())
+            ->addColumn('action', 'agen.order.order-action')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+
+        return view('agen.order.v_get_order', ['id' => $userId, 'title' => $title]);
+    }
+
+    public function export_excel_transaction(){
+        return Excel::download(new ExportOrder, "data_transaction.xlsx");
     }
 }

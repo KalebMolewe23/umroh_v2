@@ -1,39 +1,39 @@
-<table>
+<table style="border: 3px solid black;border-collapse: collapse;">
     <thead>
         <tr>
-            <th>No.</th>
-            <th>ID. MITRA/AGEN</th>
-            <th>NAMA MITRA/AGEN</th>
-            <th>HP. MITRA/AGEN</th>
-            <th>NAMA SESUAI KTP/KK</th>
-            <th>NAMA KTP/KK</th>
-            <th>NAMA AYAH KANDUNG</th>
-            <th>TEMPAT LAHIR</th>
-            <th>TANGGAL LAHIR</th>
-            <th>STATUS PERNIKAHAN</th>
-            <th>TITLE</th>
-            <th>JENIS KELAMIN</th>
-            <th>KEWARGANEGARAAN</th>
-            <th>ALAMAT</th>
-            <th>PROVINSI</th>
-            <th>KOTA</th>
-            <th>HANDPHONE</th>
-            <th>EMAIL</th>
-            <th>PENDIDIKAN</th>
-            <th>PEKERJAAN</th>
-            <th>GOL.DARAH</th>
-            <th>PERGI UMROH/HAJI</th>
-            <th>NAMA PASPOR</th>
-            <th>NO. PASPOR</th>
-            <th>TEMPAT DIKELUARKAN</th>
-            <th>TANGGAL DIKELUARKAN</th>
-            <th>HABIS MASA BERLAKU</th>
-            <th>NAMA PENDAMPING</th>
-            <th>HUBUNGAN</th>
-            <th>NAMA PAKET UMROH</th>
-            <th>JENIS KAMAR</th>
-            <th>TANGGAL KEBERANGKATAN</th>
-            <th>HARGA PAKET</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">No.</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">ID. MITRA/AGEN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">NAMA MITRA/AGEN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">HP. MITRA/AGEN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">NAMA SESUAI KTP/KK</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">NAMA KTP/KK</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">NAMA AYAH KANDUNG</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">TEMPAT LAHIR</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">TANGGAL LAHIR</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">STATUS PERNIKAHAN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">TITLE</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">JENIS KELAMIN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">KEWARGANEGARAAN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">ALAMAT</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">PROVINSI</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">KOTA</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">HANDPHONE</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">EMAIL</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">PENDIDIKAN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">PEKERJAAN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">GOL.DARAH</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">PERGI UMROH/HAJI</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">NAMA PASPOR</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">NO. PASPOR</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">TEMPAT DIKELUARKAN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">TANGGAL DIKELUARKAN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">HABIS MASA BERLAKU</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">NAMA PENDAMPING</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">HUBUNGAN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">NAMA PAKET UMROH</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">JENIS KAMAR</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">TANGGAL KEBERANGKATAN</th>
+            <th style="border: 1px solid black;width:200px;background-color:#15baef;color:black;font-align:center">HARGA PAKET</th>
         </tr>
     </thead>
     <tbody>
@@ -42,39 +42,39 @@
         @endphp
         @foreach($data as $item => $value)
         <tr>
-            <td>{{ $no++; }}</td>
-            <td>-</td>
-            <td>{{ $value->name_agen }}</td>
-            <td>{{ $value->phone_agen }}</td>
-            <td>{{ $value->name }}</td>
-            <td>{{ $value->ktp }}</td>
-            <td>{{ $value->father_name }}</td>
-            <td>{{ $value->born_place }}</td>
-            <td>{{ $value->date_of_birth }}</td>
-            <td>{{ $value->marital_status }}</td>
-            <td>{{ $value->title }}</td>
-            <td>{{ $value->gender }}</td>
-            <td>{{ $value->citizenship }}</td>
-            <td>{{ $value->address }}</td>
-            <td>{{ $value->province_name }}</td>
-            <td>{{ $value->regencies_name }}</td>
-            <td>{{ $value->phone }}</td>
-            <td>{{ $value->email }}</td>
-            <td>{{ $value->education }}</td>
-            <td>{{ $value->job }}</td>
-            <td>{{ $value->blood_groub }}</td>
-            <td>{{ $value->status_umroh }}</td>
-            <td>{{ $value->passport_name }}</td>
-            <td>{{ $value->passport_number }}</td>
-            <td>{{ $value->passport_place }}</td>
-            <td>{{ $value->passport_date }}</td>
-            <td>{{ $value->expired }}</td>
-            <td>{{ $value->companion_name }}</td>
-            <td>{{ $value->connection }}</td>
-            <td>{{ $value->name_packet }}</td>
-            <td>{{ $value->room_type }}</td>
-            <td>{{ $value->departure_date }}</td>
-            <td>{{ $value->grand_total }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $no++; }}</td>
+            <td style="font-align:center;border: 1px solid black;">-</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->name_agen }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->phone_agen }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->name }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->ktp }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->father_name }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->born_place }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->date_of_birth }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->marital_status }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->title }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->gender }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->citizenship }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->address }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->province_name }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->regencies_name }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->phone }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->email }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->education }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->job }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->blood_groub }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->status_umroh }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->passport_name }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->passport_number }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->passport_place }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->passport_date }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->expired }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->companion_name }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->connection }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->name_packet }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->room_type }}</td>
+            <td style="font-align:center;border: 1px solid black;">{{ $value->departure_date }}</td>
+            <td style="font-align:center;border: 1px solid black;">Rp. {{ number_format($value->grand_total) }}</td>
         </tr>
         @endforeach
     </tbody>

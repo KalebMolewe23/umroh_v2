@@ -328,7 +328,7 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         <i class='bx bx-plus' ></i> Tambah Komisi
                     </button>
-                    <a href="{{ url('/agen/export_excel_commision'); }}" class="btn btn-success">Export Excel</a>
+                    <a href="{{ url('/agen/export_excel_commision'); }}" class="btn btn-success"><i class='bx bx-file'></i> Export</a>
                     <br><br>
                     <table class="table table-striped" id="ajax-crud-commision-transaction">
                         <thead>
