@@ -1,3 +1,7 @@
+<?php
+    use Carbon\Carbon;
+?>
+
 @include('agen.layout.header')
 <?php
     $data_bg = DB::table('cms')->get();
@@ -7,6 +11,8 @@
         $bg1            = $v_bg->bg1;
         $bg2            = $v_bg->bg2;
     }
+
+    
 ?>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -358,7 +364,13 @@
                                                     <select class="form-control" name="id_transaction" required>
                                                       <option value="">-Pilih Nama Paket-</option>
                                                       <?php foreach($transaction as $v_transaction){ ?>
-                                                        <option value="<?= $v_transaction->id ?>"><?= $v_transaction->name_packet ?></option>
+                                                        <?php 
+                                                          $date = Carbon::parse($v_transaction->created_at);
+                                                          $nama_customer = DB::table('transactions')->join('users', 'users.id', '=', 'transactions.id_user')->where('transactions.id', $v_transaction->id)->first(); 
+                                                        ?>
+                                                        <option value="<?= $v_transaction->id ?>">
+                                                          <?= $v_transaction->name_packet ?> (<?= $v_transaction->departing_from ?>) (<?= $nama_customer->name ?>)
+                                                        </option>
                                                       <?php } ?>
                                                     </select>
                                                     <br>

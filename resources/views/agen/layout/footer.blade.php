@@ -47,6 +47,45 @@
 
     <script>
 
+$(document).ready(function() {
+    var table = $('#ajax-data-content-blog').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ url('/admin/content_blog') }}",
+        columns: [
+            { data: 'category_name', name: 'category_name' },
+            { data: 'name', name: 'name' },
+            { data: 'title', name: 'title' },
+            { 
+                data: 'thumbnail',
+                name: 'thumbnail',
+                render: function(data, type, full, meta) {
+                    return '<img class="zoomable" src="' + data + '" style="max-width:100px; max-height:100px;" />';
+                },
+                orderable: false,
+                searchable: false
+            },
+            { data: 'action', name: 'action', orderable: false },
+        ],
+        order: [[0, 'desc']]
+    });
+
+    // Tambahkan event listener untuk gambar
+    $('#ajax-data-content-blog tbody').on('click', 'img.zoomable', function() {
+        zoomImage($(this));
+    });
+
+    // Fungsi untuk melakukan zoom pada gambar
+    function zoomImage(image) {
+        var currentWidth = image.width();
+        var currentHeight = image.height();
+        var newWidth = currentWidth * 1.2; // Contoh: perbesar gambar sebesar 20%
+        var newHeight = currentHeight * 1.2; // Contoh: perbesar gambar sebesar 20%
+        image.css('width', newWidth);
+        image.css('height', newHeight);
+    }
+});
+
     $(document).ready(function () {
 
         $('.data_user').select2();
@@ -1176,28 +1215,6 @@
             order: [[0, 'desc']]
         });
 
-        $('#ajax-data-content-blog').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ url('/admin/content_blog') }}",
-            columns: [
-                { data: 'category_name', name: 'category_name' },
-                { data: 'name', name: 'name' },
-                { data: 'title', name: 'title' },
-                { 
-                    data: 'thumbnail',
-                    name: 'thumbnail',
-                    render: function(data, type, full, meta) {
-                        return '<img src="' + data + '" style="max-width:100px; max-height:100px;" />';
-                    },
-                    orderable: false,
-                    searchable: false
-                },
-                { data: 'action', name: 'action', orderable: false },
-            ],
-            order: [[0, 'desc']]
-        });
-
         $('#ajax-crud-money-transaction').DataTable({
             processing: true,
             serverSide: true,
@@ -1207,7 +1224,14 @@
                 { data: 'transaction_code', name: 'transaction_code' },
                 { data: 'created_at', name: 'created_at' },
                 { data: 'due_date', name: 'due_date' },
-                { data: 'payment_image', name: 'payment_image' },
+                { 
+                    data: 'payment_image', 
+                    name: 'payment_image',
+                    render: function(data, type, full, meta) {
+                        // Format data untuk menampilkan gambar
+                        return '<img src="' + data + '" width="100" />';
+                    }
+                },
                 { data: 'room_type', name: 'room_type' },
                 { data: 'departing_from', name: 'departing_from' },
                 { data: 'grand_total', name: 'grand_total' },

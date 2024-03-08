@@ -203,7 +203,8 @@ Route::middleware('auth_agen')->group(function(){
     Route::get('/agen/get_commision', [MoneyController::class, 'get_commision'])->name('agen/get_commision');
     Route::post('/agen/save_commision', [MoneyController::class, 'save_commision'])->name('agen/save_commision');
     Route::get('/agen/export_excel_commision', [MoneyController::class, 'export_excel_commision'])->name('agen/export_excel_commision');
-    
+    Route::post('/agen/proses_update_commision/{id}', [MoneyController::class, 'proses_update_commision'])->name('admin/proses_update_commision');
+
     //---------------------------------------- Superadmin--------------------------------------------------------------------------
     //tampilan superadmin
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin/dashboard');
