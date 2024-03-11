@@ -194,10 +194,9 @@
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                       <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">5 Travel Terlaris Tiap Bulan</h5><br>
+                        <h5 class="m-0 me-2">Informasi Total Transaksi Travel Per-Bulan</h5><br>
                         <?php
                           $transaction = DB::table('transactions')
-                          ->where('transaction_status', 'success')
                           ->whereYear('transactions.created_at', date('Y'))
                           ->whereMonth('transactions.created_at', date('m'))
                           ->count();
@@ -213,14 +212,19 @@
                         </div>
                       </div>
                       <?php
-                        $informasi_travel = DB::table('informasi_travels')->get();
+                        $informasi_travel = DB::table('informasi_travels')->take(5)->get();
                       ?>
                       @foreach($informasi_travel as $v_infor_travel)
                         <?php
-                          $packet = DB::table('packets')->where('id_user', $v_infor_travel->id_user)->first();
+                          $data_transaction = DB::table('transactions')
+                          ->join('packets', 'packets.id', '=', 'transactions.id_packet')
+                          ->where('packets.id_user', $v_infor_travel->id_user)
+                          ->whereYear('transactions.created_at', date('Y'))
+                          ->whereMonth('transactions.created_at', date('m'))
+                          ->count();
                           $ceo = DB::table('users')->where('id', $v_infor_travel->id_user)->first();
-                          $total_transaction = DB::table('transactions')->where('id_packet', $packet->id)->count();
                         ?>
+
                         <ul class="p-0 m-0">
                           <li class="d-flex mb-4 pb-1">
                             <div class="avatar flex-shrink-0 me-3">
@@ -232,16 +236,69 @@
                                 <small class="text-muted">{{ $ceo->name }}</small>
                               </div>
                               <div class="user-progress">
-                                <small class="fw-semibold">{{ $total_transaction }}</small>
+                                <small class="fw-semibold">{{ $data_transaction }}</small>
                               </div>
                             </div>
                           </li>
                         </ul>
-                      @endforeach
+                        
+                        @endforeach
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          Detail Selengkapnya!
+                        </button>
                     </div>
                   </div>
                 </div>
                 <!--/ Order Statistics -->
+
+                <!-- Modal All Travel -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Data Transaksi Travel Per-Bulan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <?php
+                          $informasi_travel = DB::table('informasi_travels')->get();
+                        ?>
+                        @foreach($informasi_travel as $v_infor_travel)
+                          <?php
+                            $data_transaction = DB::table('transactions')
+                            ->join('packets', 'packets.id', '=', 'transactions.id_packet')
+                            ->where('packets.id_user', $v_infor_travel->id_user)
+                            ->whereYear('transactions.created_at', date('Y'))
+                            ->whereMonth('transactions.created_at', date('m'))
+                            ->count();
+                            $ceo = DB::table('users')->where('id', $v_infor_travel->id_user)->first();
+                          ?>
+
+                          <ul class="p-0 m-0">
+                            <li class="d-flex mb-4 pb-1">
+                              <div class="avatar flex-shrink-0 me-3">
+                                <img src="{{ asset('assets/image_travel/'.$v_infor_travel->image) }}" width="50px">
+                              </div>
+                              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                <div class="me-2">
+                                  <h6 class="mb-0">{{ $v_infor_travel->travel_name }}</h6>
+                                  <small class="text-muted">{{ $ceo->name }}</small>
+                                </div>
+                                <div class="user-progress">
+                                  <small class="fw-semibold">{{ $data_transaction }}</small>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        @endforeach
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <!-- Expense Overview -->
                 <div class="col-md-6 col-lg-4 order-1 mb-4">
@@ -308,124 +365,89 @@
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="card-title m-0 me-2">Transactions</h5>
-                      <div class="dropdown">
-                        <button
-                          class="btn p-0"
-                          type="button"
-                          id="transactionID"
-                          data-bs-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-                          <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                        </div>
-                      </div>
+                      <h5 class="card-title m-0 me-2">Data Transaction</h5>
                     </div>
                     <div class="card-body">
+
+                      <?php
+                        $user_transaction = DB::table('users')->take(5)->get();
+                        foreach($user_transaction as $v_user_transaction){ 
+                          $data_all_transaction = DB::table('transactions')
+                          ->select(DB::raw('SUM(grand_total) as total_grand_total'))
+                          ->join('users', 'users.id', '=', 'transactions.id_user')
+                          ->where('id_user', $v_user_transaction->id)
+                          ->where('transaction_status', 'success')
+                          ->first();
+                      ?>
                       <ul class="p-0 m-0">
                         <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/paypal.png" alt="User" class="rounded" />
-                          </div>
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
-                              <small class="text-muted d-block mb-1">Paypal</small>
-                              <h6 class="mb-0">Send money</h6>
+                              <small class="text-muted d-block mb-1">{{ $v_user_transaction->name }}</small>
+                              <h6 class="mb-0">{{ $v_user_transaction->email  }}</h6>
                             </div>
                             <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">+82.6</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/wallet.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Wallet</small>
-                              <h6 class="mb-0">Mac'D</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">+270.69</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/chart.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Transfer</small>
-                              <h6 class="mb-0">Refund</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">+637.91</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/cc-success.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Credit Card</small>
-                              <h6 class="mb-0">Ordered Food</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">-838.71</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/wallet.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Wallet</small>
-                              <h6 class="mb-0">Starbucks</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">+203.33</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/cc-warning.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Mastercard</small>
-                              <h6 class="mb-0">Ordered Food</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">-92.45</h6>
-                              <span class="text-muted">USD</span>
+                              <span class="text-muted">Rp. </span>
+                              <h6 class="mb-0">{{ number_format($data_all_transaction->total_grand_total) }}</h6>
                             </div>
                           </div>
                         </li>
                       </ul>
+                      <?php } ?>
+
                     </div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalTransaction">
+                      Detail Selengkapnya!
+                    </button>
                   </div>
                 </div>
                 <!--/ Transactions -->
               </div>
             </div>
+
+            <!-- Modal Transaction -->
+            <div class="modal fade" id="exampleModalTransaction" tabindex="-1" aria-labelledby="exampleModalLabelTrans" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabelTrans">Data Transaction</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                      <?php
+                        $user_transaction = DB::table('users')->take(5)->get();
+                        foreach($user_transaction as $v_user_transaction){ 
+                          $data_all_transaction = DB::table('transactions')
+                          ->select(DB::raw('SUM(grand_total) as total_grand_total'))
+                          ->join('users', 'users.id', '=', 'transactions.id_user')
+                          ->where('id_user', $v_user_transaction->id)
+                          ->where('transaction_status', 'success')
+                          ->first();
+                        ?>
+                        <ul class="p-0 m-0">
+                          <li class="d-flex mb-4 pb-1">
+                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                              <div class="me-2">
+                                <small class="text-muted d-block mb-1">{{ $v_user_transaction->name }}</small>
+                                <h6 class="mb-0">{{ $v_user_transaction->email  }}</h6>
+                              </div>
+                              <div class="user-progress d-flex align-items-center gap-1">
+                                <span class="text-muted">Rp. </span>
+                                <h6 class="mb-0">{{ number_format($data_all_transaction->total_grand_total) }}</h6>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+
+                      <?php } ?>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
         </div>
             <!-- / Content -->

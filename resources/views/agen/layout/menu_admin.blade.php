@@ -99,12 +99,6 @@
                 </li>
               </ul>
             </li>
-            <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-cart-alt"></i>
-                <div data-i18n="Basic">Data Transaction</div>
-              </a>
-            </li>
             <!-- CMS -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">CMS</span></li>
             <li class="menu-item">
