@@ -110,7 +110,7 @@ use App\Models\Itinery;
 
         <div class="col-md-12 mt-5">
             <span>Paket Umroh dengan Keberangkatan Paling Awal</span>
-            <div class="row">
+            <div class="row" data-aos="zoom-out-bottom">
                 @foreach ($data as $item)
                     @php
                         $hotel = Hotel::with('listHotel')
@@ -208,10 +208,10 @@ use App\Models\Itinery;
             <center>
                 <a href="/all_product"><button class="btn btn-info text-white mt-4 bg-blue">Lihat Lebih Banyak</button></a>
             </center><br><br>
-            <h5><strong>Rekan Biro Travel Kami</strong></h5>
-            <p>Lebih Dari 100 Biro Travel Umroh telah Menjadi Rekan Kami</p>
+            <h5 data-aos="zoom-out-bottom"><strong>Rekan Biro Travel Kami</strong></h5>
+            <p data-aos="zoom-out-bottom">Lebih Dari 100 Biro Travel Umroh telah Menjadi Rekan Kami</p>
             <br>
-            <div class="row">
+            <div class="row" data-aos="zoom-out-bottom">
                 <?php 
                     $travel = DB::table('informasi_travels')->orderBy('id', 'desc')->get();
                 ?>
@@ -222,14 +222,23 @@ use App\Models\Itinery;
                     </div>
                 @endforeach
             </div><br><br>
-            <h5><strong>Tentang Kami</strong></h5>
-            <br><br>
+            <h5 data-aos="zoom-out-bottom"><strong>Tentang Kami</strong></h5>
+                <?php 
+                    $about = DB::table('information')->orderBy('id', 'desc')->first();
+                ?>
+                <p data-aos="zoom-out-bottom">{!! $about->about !!}</p>
+            <br data-aos="zoom-out-bottom"><br>
             <h5>Diliput Oleh</h5><br>
-            <div class="row">
-                <div class="col">
-                    <img src="{{ asset('assets/sponsor/tribun.png') }}" width="100px"><br>
-                    <p>tribunnews.com</p>
-                </div>
+            <div class="row" data-aos="zoom-out-bottom">
+                <?php 
+                    $cover = DB::table('covereds')->get();
+                ?>
+                @foreach($cover as $v_cover)
+                    <div class="col">
+                        <img src="{{ asset('assets/sponsor/'.$v_cover->logo) }}" width="100px"><br>
+                        <p>{{ $v_cover->name_covered }}</p>
+                    </div>
+                @endforeach
             </div><br><br>
         </div>
     </div>

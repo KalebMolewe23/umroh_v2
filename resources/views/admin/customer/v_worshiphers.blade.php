@@ -147,42 +147,31 @@
               </ul>
             </div>
           </nav>
+
           <!-- start content -->
         <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">
-            <form action="{{ url('/admin/proses_update_information/'.$information->id) }}" method="post" enctype="multipart/form-data">
-                @csrf
                 <div class="card">
                     <div class="card-body">
-                        <h4>Edit Information Website</h4><br>
-                        <input type="hidden" name="id" value="<?= $information->id; ?>">
-                        <div class="row">
-                            <div class="col">
-                                <label>No. Whatsapp</label>
-                                <input type="whatsapp" name="whatsapp" class="form-control" maxlength="14" value="<?= $information->whatsapp ?>">
-                                <p style="color:red">*Catatan Wajib (Tidak perlu 0 atau 62 langsung nomor belakang saja)</p>
-                            </div>
-                            <div class="col">
-                                <label>Email</label>
-                                <input type="email" name="email" class="form-control" value="<?= $information->email ?>">
-                            </div>
-                        </div>
-                        <label>About Website</label><br>
-                        <textarea id="long_desc" name="about" class="form-control"><?= $information->about ?></textarea><br>
-                        <div align="right">
-                            <button type="submit" class="btn btn-success">Simpan</button>
+                    <!-- <a href="{{ url('/admin/export_all_travel/') }}" class="btn btn-secondary"><i class='bx bxs-file-export' ></i> Excel</a><br><br> -->
+                      <div class="table-responsive">
+                          <table class="table table-striped" id="ajax-data-worshiphers">
+                              <thead>
+                                  <tr>
+                                      <th scope="col">Nama Customer</th>
+                                      <th scope="col">Nama Paket</th>
+                                      <th scope="col">Kode Transaksi</th>
+                                      <th scope="col">Keberangkatan</th>
+                                      <th scope="col">Total Transaksi</th>
+                                      <th scope="col">Tanggal Transaksi</th>
+                                      <th scope="col">Status Transaksi</th>
+                                  </tr>
+                              </thead>
+                          </table>
                         </div>
                     </div>
                 </div>
-            </form>
             </div>
         </div>
 
-        <script>
-          ClassicEditor
-              .create( document.querySelector( '#long_desc' ) )
-              .catch( error => {
-                  console.error( error );
-              } );
-        </script>
 @include('agen.layout.footer')

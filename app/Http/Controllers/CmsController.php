@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Cms;
 use App\Models\Information;
 use App\Models\Social_media;
+use App\Models\Covered;
 
 class CmsController extends Controller
 {
@@ -130,5 +131,74 @@ class CmsController extends Controller
         $data->save();
 
         return redirect('/admin/sosmed/')->with('success', 'Status Dirubah Menjadi Aktif');
+    }
+
+    public function covereds(){
+        if (Auth::check()) {
+            $userId = Auth::id();
+            // Lakukan sesuatu dengan $userId
+        } else {
+            // Pengguna tidak masuk atau belum diautentikasi
+        }
+
+        $title = "Data Peliputan";
+
+        if(request()->ajax()){
+            $data = DB::table('covereds')
+            ->select('id', 'logo', 'name_covered')
+            ->distinct()
+            ->get();
+
+            $data->map(function($item) {
+                
+                $item->logo = asset('assets/sponsor/' . $item->logo); // Sesuaikan dengan path Anda
+        
+                return $item;
+            });
+
+            return datatables()->of($data)
+            ->addColumn('action', 'admin.cms.covereds-action')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+
+        return view('admin.cms.v_covereds', ['id' => $userId, 'title' => $title]);
+    }
+
+    public function proses_save_covered(Request $request){
+
+        $data = Covered::create($request->all());
+
+        if($request->hasFile('logo')){
+            $request->file('logo')->move('assets/sponsor/', $request->file('logo')->getClientOriginalName());
+            $data->logo = $request->file('logo')->getClientOriginalName();
+            $data->save();
+        }
+
+        $data->save();
+
+        return redirect('/admin/covereds/')->with('success', 'Data Berhasil Dibuat');
+    }
+
+    public function proses_update_covered(Request $request, $id){
+        $data = Covered::find($id);
+
+        if($request->hasFile('logo')){
+            $request->file('logo')->move('assets/sponsor/', $request->file('logo')->getClientOriginalName());
+            $data->logo = $request->file('logo')->getClientOriginalName();
+            $data->save();
+        }
+
+        $data->name_covered        = $request->input('name_covered');
+        $data->save();
+
+        return redirect('/admin/covereds/')->with('success', 'Data Berhasil Dibuat');
+    }
+
+    public function delete_covered($id){
+        Covered::where('id', $id)->delete();
+
+        return redirect('/admin/covereds/')->with('success', 'Data Berhasil Dihapus');
     }
 }

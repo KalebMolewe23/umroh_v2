@@ -1187,6 +1187,25 @@ $(document).ready(function() {
             order: [[0, 'desc']]
         });
 
+        $('#ajax-crud-covereds-datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('/admin/covereds') }}",
+            columns: [
+                { 
+                    data: 'logo', 
+                    name: 'logo',
+                    render: function(data, type, full, meta) {
+                        // Format data untuk menampilkan gambar
+                        return '<img src="' + data + '" width="50" />';
+                    }
+                },
+                { data: 'name_covered', name: 'name_covered' },
+                { data: 'action', name: 'action', orderable: false },
+            ],
+            order: [[0, 'desc']]
+        });
+
         $('#ajax-crud-datatable-agen').DataTable({
             processing: true,
             serverSide: true,
@@ -1428,13 +1447,29 @@ $(document).ready(function() {
             order: [[0, 'desc']]
         });
 
+        $('#ajax-data-worshiphers').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('/admin/information_worsiphers') }}",
+            columns: [
+                { data: 'name', name: 'name' },
+                { data: 'name_packet', name: 'name_packet' },
+                { data: 'transaction_code', name: 'transaction_code' },
+                { data: 'departing_from', name: 'departing_from' },
+                { data: 'grand_total', name: 'grand_total' },
+                { data: 'created_at', name: 'created_at' },
+                { data: 'transaction_status', name: 'transaction_status' },
+            ],
+            order: [[0, 'desc']]
+        });
+
         $('#ajax-data-branch').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ url('/admin/information_branch') }}",
             columns: [
                 { data: 'action', name: 'action', orderable: false },
-                { data: 'name', name: 'name' },
+                { data: 'city', name: 'city' },
                 { data: 'cost', name: 'cost' },
                 { data: 'created_at', name: 'created_at' },
             ],

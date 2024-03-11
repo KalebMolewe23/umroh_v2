@@ -154,6 +154,7 @@
                 <div class="card">
                     <div class="card-body">
                     <!-- <a href="{{ url('/admin/export_all_travel/') }}" class="btn btn-secondary"><i class='bx bxs-file-export' ></i> Excel</a><br><br> -->
+                      <div class="table-responsive">
                           <table class="table table-striped" id="ajax-data-customer-travel">
                               <thead>
                                   <tr>
@@ -167,7 +168,8 @@
                                       <th scope="col">Aksi</th>
                                   </tr>
                               </thead>
-                        </table>
+                          </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -248,6 +248,7 @@ Route::middleware('auth_agen')->group(function(){
     Route::get('/admin/export_travel/{id}', [CustomerController::class, 'export_travel'])->name('admin/export_travel/');
     Route::get('/admin/export_all_travel/', [CustomerController::class, 'export_all_travel'])->name('admin/export_all_travel/');
     Route::get('/admin/information_branch', [CustomerController::class, 'information_branch'])->name('admin/information_branch');
+    Route::get('/admin/information_worsiphers', [CustomerController::class, 'information_worsiphers'])->name('admin/information_worsiphers');
     
     //cms
     Route::get('/admin/bg_color/{id}', [CmsController::class, 'index'])->name('/admin/bg_color');
@@ -266,6 +267,10 @@ Route::middleware('auth_agen')->group(function(){
     Route::post('/admin/proses_update_sosmed/{id}', [CmsController::class, 'proses_update_sosmed'])->name('admin/proses_update_sosmed/');
     Route::post('/admin/status_active_sosmed/{id}', [CmsController::class, 'status_active_sosmed'])->name('admin/status_active_sosmed/');
     Route::post('/admin/status_noactive_sosmed/{id}', [CmsController::class, 'status_noactive_sosmed'])->name('admin/status_noactive_sosmed/');
+    Route::get('/admin/covereds/', [CmsController::class, 'covereds'])->name('/admin/covereds');
+    Route::post('/admin/proses_save_covered/', [CmsController::class, 'proses_save_covered'])->name('admin/proses_save_covered/');
+    Route::post('/admin/proses_update_covered/{id}', [CmsController::class, 'proses_update_covered'])->name('admin/proses_update_covered/');
+    Route::DELETE('/admin/delete_covered/{id}', [CmsController::class, 'delete_covered'])->name('/admin/delete_covered');
     //-----------------------------------------------------------------------------------------------------------------------------
     
 });

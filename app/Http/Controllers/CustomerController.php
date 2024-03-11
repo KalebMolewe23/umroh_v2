@@ -53,8 +53,7 @@ class CustomerController extends Controller
             return datatables()->of(DB::table('informasi_travels')
             ->select('informasi_travels.id','travel_name', 'name','employee_name','number_umroh','informasi_travels.address','informasi_travels.email as email',DB::raw('CASE WHEN is_verifition != 0 THEN "Sudah Diverifikasi" ELSE "Belum Diverifikasi" END as is_verifition'))
             ->join('users', 'users.id', '=', 'informasi_travels.id_user')
-            ->whereMonth('informasi_travels.created_at',$month)
-            ->whereYear('informasi_travels.created_at',$year)
+             ->whereYear('informasi_travels.created_at',$year)
             ->orderBy('informasi_travels.id', 'desc')
             ->distinct()
             ->get())
@@ -183,8 +182,7 @@ class CustomerController extends Controller
         
         if(request()->ajax()){
             return datatables()->of(DB::table('partner_branches')
-            ->select(DB::raw('FORMAT(cost, 2) as cost, DATE_FORMAT(created_at, "%d-%m-%Y %H:%i:%s") as created_at'),'partner_branches.id as id', 'id_user', 'name')
-            ->join('regencies', 'regencies.id', '=', 'partner_branches.id_regencies')
+            ->select(DB::raw('FORMAT(cost, 2) as cost, DATE_FORMAT(created_at, "%d-%m-%Y %H:%i:%s") as created_at'),'partner_branches.id as id', 'id_user', 'city')
             ->orderBy('created_at', 'desc')
             ->distinct()
             ->get())
@@ -195,6 +193,31 @@ class CustomerController extends Controller
         }
 
         return view('admin.customer.v_branch', ['id' => $userId, 'title' => $title]);
+    }
+
+    public function information_worsiphers(){
+        if (Auth::check()) {
+            $userId = Auth::id();
+            // Lakukan sesuatu dengan $userId
+        } else {
+            // Pengguna tidak masuk atau belum diautentikasi
+        }
+
+        $title = "Data Jamaah";
+
+        if(request()->ajax()){
+            return datatables()->of(DB::table('transactions')
+            ->select(DB::raw('FORMAT(grand_total, 2) as grand_total, DATE_FORMAT(transactions.created_at, "%d-%m-%Y %H:%i:%s") as created_at'), 'transactions.id as id', 'users.name as name', 'name_packet', 'transaction_code', 'transactions.departing_from', 'transaction_status')
+            ->join('users', 'users.id', '=', 'transactions.id_user')
+            ->join('packets', 'packets.id', '=', 'transactions.id_packet')
+            ->orderBy('transactions.created_at', 'desc')
+            ->distinct()
+            ->get())
+            ->addIndexColumn()
+            ->make(true);
+        }
+
+        return view('admin.customer.v_worshiphers', ['id' => $userId, 'title' => $title]);
     }
 
 }

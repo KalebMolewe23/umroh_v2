@@ -93,7 +93,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="extended-ui-text-divider.html" class="menu-link">
+                  <a href="/admin/information_worsiphers" class="menu-link">
                     <div data-i18n="Text Divider">Data Jamaah</div>
                   </a>
                 </li>
@@ -123,6 +123,12 @@
               <a href="/admin/blog/" class="menu-link">
                 <i class="menu-icon tf-icons bx bxl-blogger"></i>
                 <div data-i18n="Basic">Blog</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/admin/covereds/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-book-content"></i>
+                <div data-i18n="Basic">Data Peliput</div>
               </a>
             </li>
 

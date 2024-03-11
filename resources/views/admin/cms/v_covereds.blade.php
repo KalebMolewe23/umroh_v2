@@ -147,42 +147,56 @@
               </ul>
             </div>
           </nav>
-          <!-- start content -->
+
         <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">
-            <form action="{{ url('/admin/proses_update_information/'.$information->id) }}" method="post" enctype="multipart/form-data">
-                @csrf
                 <div class="card">
                     <div class="card-body">
-                        <h4>Edit Information Website</h4><br>
-                        <input type="hidden" name="id" value="<?= $information->id; ?>">
-                        <div class="row">
-                            <div class="col">
-                                <label>No. Whatsapp</label>
-                                <input type="whatsapp" name="whatsapp" class="form-control" maxlength="14" value="<?= $information->whatsapp ?>">
-                                <p style="color:red">*Catatan Wajib (Tidak perlu 0 atau 62 langsung nomor belakang saja)</p>
-                            </div>
-                            <div class="col">
-                                <label>Email</label>
-                                <input type="email" name="email" class="form-control" value="<?= $information->email ?>">
-                            </div>
-                        </div>
-                        <label>About Website</label><br>
-                        <textarea id="long_desc" name="about" class="form-control"><?= $information->about ?></textarea><br>
-                        <div align="right">
-                            <button type="submit" class="btn btn-success">Simpan</button>
-                        </div>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah</button><br><br>
+                      <div class="table-responsive">
+                        <table class="table table-striped" id="ajax-crud-covereds-datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Logo</th>
+                                    <th scope="col">Nama Peliput</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                      </div>
                     </div>
                 </div>
-            </form>
             </div>
         </div>
 
-        <script>
-          ClassicEditor
-              .create( document.querySelector( '#long_desc' ) )
-              .catch( error => {
-                  console.error( error );
-              } );
-        </script>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Tambah Peliput</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="/admin/proses_save_covered" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label>Logo</label>
+                                                    <input class="form-control" name="logo" type="file" required><br>
+                                                </div>
+                                                <div class="col">
+                                                    <label>Nama</label>
+                                                    <input class="form-control" name="name_covered" type="text" placeholder="Masukkan Nama Peliput" id="name_covered" required><br>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary"><i class='bx bxs-memory-card'></i> Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 @include('agen.layout.footer')
