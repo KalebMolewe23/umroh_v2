@@ -102,26 +102,28 @@
                     <div class="col-8">
                         <h5><strong>Tiket Group & Rontokan</strong></h5>
                         <div class="card" data-aos="zoom-out-left">
-                            <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;
-                                <div class="col"><br>
-                                    <div class="form-group">
-                                        <label class="form-label">Tanggal Awal</label>
-                                        <input autocomplete="off" type="text" class="form-control tanggal_awal" name="tanggal_awal">
+                            <form action="/ticket_schedule" method="GET">
+                                <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="col"><br>
+                                        <div class="form-group">
+                                            <label class="form-label">Tanggal Awal</label>
+                                            <input autocomplete="off" type="text" class="form-control tanggal_awal" name="tanggal_awal">
+                                        </div>
+                                    </div>
+                                    <div class="col"><br>
+                                        <div class="form-group">
+                                            <label class="form-label">Tanggal Akhir</label>
+                                            <input autocomplete="off" type="text" class="form-control tanggal_akhir" name="tanggal_akhir">
+                                        </div>
+                                    </div>
+                                    <div class="col"><br>
+                                        <div class="form-group" style="margin-top: 32px">
+                                            <button class="btn btn-primary">Filter</button>
+                                            <button type="button" class="btn btn-light reset">Reset</button>
+                                        </div><br>
                                     </div>
                                 </div>
-                                <div class="col"><br>
-                                    <div class="form-group">
-                                        <label class="form-label">Tanggal Akhir</label>
-                                        <input autocomplete="off" type="text" class="form-control tanggal_akhir" name="tanggal_akhir">
-                                    </div>
-                                </div>
-                                <div class="col"><br>
-                                    <div class="form-group" style="margin-top: 32px">
-                                        <button class="btn btn-primary">Filter</button>
-                                        <button type="button" class="btn btn-light reset">Reset</button>
-                                    </div><br>
-                                </div>
-                            </div>
+                            </form>
                         </div><br>
 
                         @foreach($ticket as $v_ticket)
@@ -298,14 +300,26 @@
             <img id="svg" src="{{ asset('assets/img/'.$bg->logo) }}" alt="">
         </div> -->
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://unpkg.com/rolly.js@0.2.1/dist/rolly.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('/assets/js/script.js') }}"></script>
 
     <script>
+
+        const tanggal_awal = "{{ @$_GET['tanggal_awal'] ?? "" }}";
+        const tanggal_akhir = "{{ @$_GET['tanggal_akhir'] ?? "" }}";
+        
+        $(document).ready(function(){
+            $('.tanggal_awal').val(tanggal_awal);
+            $('.tanggal_akhir').val(tanggal_akhir);
+            $('.tanggal_awal, .tanggal_akhir').datepicker({
+                dateFormat: 'dd-mm-yy',
+            });
+        });
+
         const r = rolly({
         view: document.querySelector('.app'),
         native: true,

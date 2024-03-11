@@ -84,6 +84,7 @@ Route::get('/profile', function (){
 
 //login agen
 Route::get('/login_agen', [Auth_agenController::class, 'index'])->name('login_agen');
+Route::get('/ticket_schedule', [Auth_agenController::class, 'index'])->name('ticket_schedule');
 Route::post('/login_agen', [Auth_agenController::class, 'loginaksi'])->name('login.aksi');
 Route::get('/logout_agen', [Auth_agenController::class, 'logout'])->name('logout_agen')->middleware('auth_agen');
 Route::get('/regis_agen', [Auth_agenController::class, 'registrasi'])->name('regis_agen');

@@ -36,4 +36,5 @@ class Bursa_ticket extends Model
         'homecoming_date_transit',
         'homecoming_time_transit',
     ];
+
 }

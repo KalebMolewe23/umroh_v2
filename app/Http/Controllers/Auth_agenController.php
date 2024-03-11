@@ -11,22 +11,43 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 
 class Auth_agenController extends Controller
 {
     public function index(){
 
-        $title = "Login Agen Travel";
-
-        $today = Carbon::today()->toDateString();
-
-        $tiket = DB::table('bursa_tickets')
-        ->join('maskapais', 'maskapais.id' ,'=', 'bursa_tickets.id_maskapai')
-        // ->where('departure_date', '>=', $today)
+        $params = $_GET;
+        $query = DB::table('bursa_tickets')
+        ->join('maskapais', 'maskapais.id', '=', 'bursa_tickets.id_maskapai')
         ->orderBy('bursa_tickets.id', 'DESC')
         ->get();
 
-        return view('agen.v_login', ['ticket' => $tiket, 'title' => $title]);
+        $title = "Login Agen Travel";
+
+        if (!empty($params['departure_date'])){
+            $query->whereHas('bursa_tickets', function ($query) use ($params){
+                $query->whereMonth('departure_date', '=', $params['departure_date']);
+            });
+        }
+
+        if(!empty($params['tanggal_awal'])) {
+            $tanggal_awal = date('Y-m-d', strtotime($params['tanggal_awal']));
+            $tanggal_akhir = date('Y-m-d', strtotime($params['tanggal_akhir']));
+            $query->where('bursa_tickets', function ($query) use ($tanggal_awal, $tanggal_akhir){
+                $query->where('departure_date', '>=', $tanggal_awal);
+                $query->where('departure_date', '<=', $tanggal_akhir);
+            });
+        }
+
+        $today = Carbon::today()->toDateString();
+
+        $query->where('bursa_tickets', function ($query) use ($today){
+            $query->where('departure_date', '>=', $today);
+        });
+
+        return view('agen.v_login', ['ticket' => $query, 'title' => $title], compact('query'));
+
     }
 
     public function loginaksi(Request $request){
@@ -82,4 +103,5 @@ class Auth_agenController extends Controller
 
         return redirect('login_agen');
     }
+
 }
