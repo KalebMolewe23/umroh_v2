@@ -1,10 +1,11 @@
 <?php 
-    $transaction = DB::table('transactions')->where('id_user', $id)->get() ;
-    $count = $transaction->count();
-    if($count == null){
-?>
-<p>Rp. 0</p>
-<?php }else{ ?>
-<p>Rp. <?= number_format($transaction->departing_price) ?></p>
+    $transaction = DB::table('transactions')
+    ->select(DB::raw('SUM(grand_total) as total_grand_total'))
+    ->join('users', 'users.id', '=', 'transactions.id_user')
+    ->where('id_user', $id)
+    ->where('transaction_status', 'success')
+    ->first() ;
 
-<?php } ?>
+    
+    ?>
+    Rp. {{ number_format($transaction->total_grand_total) }}

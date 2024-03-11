@@ -383,7 +383,7 @@
                       </div>
                       <div class="modal-body">
                       <?php
-                        $user_transaction = DB::table('users')->take(5)->get();
+                        $user_transaction = DB::table('users')->get();
                         foreach($user_transaction as $v_user_transaction){ 
                           $data_all_transaction = DB::table('transactions')
                           ->select(DB::raw('SUM(grand_total) as total_grand_total'))
