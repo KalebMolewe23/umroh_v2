@@ -205,10 +205,12 @@ Route::middleware('auth_agen')->group(function(){
     Route::post('/agen/save_commision', [MoneyController::class, 'save_commision'])->name('agen/save_commision');
     Route::get('/agen/export_excel_commision', [MoneyController::class, 'export_excel_commision'])->name('agen/export_excel_commision');
     Route::post('/agen/proses_update_commision/{id}', [MoneyController::class, 'proses_update_commision'])->name('admin/proses_update_commision');
-
+    
     //---------------------------------------- Superadmin--------------------------------------------------------------------------
     //tampilan superadmin
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin/dashboard');
+    Route::get('/admin/profile/{id}', [AdminController::class, 'profile'])->name('admin/profile');
+    Route::post('/admin/proccess_update_profile/{id}', [AdminController::class, 'proccess_update_profile'])->name('admin/proccess_update_profile');
 
     //ticket
     Route::get('/admin/provider', [TicketController::class, 'index'])->name('admin/provider');
