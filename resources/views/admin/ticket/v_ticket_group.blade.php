@@ -164,7 +164,9 @@
                             <a href="/agen/add_ticket_group"><button class="btn btn-primary"><i class='bx bx-plus'></i> Tambah Tiket</button></a>
                         </center><br>
                     <?php }else{ ?>
-                        <table class="table table-striped" id="ajax-crud-ticket-group">
+                      <div class="d-flex align-items-end row">
+                        <div class="table-responsive">
+                          <table class="table table-striped" id="ajax-crud-ticket-group">
                             <thead>
                                 <tr>
                                     <th scope="col">Kode PNR Maskapai</th>
@@ -176,7 +178,9 @@
                                     <th scope="col">Kota Keberangkatan</th>
                                 </tr>
                             </thead>
-                        </table>
+                          </table>
+                        </div>
+                      </div>
                     <?php } ?>
 
                     </div>

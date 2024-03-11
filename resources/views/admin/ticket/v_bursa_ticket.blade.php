@@ -167,6 +167,7 @@
                             <a href="/admin/add_bursa_ticket" class="btn btn-primary"><i class='bx bx-plus' ></i> Tambah Bursa Tiket</a>
                         </center>
                     <?php }else{ ?>
+                      <div class="table-responsive">
                         <table class="table table-striped" id="ajax-crud-bursa-datatable">
                             <thead>
                                 <tr>
@@ -181,6 +182,7 @@
                                 </tr>
                             </thead>
                         </table>
+                      </div>
                     <?php } ?>
 
                     </div>

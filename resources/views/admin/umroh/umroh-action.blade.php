@@ -594,19 +594,6 @@
                         </div>
                     </div>
                 </div>
-            <div class="modal-footer">
-                <?php if($status == 0){ ?>
-                    <form class="d-inline" action="{{ url('/admin/update_verify_umroh/'.$id_itineries) }}" method="post">
-                        @csrf
-                        <button style="height:40px;" type="submit" name="submit" class="btn btn-danger btn-sm"><i class='bx bx-x' ></i> Belum Diverifikasi</button>
-                    </form>
-                <?php }else{ ?>
-                    <form class="d-inline" action="{{ url('/admin/update_notverify_umroh/'.$id_itineries) }}" method="post">
-                        @csrf
-                        <button style="height:40px;" type="submit" name="submit" class="btn btn-success btn-sm"><i class='bx bx-check'></i> Sudah Diverfikasi</button>
-                    </form>
-                <?php } ?>
-            </div>
         </div>
     </div>
 </div>

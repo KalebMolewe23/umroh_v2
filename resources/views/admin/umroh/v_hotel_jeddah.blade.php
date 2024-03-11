@@ -155,16 +155,18 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class='bx bx-plus' ></i> Add Hotel
                         </button><br><br>
-                        <table class="table table-striped" id="ajax-data-hotel-jeddah">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Hotel Name</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Star</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="table-responsive">
+                          <table class="table table-striped" id="ajax-data-hotel-jeddah">
+                              <thead>
+                                  <tr>
+                                      <th scope="col">Hotel Name</th>
+                                      <th scope="col">Address</th>
+                                      <th scope="col">Star</th>
+                                      <th scope="col">Aksi</th>
+                                  </tr>
+                              </thead>
+                          </table>
+                        </div>
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">

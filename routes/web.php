@@ -225,8 +225,7 @@ Route::middleware('auth_agen')->group(function(){
 
     //Umroh
     Route::get('/admin/data_packet_umroh', [PacketController::class, 'index'])->name('admin/data_packet_umroh');
-    Route::post('/admin/update_verify_umroh/{id}', [PacketController::class, 'update_verify_umroh'])->name('admin/update_verify_umroh');
-    Route::post('/admin/update_notverify_umroh/{id}', [PacketController::class, 'update_notverify_umroh'])->name('admin/update_notverify_umroh');
+    Route::delete('/admin/delete_verify_umroh/{id}', [PacketController::class, 'delete_verify_umroh'])->name('admin/delete_verify_umroh');
     Route::get('/admin/jeddah_hotel', [PacketController::class, 'jeddah_hotel'])->name('admin/jeddah_hotel');
     Route::post('/admin/proses_save_hotel_jeddah/', [PacketController::class, 'proses_save_hotel_jeddah'])->name('admin/proses_save_hotel_jeddah');
     Route::post('/admin/proses_update_hotel_jeddah/{id}', [PacketController::class, 'proses_update_hotel_jeddah'])->name('admin/proses_update_hotel_jeddah');

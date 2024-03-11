@@ -153,6 +153,7 @@
             <div class="container-xxl flex-grow-1 container-p-y">
                 <div class="card">
                     <div class="card-body">
+                      <div class="table-responsive">
                         <table class="table table-striped" id="ajax-data-packet-umroh">
                               <thead>
                                   <tr>
@@ -168,6 +169,7 @@
                                   </tr>
                               </thead>
                         </table>
+                      </div>
                     </div>
                 </div>
             </div>

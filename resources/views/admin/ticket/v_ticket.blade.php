@@ -155,14 +155,16 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <i class='bx bx-plus' ></i> Add Provider
                         </button><br><br>
-                        <table class="table table-striped" id="ajax-data-provider">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Provider Name</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="table-responsive">
+                          <table class="table table-striped" id="ajax-data-provider">
+                              <thead>
+                                  <tr>
+                                      <th scope="col">Provider Name</th>
+                                      <th scope="col">Aksi</th>
+                                  </tr>
+                              </thead>
+                          </table>
+                        </div>
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">

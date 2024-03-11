@@ -41,8 +41,8 @@ class PacketController extends Controller
         return view('admin.umroh.v_packet_umroh', ['id' => $userId, 'title' => $title]);
     }
 
-    public function update_verify_umroh(Request $request, $id){
-        $data = Itinery::find($id);
+    public function delete_verify_umroh(Request $request, $id){
+        $data = Itinery::where('id', $id)->delete();
 
         $photo = DB::table('photos')->where('id', $data->id_photo)->first();
         $packets = DB::table('packets')->where('id', $photo->id_packet)->first();
@@ -57,7 +57,7 @@ class PacketController extends Controller
                 <br>
                 <div class='card-body'>
                     <h3 style='color:black'>Assalamualaikum,</h3>
-                    <h4 style='color:black'>Selamat paket " .$packets->name_packet. " berhasil di konfirmasi.</h4>
+                    <h4 style='color:black'>Maaf paket anda mengenai : " .$packets->name_packet. " Kami hapus karena tidak sesuai dengan ketentuan yang berlaku.</h4>
                     <br><br>
                     <center><p style='color:red;text-decoration: none;'>Info lebih lanjut, silahkan klik di link ini<a style='color:red;text-decoration: none;' href='https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0'> https://api.whatsapp.com/send/?phone=62083819496697&text&type=phone_number&app_absent=0</a></p></center>
                 </div>    
@@ -70,15 +70,6 @@ class PacketController extends Controller
         Mail::to("$email->email")->send(new VerifPacket($data_email));
 
         return redirect('/admin/data_packet_umroh')->with('success', 'Data Berhasil Di Verifikasi');
-    }
-
-    public function update_notverify_umroh(Request $request, $id){
-        $data = Itinery::find($id);
-
-        $data->status = 0;
-        $data->save();
-
-        return redirect('/admin/data_packet_umroh')->with('success', 'Data Berhasil Di Non-Verifikasi');
     }
 
     public function jeddah_hotel(Request $request){
