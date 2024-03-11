@@ -303,57 +303,25 @@
                 <!-- Expense Overview -->
                 <div class="col-md-6 col-lg-4 order-1 mb-4">
                   <div class="card h-100">
-                    <div class="card-header">
-                      <ul class="nav nav-pills" role="tablist">
-                        <li class="nav-item">
-                          <button
-                            type="button"
-                            class="nav-link active"
-                            role="tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#navs-tabs-line-card-income"
-                            aria-controls="navs-tabs-line-card-income"
-                            aria-selected="true"
-                          >
-                            Income
-                          </button>
-                        </li>
-                        <li class="nav-item">
-                          <button type="button" class="nav-link" role="tab">Expenses</button>
-                        </li>
-                        <li class="nav-item">
-                          <button type="button" class="nav-link" role="tab">Profit</button>
-                        </li>
-                      </ul>
-                    </div>
                     <div class="card-body px-0">
                       <div class="tab-content p-0">
                         <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
                           <div class="d-flex p-4 pt-3">
-                            <div class="avatar flex-shrink-0 me-3">
-                              <img src="../assets/img/icons/unicons/wallet.png" alt="User" />
-                            </div>
                             <div>
-                              <small class="text-muted d-block">Total Balance</small>
+                              <small class="text-muted d-block">Total Transaksi Dalam 1 Tahun</small>
                               <div class="d-flex align-items-center">
-                                <h6 class="mb-0 me-1">$459.10</h6>
-                                <small class="text-success fw-semibold">
-                                  <i class="bx bx-chevron-up"></i>
-                                  42.9%
-                                </small>
+                                <?php
+                                  $total_transaction = DB::table('transactions')
+                                  ->select(DB::raw('SUM(grand_total) as total_grand_total'))
+                                  ->whereYear('transactions.created_at', date('Y'))
+                                  ->where('transaction_status', 'success')
+                                  ->first();
+                                ?>
+                                <h6 class="mb-0 me-1">Rp {{ number_format($total_transaction->total_grand_total) }}</h6>
                               </div>
                             </div>
                           </div>
-                          <div id="incomeChart"></div>
-                          <div class="d-flex justify-content-center pt-4 gap-2">
-                            <div class="flex-shrink-0">
-                              <div id="expensesOfWeek"></div>
-                            </div>
-                            <div>
-                              <p class="mb-n1 mt-1">Expenses This Week</p>
-                              <small class="text-muted">$39 less than last week</small>
-                            </div>
-                          </div>
+                          <canvas id="chart"></canvas>
                         </div>
                       </div>
                     </div>
@@ -451,5 +419,16 @@
 
         </div>
             <!-- / Content -->
+
+            <script>
+              var ctx = document.getElementById('chart').getContext('2d');
+              var userChart = new Chart(ctx,{
+                  type:'bar',
+                  data:{
+                      labels: {!! json_encode($labels) !!},
+                      datasets: {!! json_encode($datasets) !!}
+                  },
+              });
+            </script>
 
 @include('agen.layout.footer')
