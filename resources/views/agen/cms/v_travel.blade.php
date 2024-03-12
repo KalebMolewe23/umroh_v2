@@ -270,6 +270,16 @@
                     <div data-i18n="Perfect Scrollbar">Komisi Agen</div>
                   </a>
                 </li>
+                <li class="menu-item">
+                  <a href="/agen/setting_deadline" class="menu-link">
+                    <div data-i18n="Perfect Scrollbar">Setting Deadline</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="/agen/travel_scoring" class="menu-link">
+                    <div data-i18n="Perfect Scrollbar">Penilaian Travel</div>
+                  </a>
+                </li>
               </ul>
             </li>
             <?php 
