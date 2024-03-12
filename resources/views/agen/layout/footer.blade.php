@@ -1187,6 +1187,17 @@ $(document).ready(function() {
             order: [[0, 'desc']]
         });
 
+        $('#ajax-crud-deadline-datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('/agen/setting_deadline') }}",
+            columns: [
+                { data: 'days', name: 'days' },
+                { data: 'action', name: 'action', orderable: false },
+            ],
+            order: [[0, 'desc']]
+        });
+
         $('#ajax-crud-covereds-datatable').DataTable({
             processing: true,
             serverSide: true,

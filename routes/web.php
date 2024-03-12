@@ -205,6 +205,10 @@ Route::middleware('auth_agen')->group(function(){
     Route::post('/agen/save_commision', [MoneyController::class, 'save_commision'])->name('agen/save_commision');
     Route::get('/agen/export_excel_commision', [MoneyController::class, 'export_excel_commision'])->name('agen/export_excel_commision');
     Route::post('/agen/proses_update_commision/{id}', [MoneyController::class, 'proses_update_commision'])->name('admin/proses_update_commision');
+    Route::get('/agen/setting_deadline', [MoneyController::class, 'setting_deadline'])->name('agen/setting_deadline');
+    Route::post('/agen/proses_save_deadline', [MoneyController::class, 'proses_save_deadline'])->name('agen/proses_save_deadline');
+    Route::post('/agen/proses_update_deadline/{id}', [MoneyController::class, 'proses_update_deadline'])->name('agen/proses_update_deadline');
+    Route::delete('/agen/delete_deadline/{id}', [MoneyController::class, 'delete_deadline'])->name('agen/delete_deadline');
     
     //---------------------------------------- Superadmin--------------------------------------------------------------------------
     //tampilan superadmin

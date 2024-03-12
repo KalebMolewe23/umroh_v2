@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Settingdue_date extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id_user',
+        'days'
+    ];
 }

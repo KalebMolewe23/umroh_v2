@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaction;
 use App\Models\Commision_transaction;
+use App\Models\Settingdue_date;
 use App\Exports\ExportDataCustomer;
 use Maatwebsite\Excel\Facades\Excel;
 use Datatables;
@@ -139,5 +140,55 @@ class MoneyController extends Controller
         $data->save();
 
         return redirect('/agen/get_commision')->with('success', 'Data Berhasil Di Update');
+    }
+
+    public function setting_deadline(){
+        if (Auth::check()) {
+            $userId = Auth::id();
+            // Lakukan sesuatu dengan $userId
+        } else {
+            // Pengguna tidak masuk atau belum diautentikasi
+        }
+
+        $title = "Setting Deadline";
+
+        if(request()->ajax()){
+            $deadline = DB::table('settingdue_dates')
+            ->select('id', 'days')
+            ->where('id_user', $userId)
+            ->get();
+
+            return datatables()->of($deadline)
+            ->addColumn('action', 'agen.money.deadline-action')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+
+        return view('agen.money.v_deadline', ['id' => $userId, 'title' => $title]);
+    }
+
+    public function proses_save_deadline(Request $request){
+        $data = Settingdue_date::create($request->all());
+
+        $data->save();
+
+        return redirect('/agen/setting_deadline')->with('success', 'Data Status Pembayaran Berhasil Di-update');
+    }
+
+    public function proses_update_deadline(Request $request, $id){
+        $data = Settingdue_date::find($id);
+
+        $data->id_user   = $request->input('id_user');
+        $data->days      = $request->input('days');
+
+        $data->save();
+
+        return redirect('/agen/setting_deadline')->with('success', 'Data Berhasil Di Update');
+    }
+
+    public function delete_deadline($id){
+        Settingdue_date::where('id', $id)->delete();
+        return redirect('/agen/setting_deadline')->with('success', 'Data Berhasil Dihapus');
     }
 }
