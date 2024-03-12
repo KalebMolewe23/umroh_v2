@@ -209,6 +209,9 @@ Route::middleware('auth_agen')->group(function(){
     Route::post('/agen/proses_save_deadline', [MoneyController::class, 'proses_save_deadline'])->name('agen/proses_save_deadline');
     Route::post('/agen/proses_update_deadline/{id}', [MoneyController::class, 'proses_update_deadline'])->name('agen/proses_update_deadline');
     Route::delete('/agen/delete_deadline/{id}', [MoneyController::class, 'delete_deadline'])->name('agen/delete_deadline');
+    Route::get('/agen/travel_scoring', [MoneyController::class, 'travel_scoring'])->name('agen/travel_scoring');
+    Route::post('/agen/proses_update_scoring_publis/{id}', [MoneyController::class, 'proses_update_scoring_publis'])->name('agen/proses_update_scoring_publis');
+    Route::post('/agen/proses_update_scoring_not_publis/{id}', [MoneyController::class, 'proses_update_scoring_not_publis'])->name('agen/proses_update_scoring_not_publis');
     
     //---------------------------------------- Superadmin--------------------------------------------------------------------------
     //tampilan superadmin

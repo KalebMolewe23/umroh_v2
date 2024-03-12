@@ -1198,6 +1198,20 @@ $(document).ready(function() {
             order: [[0, 'desc']]
         });
 
+        $('#ajax-crud-scoring-datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('/agen/travel_scoring') }}",
+            columns: [
+                { data: 'name', name: 'name' },
+                { data: 'name_packet', name: 'name_packet' },
+                { data: 'rating', name: 'rating' },
+                { data: 'opinion', name: 'opinion' },
+                { data: 'action', name: 'action', orderable: false },
+            ],
+            order: [[0, 'desc']]
+        });
+
         $('#ajax-crud-covereds-datatable').DataTable({
             processing: true,
             serverSide: true,

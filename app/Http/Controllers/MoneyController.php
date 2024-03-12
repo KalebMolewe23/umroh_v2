@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Transaction;
 use App\Models\Commision_transaction;
 use App\Models\Settingdue_date;
+use App\Models\Rating;
 use App\Exports\ExportDataCustomer;
 use Maatwebsite\Excel\Facades\Excel;
 use Datatables;
@@ -190,5 +191,54 @@ class MoneyController extends Controller
     public function delete_deadline($id){
         Settingdue_date::where('id', $id)->delete();
         return redirect('/agen/setting_deadline')->with('success', 'Data Berhasil Dihapus');
+    }
+
+    public function travel_scoring(){
+        if (Auth::check()) {
+            $userId = Auth::id();
+            // Lakukan sesuatu dengan $userId
+        } else {
+            // Pengguna tidak masuk atau belum diautentikasi
+        }
+
+        $title = "Penilaian Travel";
+
+        
+        if(request()->ajax()){
+            $travel = DB::table('ratings')
+            ->select('ratings.id', 'name_packet', 'rating', 'opinion', 'users.name')
+            ->join('transactions', 'transactions.id', '=', 'ratings.id_transaction')
+            ->join('packets', 'packets.id', '=', 'transactions.id_packet')
+            ->join('informasi_travels', 'informasi_travels.id', '=', 'ratings.id_travel')
+            ->join('users', 'users.id', '=', 'ratings.id_user')
+            ->where('informasi_travels.id_user', $userId)
+            ->get();
+
+            return datatables()->of($travel)
+            ->addColumn('action', 'agen.money.scoring-action')
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+
+        return view('agen.money.v_scoring', ['id' => $userId, 'title' => $title]);
+    }
+
+    public function proses_update_scoring_publis(Request $request, $id){
+        $data = Rating::find($id);
+
+        $data->status     = 1;
+        $data->save();
+
+        return redirect('/agen/travel_scoring')->with('success', 'Data Berhasil Di Publish');
+    }
+
+    public function proses_update_scoring_not_publis(Request $request, $id){
+        $data = Rating::find($id);
+
+        $data->status     = 0;
+        $data->save();
+
+        return redirect('/agen/travel_scoring')->with('success', 'Data Tidak Di Publish');
     }
 }

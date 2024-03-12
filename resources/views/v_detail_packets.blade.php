@@ -238,7 +238,7 @@
                         <div class="head-border"></div>
                         <?php
                             $travel = DB::table('informasi_travels')->where('travel_name', $data->photo->packets->informasiTravels->travel_name)->first();
-                            $data_rating = DB::table('ratings')->select('users.name as name_user', 'regencies.name as name_city', 'opinion', 'rating')->join('users', 'users.id', '=', 'ratings.id_user')->join('regencies', 'regencies.id', '=', 'users.id_regencies',)->where('id_travel', $travel->id)->get();
+                            $data_rating = DB::table('ratings')->select('users.name as name_user', 'regencies.name as name_city', 'opinion', 'rating')->join('users', 'users.id', '=', 'ratings.id_user')->join('regencies', 'regencies.id', '=', 'users.id_regencies',)->where('id_travel', $travel->id)->where('status', 1)->get();
                             $maxStars = 5;
                             foreach($data_rating as $v_rating){
                         ?>
