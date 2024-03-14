@@ -30,7 +30,6 @@ class OrderController extends Controller
         ->leftjoin('hotels', 'hotels.id', '=' , 'photos.id_hotel')
         ->leftjoin('money_packets', 'money_packets.id', '=' , 'photos.id_money')
         ->where('photos.id_user', $userId)
-        ->where('itineries.status', 1)
         ->get();
 
         return view('agen.order.v_order', ['id' => $userId, 'title' => $title, 'customer' => $customer , 'packet' => $packet]);
